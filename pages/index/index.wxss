@@ -1,0 +1,45 @@
+.tishiLable {
+  text-align: center;
+  /* 上右下左（顺时针）*/
+  margin: 10px 0px 20px;
+}
+.pwdStatus {
+  align-items: center;
+  margin: 10px 80px 20px 80px;
+}
+.pwdCicle {
+  width: 10px;
+  height: 10px;
+  padding: 5px;
+  border-radius: 50%;
+  /* 宽度 样式 颜色 */
+  border: 1px solid #00ADB7;
+}
+/* 自定义边框需要将伪元素设置为空  */
+.pwdCicle::after {    
+  border: none;
+}
+.numberKeyBoard {
+  align-items: center;
+  padding: 20px;
+  margin-top: 40px 20px 0px 20px;
+}
+.numButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;     
+  /* 在圆形按钮中 设置行高，让文字居中  */
+  line-height: 60px;
+  text-align: center;
+  border: 1px solid #00ADB7;
+
+  /* 设置按钮字体颜色  */
+  color: #00ADB7;
+}
+.numButton::after {  
+  border: none;
+}
+.setPwdAgain {
+  margin-top: 10px;
+  margin-left: 60px  
+}

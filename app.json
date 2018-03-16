@@ -1,0 +1,50 @@
+{
+  "pages":[    
+    "pages/index/index",
+    "pages/main/main",
+    "pages/adding/adding",
+    "pages/adding_randomPwd/randomPwd",
+    "pages/adding_account/account",
+    "pages/adding_readablePwd/readablePwd",    
+    "pages/setting/setting",
+    "pages/setting_exportPwd/exportPwd",
+    "pages/setting_importPwd/importPwd",
+    "pages/setting_clearAllPwd/clearAllPwd",
+    "pages/setting_editPwdRules/editPwdRules",
+    "pages/setting_modifyUserKey/modifyUserKey",
+    "pages/setting_help/help",
+    "pages/setting_about/about",
+    "pages/setting_advices/advices"
+  ],
+"window": {
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#00ADB7",
+  "navigationBarTitleText": "帐号管理",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f8f8f8"
+},
+"tabBar": {
+  "list": [
+    {
+      "pagePath": "pages/main/main",
+      "text": "首页",
+      "selectedIconPath": "images/home.png",
+      "iconPath": "images/before_home.png"
+    },
+    {
+      "pagePath": "pages/adding/adding",
+      "text": "添加",
+      "selectedIconPath": "images/add.png",
+      "iconPath": "images/before_add.png"
+    },
+    {
+      "pagePath": "pages/setting/setting",
+      "text": "管理",
+      "selectedIconPath": "images/key.png",
+      "iconPath": "images/before_key.png"
+    }
+  ],
+  "color": "#D3D3D3",
+  "selectedColor": "#00ADB7"
+}
+}

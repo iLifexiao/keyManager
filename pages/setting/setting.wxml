@@ -1,0 +1,57 @@
+<!-- 密码管理 begin  -->
+<view class="icon-box">
+  <image src="../../images/manager.png" style='width: 23px; height: 23px'></image>
+  <text style='margin-left: 5px;'>密码管理</text>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{pwdManagerList}}" wx:key="*this">
+    <navigator url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{item.iconPath}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">{{item.title}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">{{item.detail}}</view>
+    </navigator>
+  </block>
+</view>
+<!-- 密码管理 end  -->
+
+<!-- 加密设置 begin  -->
+<view class="icon-box">
+  <image src="../../images/pwdSetting.png" style='width: 23px; height: 23px'></image>
+  <text style='margin-left: 5px;'>加密设置</text>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{encodeSettingList}}" wx:key="*this">
+    <navigator url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{item.iconPath}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">{{item.title}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">{{item.detail}}</view>
+    </navigator>
+  </block>
+</view>
+<!-- 加密设置 end  -->
+
+
+<!-- 软件设置 begin  -->
+<view class="icon-box">
+  <image src="../../images/setting.png" style='width: 23px; height: 23px'></image>
+  <text style='margin-left: 5px;'>软件设置</text>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <block wx:for="{{softSettingList}}" wx:key="*this">
+    <navigator url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__hd">
+            <image src="{{item.iconPath}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+        </view>
+        <view class="weui-cell__bd">{{item.title}}</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">{{item.detail}}</view>
+    </navigator>
+  </block>
+</view>
+<!-- 软件设置 end  -->

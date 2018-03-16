@@ -1,0 +1,12 @@
+/**index.wxss**/
+.dailyimage {
+  width: 750rpx;
+  height: 300rpx;
+  background-color: #eeeeee
+}
+.icon-box{
+    margin-bottom: 5px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+}

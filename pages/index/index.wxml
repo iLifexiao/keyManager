@@ -1,0 +1,43 @@
+<view class='tishiLable'>{{tishi}}</view>
+
+<!-- view 的flex布局不会自动分配 -->
+<!-- button 的才会 -->
+<!-- 6个密码标记点 -->
+<view class='pwdStatus'>
+  <view class="weui-flex">
+    <view class="weui-flex__item" wx:for="{{[1,2,3,4,5,6]}}" wx:key="*this">
+      <button wx:if="{{pwd[index] >= 0}}" disabled='true' class='pwdCicle' style='background-color:#00ADB7;'></button>
+      <button wx:else disabled='true' class='pwdCicle'></button>
+    </view>
+  </view>
+</view>
+
+<!-- 数字按钮（1~9） -->
+<view class='numberKeyBoard' wx:for="{{[1, 4, 7]}}" wx:for-item="begin" wx:key="*this">
+  <view class="weui-flex">
+    <view class="weui-flex__item" wx:for="{{[1,2,3]}}" wx:for-index="inc" wx:key="*this" >
+      <button  class='numButton' bindtap='numTap' data-num="{{begin+inc}}">{{begin+inc}}</button>
+    </view>
+  </view>
+</view>
+
+<!-- 重置按钮，删除按钮，0 -->
+<view class='numberKeyBoard'>
+  <view class="weui-flex">
+    <view class="weui-flex__item" >
+      <button class='numButton' bindtap='clearTap'>CLR</button>
+    </view>
+    <view class="weui-flex__item" >
+      <button class='numButton' bindtap='numTap'>0</button>
+    </view>
+    <view class="weui-flex__item" >
+      <button class='numButton' bindtap='deleteTap'>DEL</button>
+    </view>
+  </view>
+</view>
+
+<!-- 忘记上一次的密码 按钮  -->
+
+<button class='setPwdAgain' bindtap='clearStoreKey' class="weui-btn" type="primary" plain="true" size="mini" wx:if="{{tishi == '在输入一次'}}" >重新设置</button>
+
+
