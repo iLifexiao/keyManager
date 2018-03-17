@@ -18,7 +18,7 @@ Page({
     const num = e.currentTarget.dataset.num
     const currentPwd = this.data.pwd
     // 记录密码
-    currentPwd.push(num)
+    currentPwd.push(num.toString())
     this.setData({
       pwd: currentPwd
     })
@@ -86,6 +86,18 @@ Page({
       userKey: [],
       confirmKey: [],
       tishi: "请设置密码"
+    })
+  },
+
+  resetLoginPwd: function(e) {
+    wx.setStorage({
+      key: 'primary',
+      data: ["6", "6", "6", "6", "6", "6"],
+      success: res => {
+        wx.showToast({
+          title: '重置成功',
+        })
+      }
     })
   },
   /**

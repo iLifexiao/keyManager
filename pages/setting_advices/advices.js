@@ -4,7 +4,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    advices: ""
+  },
+  writeAdvicesDone: function(e) {
+    const advices = e.detail.value
+    this.setData({
+      advices: advices
+    })
+  },
+  sendAdvices: function(e) {
+    const advices = this.data.advices
+    if (this.data.advices.length == 0) {
+      wx.showToast({
+        title: '吐槽框为空',
+        image: '/images/exclamatory-mark.png'
+      })
+      return
+    }
+    wx.showToast({
+      title: '发送成功',
+    })    
+  },
+  reWrite: function(e) {
+    this.setData({
+      advices: ""
+    })
   },
 
   /**

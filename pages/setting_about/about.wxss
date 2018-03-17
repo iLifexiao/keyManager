@@ -1,0 +1,17 @@
+/* 控件最好放在容器里面，然后通过布局来显示 */
+.logo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  /* 弹性布局 */
+  /* 垂直分布、子对象垂直居中、水平居中 */
+  display: flex;
+  flex-direction:column;  
+  justify-content: center;
+  align-items: center;
+}
+
+.softDesc {
+  margin: 20px 20px 60px 20px;
+  font-size: 14px;
+}

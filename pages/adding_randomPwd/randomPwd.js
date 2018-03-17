@@ -10,6 +10,7 @@ Page({
       name: "",
       acc: "",
       pwd: "",
+      secPwd: "",
       pwdCount: 6,
       remarks: "",
     },
@@ -32,6 +33,10 @@ Page({
       '!@#': ['!', '@', '#', '$', '%', '^', '&', '*', ',', '.']
     }
   },
+
+  /**
+   * 选择帐号图标
+   */
   selectIcon: function (e) {
     wx.chooseImage({
       success: function (res) {
@@ -47,6 +52,9 @@ Page({
       }
     })
   },
+  /**
+   * 选择帐号分类
+   */
   selectClassify: function (e) {
     var account = this.data.account
     const classifyIndex = e.detail.value
@@ -56,6 +64,9 @@ Page({
       account: account
     })
   },
+  /**
+   * 选择密码位数
+   */
   accountCountChange: function(e) {
     var account = this.data.account
     account.pwdCount = e.detail.value
@@ -63,6 +74,9 @@ Page({
       account: account
     })
   },
+  /**
+   * 修改成成的密码规则
+   */
   pwdRuleChange: function (e) {
     var pwdRules = this.data.pwdRules
     var values = e.detail.value
@@ -80,6 +94,10 @@ Page({
       pwdRules: pwdRules
     });
   },
+
+  /**
+   * 随机生成密码
+   */
   creatPassword: function (e) {
     var tempPwd = ""
     const pwdRules = this.data.pwdRules
@@ -114,9 +132,38 @@ Page({
       })
     }
   },
+  /**
+   * 保存帐号
+   */
   saveAccount: function (e) {
+    // 输入信息判断
+    if (this.data.account.name.length == 0) {
+      wx.showToast({
+        title: '帐号名称不能为空',
+        image: '/images/exclamatory-mark.png'
+      })
+      return
+    }
+    if (this.data.account.acc.length == 0) {
+      wx.showToast({
+        title: '帐号不能为空',
+        image: '/images/exclamatory-mark.png'
+      })
+      return
+    }
+    if (this.data.account.pwd.length == 0) {
+      wx.showToast({
+        title: '密码不能为空',
+        image: '/images/exclamatory-mark.png'
+      })
+      return
+    }
+
     console.log(this.data.account)
   },
+  /**
+   * 拷贝密码
+   */
   copyPwd: function (e) {
     wx.setClipboardData({
       data: this.data.account.pwd,

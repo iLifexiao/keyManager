@@ -1,0 +1,21 @@
+<view class="page__hd">
+  <view class="page__title">提示</view>
+  <view class="page__desc">该操作不可逆，请确认已经完全备份!!!</view>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <!-- 登录密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">登录密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请验证身份" bindinput='checkUserKey' maxlength='6' type='number' password='true'/>
+    </view>
+  </view>
+</view>
+
+<view class="operationButton">
+  <button class="weui-btn" type="warn" bindtap="clearAllAccount">清空所有帐号</button>
+</view>
+

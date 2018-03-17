@@ -1,0 +1,39 @@
+<!-- 加密分类 -->
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_select">
+    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+      <view class="weui-label">编码分类</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker bindchange="selectClassify" value="{{classifyIndex}}" range="{{classify}}">
+        <view class="weui-select">{{classify[classifyIndex]}}</view>
+      </picker>
+    </view>
+  </view>
+</view>
+
+<!-- 明文 -->
+<view class="weui-cells__title">信息输入</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea class="weui-textarea" placeholder="请输入" style="height: 3.3em" bindblur="getMessage"/>
+      <view class="weui-textarea-counter">0/200</view>
+    </view>
+  </view>
+</view>
+
+<!-- 加密输出 -->
+<view class="weui-cells__title">编码输出</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea class="weui-textarea" value='{{secret}}'  style="height: 3.3em" disabled="true"/>
+    </view>
+  </view>
+</view>
+
+<view class="operationButton">
+  <button class="weui-btn" type="primary" bindtap='creatSecret'>转换</button>
+  <button class="weui-btn" type="default" bindtap='copySecret'>复制编码</button>
+</view>

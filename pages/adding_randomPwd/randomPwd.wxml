@@ -93,7 +93,7 @@
 <view class="weui-cells__tips">不会上传任何信息</view>
 
 <!-- 操作 -->
-<view class="operation">
+<view class="operationButton">
   <button class="weui-btn" type="primary" bindtap='saveAccount'>保存帐号</button>
   <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码</button>
 </view>

@@ -1,0 +1,41 @@
+<view class="page__hd">
+  <view class="page__title">登录密码</view>
+  <view class="page__desc">用于确认用户的身份，避免陌生人操作你的账户信息</view>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <!-- 旧密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">旧密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请输入旧密码" bindblur='checkOldPassword' maxlength='6' type='number' password='true'/>
+    </view>
+  </view>
+
+  <!-- 新密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">新密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请输入6位新密码" bindblur='checkNewPassword' maxlength='6' type='number' password='true'/>
+    </view>
+  </view>
+
+  <!-- 确认密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">确认密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="在输入一次" bindinput='checkSamePassword' maxlength='6' type='number' password='true'/>
+    </view>
+  </view>
+</view>
+
+<!-- 确认按钮 -->
+<view class="operation">
+  <button class="weui-btn" type="primary" bindtap='changePassword'>确认修改</button>
+</view>

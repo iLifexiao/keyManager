@@ -1,0 +1,82 @@
+<view class="weui-cells weui-cells_after-title">
+  <!-- 帐号图标 -->
+  <view class="weui-cell weui-cell_input weui-cell_vcode">
+    <view class="weui-cell__hd">
+      <view class="weui-label">图标</view>
+    </view>
+    <view class="weui-cell__bd">
+      <image class="weui-vcode-img" src="{{account.icon}}" style='width: 44px'></image>
+    </view>
+    <view class="weui-cell__ft">
+      <view class="weui-vcode-btn" bindtap='selectIcon'>选择图标</view>
+    </view>
+  </view>
+
+  <!-- 帐号分类 -->
+  <view class="weui-cell weui-cell_select">
+    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+      <view class="weui-label">分类</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker bindchange="selectClassify" value="{{classifyIndex}}" range="{{classify}}">
+        <view class="weui-select">{{classify[classifyIndex]}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 帐号名称 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">名称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="帐号名称" bindblur='checkAccountName'/>
+    </view>
+  </view>
+
+  <!-- 帐号 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">帐号</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请输入帐号" bindblur='checkAccount'/>
+    </view>
+  </view>
+
+  <!-- 密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请输入密码" bindblur='checkPassword'/>
+    </view>
+  </view>
+
+  <!-- 密码 -->
+  <view class="weui-cell weui-cell_input" wx:if="{{classifyIndex == 1}}">
+    <view class="weui-cell__hd">
+      <view class="weui-label">二级密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="可选" bindblur='checkSecondPassword'/>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">备注</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="可选" bindblur='checkRemarks'/>
+    </view>
+  </view>
+</view>
+<view class="weui-cells__tips">不会上传任何信息</view>
+
+<!-- 操作 -->
+<view class="operationButton">
+  <button class="weui-btn" type="primary" bindtap='saveAccount'>保存帐号</button>
+</view>

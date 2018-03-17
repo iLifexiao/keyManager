@@ -1,0 +1,33 @@
+<view class="logo">
+  <image src="/images/keyManager.png" mode="aspectFit" style='width: 100px;height:100px'></image>
+  <text style="font-size: 20px;text-align: center;">帐号管理</text>
+</view>
+
+
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">版本</view>
+    <view class="weui-cell__ft">1.0</view>
+  </view>
+  <view class="weui-cell" bindtap='copyGitHubAddr'>
+    <view class="weui-cell__bd">代码开源</view>
+    <view class="weui-cell__ft">GitHub</view>
+  </view>
+  <view class="weui-cell" bindtap='copyQQMailAddr'>
+    <view class="weui-cell__bd">联系方式</view>
+    <view class="weui-cell__ft">710178950@qq.com</view>
+  </view>
+</view>
+
+<view class="page__hd">
+  <view class="page__desc">
+    程序提供保存帐号密码、导出、导入、清空本帐号地密码等功能。一键生成密码、添加已有密码、本地信息加密。第一次使用需要设置登录密码，程序本身不会发起网络请求，代码开源地址。有任何建议和问题可以通过下方的吐槽链接联系我们！
+  </view>
+</view>
+
+<view class="weui-footer">
+  <view class="weui-footer__links">
+    <navigator url="../setting_advices/advices" class="weui-footer__link">我要吐槽</navigator>
+  </view>
+  <view class="weui-footer__text">Copyright © 2017 iLife</view>
+</view>

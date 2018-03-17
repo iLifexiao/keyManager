@@ -1,7 +1,4 @@
-
-
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -14,16 +11,24 @@ Page({
         "url": "../adding_randomPwd/randomPwd"
       },
       {
-        "iconPath": "../../images/hashtag.png",
+        "iconPath": "../../images/account.png",
         "title": "添加已有帐号",
         "detail": "",
         "url": "../adding_account/account"
       },
+    ],
+    codeList: [
       {
         "iconPath": "../../images/code.png",
         "title": "明文加密",
         "detail": "",
         "url": "../adding_readablePwd/readablePwd"
+      },
+      {
+        "iconPath": "../../images/decode.png",
+        "title": "哈希散列",
+        "detail": "",
+        "url": "../adding_hashPwd/hashPwd"
       }
     ]
   },

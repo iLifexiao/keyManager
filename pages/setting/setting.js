@@ -1,5 +1,3 @@
-
-
 Page({
 
   /**
@@ -9,13 +7,13 @@ Page({
     pwdManagerList: [
       {
         "iconPath": "/images/export.png",
-        "title": "导出密码",
+        "title": "导出帐号",
         "detail": "",
         "url": "/pages/setting_exportPwd/exportPwd"
       },
       {
         "iconPath": "/images/import.png",
-        "title": "导入密码",
+        "title": "导入帐号",
         "detail": "",
         "url": "/pages/setting_importPwd/importPwd"
       },

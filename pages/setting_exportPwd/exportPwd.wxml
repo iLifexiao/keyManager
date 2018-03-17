@@ -1,0 +1,21 @@
+<view class="page__hd">
+  <view class="page__title">导出密码</view>
+  <view class="page__desc">通过建立一个名为（帐号备份）的手机联系人，来保存帐号信息，防治丢失。帐号信息保存在联系人的备注里</view>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <!-- 登录密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">登录密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请验证身份" bindinput='checkUserKey' maxlength='6' type='number' password='true'/>
+    </view>
+  </view>
+</view>
+
+<view class="operationButton">
+  <button class="weui-btn" type="primary" bindtap="exportAllAccount">导出帐号</button>
+</view>
+

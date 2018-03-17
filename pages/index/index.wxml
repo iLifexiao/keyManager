@@ -40,4 +40,7 @@
 
 <button class='setPwdAgain' bindtap='clearStoreKey' class="weui-btn" type="primary" plain="true" size="mini" wx:if="{{tishi == '在输入一次'}}" >重新设置</button>
 
+<!-- <button class='setPwdAgain' bindtap='resetLoginPwd' class="weui-btn" type="primary" plain="true" size="mini" >重新设置</button>  -->
+
+
 

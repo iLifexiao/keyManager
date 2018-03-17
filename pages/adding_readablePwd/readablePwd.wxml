@@ -1,0 +1,60 @@
+<!-- 加密分类 -->
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_select">
+    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+      <view class="weui-label">加密分类</view>
+    </view>
+    <view class="weui-cell__bd">
+      <picker bindchange="selectClassify" value="{{classifyIndex}}" range="{{classify}}">
+        <view class="weui-select">{{classify[classifyIndex]}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 加密规则 -->
+  <view wx:if="{{classifyIndex == 1}}" class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">加密规则</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请输入16位数字" bindblur='checkKey' maxlength='16' type='number'/>
+    </view>
+  </view>
+
+  <!-- 密码偏移 -->
+  <view wx:if="{{classifyIndex == 1}}" class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">密码偏移</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请输入16位数字" bindinput='checkIV' maxlength='16' type='number' />
+    </view>
+  </view>
+</view>
+
+<!-- 使用bindinput，避免控件还未失去焦点时，进行交互的问题 -->
+<!-- 但是会导致数据的不断刷新 -->
+<!-- 明文 -->
+<view class="weui-cells__title">明文信息输入</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea class="weui-textarea" placeholder="请输入明文" style="height: 3.3em" bindinput="getMessage"/>
+    </view>
+  </view>
+</view>
+
+<!-- 加密输出 -->
+<view class="weui-cells__title">加密信息输出</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea class="weui-textarea" value='{{secret}}'  style="height: 3.3em" disabled="true"/>
+    </view>
+  </view>
+</view>
+
+<view class="operationButton">
+  <button class="weui-btn" type="primary" bindtap='creatSecret'>加密</button>
+  <button class="weui-btn" type="default" bindtap='copySecret'>复制密文</button>
+</view>
