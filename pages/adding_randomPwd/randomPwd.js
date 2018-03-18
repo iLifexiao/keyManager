@@ -14,7 +14,7 @@ Page({
       pwdCount: 6,
       remarks: "",
     },
-    
+    tempIcon: "/images/keyManager.png",
     classify: ["社交", "游戏", "论坛", "学习", "金融"],
     classifyIndex: 0,
 
@@ -33,25 +33,67 @@ Page({
       '!@#': ['!', '@', '#', '$', '%', '^', '&', '*', ',', '.']
     }
   },
+  /**
+   * 解决方法一
+   * var that = this
+   * 在wx.request({})，有时候会需要获取页面初始化数据data的情况，
+   * 这个时候，如果使用，this.data来获取，会出现获取不到的情况，调试页面也会报undefiend。
+   * 原因是，在javascript中，this代表着当前对象，会随着程序的执行过程中的上下文改变，
+   * 在wx.request({});方法的回调函数中，对象已经发生改变，所以已经不是wx.request({});方法对象了，data属性也不存在了。
+   * 官方的解决办法是，复制一份当前的对象，如下：
+   * var that=this;//把this对象复制到临时变量that
+   */
+
+  /**
+   * 解决方法二
+   * 将回调函数换一种声明方式
+   * success: res=> {
+   *   this.
+   * }
+   */
 
   /**
    * 选择帐号图标
    */
   selectIcon: function (e) {
-    wx.chooseImage({
-      success: function (res) {
-        var tempFilePaths = res.tempFilePaths
-        wx.saveFile({
-          tempFilePath: tempFilePaths[0],
-          success: function (res) {            
-            var savedFilePath = res.savedFilePath
-            console.log(savedFilePath)
-            
+    wx.showActionSheet({
+      itemList: ['常用图标', '从相册中选择'],
+      itemColor: '#00ADB7',
+      success: res => {
+        if (!res.cancel) {
+          switch (res.tapIndex) {
+            case 0:
+              this.chooseOrdinaryIcon();
+              break;
+            case 1:
+              this.chooseIconWithAlbum();
+              break;
+            default :
+              break;
           }
-        })
+        }
       }
+    })     
+  },
+
+  chooseIconWithAlbum: function (e) {
+    wx.chooseImage({
+      count: 1,
+      success: res => {
+        var tempFilePaths = res.tempFilePaths[0]
+        this.setData({
+          tempIcon: tempFilePaths
+        })        
+      },
+    });
+  },
+
+  chooseOrdinaryIcon: function (e) {
+    wx.navigateTo({
+      url: '../adding_chooseLogo/chooseLogo',
     })
   },
+
   /**
    * 选择帐号分类
    */
@@ -64,10 +106,12 @@ Page({
       account: account
     })
   },
+  
+
   /**
    * 选择密码位数
    */
-  accountCountChange: function(e) {
+  accountCountChange: function (e) {
     var account = this.data.account
     account.pwdCount = e.detail.value
     this.setData({
@@ -103,33 +147,48 @@ Page({
     const pwdRules = this.data.pwdRules
     // 判断当前选择的规则种类
     var rules = []
-    for (var i = 0, lenI = pwdRules.length; i < lenI; ++i ) {
+    for (var i = 0, lenI = pwdRules.length; i < lenI; ++i) {
       if (pwdRules[i].checked) {
         rules.push(pwdRules[i].name)
       }
     }
-    
+
     // 必须有选择密码种类
     if (rules.length > 0) {
       const pwdCount = this.data.account.pwdCount
       const passwordCompoent = this.data.passwordCompoent
-      for(var i = 0; i < pwdCount; ++i) {
+      for (var i = 0; i < pwdCount; ++i) {
         // 随机选择一个种类
         var kindIndex = Math.floor(Math.random() * rules.length)
         var kind = rules[kindIndex]
         var compoent = passwordCompoent[kind]
-        
+
         // 随机种类中的随机元素
         var compoentIndex = Math.floor(Math.random() * compoent.length)
         var randomValue = compoent[compoentIndex]
         tempPwd += randomValue
       }
 
-      var account = this.data.account
-      account.pwd = tempPwd
-      this.setData({
-        account: account
-      })
+      // 判断当前密码的种类
+      const pwdType = e.currentTarget.dataset.pwdType
+      switch (pwdType) {
+        case "first":
+          var account = this.data.account
+          account.pwd = tempPwd
+          this.setData({
+            account: account
+          })
+          break;
+        case "second":
+          var account = this.data.account
+          account.secPwd = tempPwd
+          this.setData({
+            account: account
+          })
+          break;
+        default:
+          break;
+      }      
     }
   },
   /**
@@ -158,27 +217,69 @@ Page({
       })
       return
     }
-
+    wx.saveFile({
+      tempFilePath: this.data.tempIcon,
+      success: res => {
+        var account = this.data.account
+        account.icon = res.savedFilePath
+        this.setData({
+          account: account
+        })
+      }
+    })
     console.log(this.data.account)
   },
   /**
    * 拷贝密码
    */
   copyPwd: function (e) {
-    wx.setClipboardData({
-      data: this.data.account.pwd,
-      success: function (res) {
-        wx.getClipboardData({
+    const pwd = this.data.account.pwd
+    const secPwd = this.data.account.secPwd
+
+    if (this.data.classifyIndex == 1) {
+      if (pwd.length != 0 || secPwd.length != 0) {
+        wx.setClipboardData({
+          data: pwd + "/" + secPwd,
           success: function (res) {
-            wx.showToast({
-              title: '密码拷贝成功',
+            wx.getClipboardData({
+              success: function (res) {
+                wx.showToast({
+                  title: '游戏密码拷贝成功, 以 / 分隔',
+                })
+              }
             })
           }
         })
-      }
-    })
+      } else {
+        wx.showToast({
+          title: '还未填写密码',
+          image: '/images/exclamatory-mark.png'
+        })
+      }    
+      return  
+    }
+
+    if (pwd.length != 0 ) {
+      wx.setClipboardData({
+        data: pwd,
+        success: function (res) {
+          wx.getClipboardData({
+            success: function (res) {
+              wx.showToast({
+                title: '密码拷贝成功',
+              })
+            }
+          })
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '还未填写密码',
+        image: '/images/exclamatory-mark.png'
+      })
+    }  
   },
-  
+
   // 输入框失去焦点的响应事件
   checkAccountName: function (e) {
     var account = this.data.account
@@ -233,27 +334,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

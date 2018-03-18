@@ -40,18 +40,20 @@ Page({
         "qIndex": 6,
         "qAnswer": "为了保障数据安全，采用AES加密数据，可以通过你设置的AES密钥恢复"
       },
+      {
+        "question": "默认的AES密码是多少？",
+        "qIndex": 7,
+        "qAnswer": "默认 key: 1234123412341234\n默认 iv: 1111111111111111"
+      }            
     ]
   },
 
   answer: function(e) {
-
     /**
      * 数据集以data-开头，多个单词由连字符-链接，
      * 不能有大写(大写会自动转成小写)如data-element-type，
      * 最终在 event.currentTarget.dataset 中会将连字符转成驼峰elementType
      */
-     
-    
 
     const qIndex = e.currentTarget.dataset.qIndex    
     const qAnswer = this.data.helpList[qIndex].qAnswer
@@ -93,27 +95,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
     
   }
 })

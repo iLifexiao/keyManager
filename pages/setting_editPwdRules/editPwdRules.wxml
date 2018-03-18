@@ -34,10 +34,8 @@
     </view>
   </view>
 </view>
-<view class="weui-cells__tips">默认 key:1234123412341234</view>
-<view class="weui-cells__tips">默认  iv:1111111111111111</view>
 
 <!-- 确认按钮 -->
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='changeRules'>确认修改</button>
+  <button class="weui-btn" type="primary" bindtap='changeRules' style='background-color: #00ADB7'>确认修改</button>
 </view>

@@ -13,6 +13,6 @@
 </view>
 
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap="importAccount">导入帐号</button>
+  <button class="weui-btn" type="primary" bindtap="importAccount" style='background-color: #00ADB7'>导入帐号</button>
 </view>
 

@@ -16,6 +16,6 @@
 </view>
 
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap="exportAllAccount">导出帐号</button>
+  <button class="weui-btn" type="primary" bindtap="exportAllAccount" style='background-color: #00ADB7'>导出帐号</button>
 </view>
 

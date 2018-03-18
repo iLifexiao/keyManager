@@ -1,5 +1,4 @@
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -14,24 +13,49 @@ Page({
       pwdCount: 6,
       remarks: "",
     },
+    tempIcon: "/images/keyManager.png",
     classify: ["社交", "游戏", "论坛", "学习", "金融"],
     classifyIndex: 0,
   },
   selectIcon: function (e) {
-    wx.chooseImage({
-      success: function (res) {
-        var tempFilePaths = res.tempFilePaths
-        wx.saveFile({
-          tempFilePath: tempFilePaths[0],
-          success: function (res) {
-            var savedFilePath = res.savedFilePath
-            console.log(savedFilePath)
-
+    wx.showActionSheet({
+      itemList: ['常用图标', '从相册中选择'],
+      itemColor: '#00ADB7',
+      success: res => {
+        if (!res.cancel) {
+          switch (res.tapIndex) {
+            case 0:
+              this.chooseOrdinaryIcon();
+              break;
+            case 1:
+              this.chooseIconWithAlbum();
+              break;
+            default:
+              break;
           }
-        })
+        }
       }
     })
   },
+
+  chooseIconWithAlbum: function (e) {
+    wx.chooseImage({
+      count: 1,
+      success: res => {
+        var tempFilePaths = res.tempFilePaths[0]
+        this.setData({
+          tempIcon: tempFilePaths
+        })
+      },
+    });
+  },
+
+  chooseOrdinaryIcon: function (e) {
+    wx.navigateTo({
+      url: '../adding_chooseLogo/chooseLogo',
+    })
+  },
+
   selectClassify: function (e) {
     var account = this.data.account
     const classifyIndex = e.detail.value
@@ -41,6 +65,7 @@ Page({
       account: account
     })
   },
+
   saveAccount: function (e) {
     // 输入信息判断
     if (this.data.account.name.length == 0) {
@@ -63,7 +88,17 @@ Page({
         image: '/images/exclamatory-mark.png'
       })
       return
-    }
+    }    
+    wx.saveFile({
+      tempFilePath: this.data.tempIcon,
+      success: res => {
+        var account = this.data.account
+        account.icon = res.savedFilePath
+        this.setData({
+          account: account
+        })
+      }
+    })
     console.log(this.data.account)
   },
 
@@ -136,27 +171,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
     
   }
 })

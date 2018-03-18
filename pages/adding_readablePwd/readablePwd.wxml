@@ -55,6 +55,6 @@
 </view>
 
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='creatSecret'>加密</button>
+  <button class="weui-btn" type="primary" bindtap='creatSecret' style='background-color: #00ADB7'>加密</button>
   <button class="weui-btn" type="default" bindtap='copySecret'>复制密文</button>
 </view>

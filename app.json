@@ -6,7 +6,8 @@
     "pages/adding_randomPwd/randomPwd",
     "pages/adding_account/account",
     "pages/adding_readablePwd/readablePwd",
-    "pages/adding_hashPwd/hashPwd",    
+    "pages/adding_hashPwd/hashPwd",
+    "pages/adding_chooseLogo/chooseLogo",
     "pages/setting/setting",
     "pages/setting_exportPwd/exportPwd",
     "pages/setting_importPwd/importPwd",
@@ -15,7 +16,8 @@
     "pages/setting_modifyUserKey/modifyUserKey",
     "pages/setting_help/help",
     "pages/setting_about/about",
-    "pages/setting_advices/advices"
+    "pages/setting_advices/advices",
+    "pages/showAccount/showaccount"
   ],
 "window": {
   "backgroundTextStyle": "light",

@@ -5,10 +5,10 @@
       <view class="weui-label">图标</view>
     </view>
     <view class="weui-cell__bd">
-      <image class="weui-vcode-img" src="{{account.icon}}" style='width: 44px'></image>
+      <image class="weui-vcode-img" src="{{tempIcon}}" style='width: 44px'></image>
     </view>
     <view class="weui-cell__ft">
-      <view class="weui-vcode-btn" bindtap='selectIcon'>选择图标</view>
+      <view class="weui-vcode-btn" bindtap='selectIcon' style='color: #00ADB7'>选择图标</view>
     </view>
   </view>
 
@@ -60,8 +60,8 @@
       <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
 
       <view class="weui-cell__hd weui-check__hd_in-checkbox">
-        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
-        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+        <icon class="weui-icon-checkbox_circle" type="circle" size="23" color='#00ADB7' wx:if="{{!item.checked}}"></icon>
+        <icon class="weui-icon-checkbox_success" type="success" size="23" color='#00ADB7' wx:if="{{item.checked}}"></icon>
       </view>
       <view class="weui-cell__bd">{{item.name}}</view>
     </label>
@@ -76,7 +76,20 @@
       <text>{{account.pwd}}</text>
     </view>
     <view class="weui-cell__ft">
-      <view class="weui-vcode-btn" bindtap='creatPassword'>生成密码</view>
+      <view class="weui-vcode-btn" data-pwd-type='first' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
+    </view>
+  </view>
+
+  <!-- 生成的密码 -->
+  <view wx:if="{{classifyIndex == 1}}" class="weui-cell weui-cell_input weui-cell_vcode">
+    <view class="weui-cell__hd">
+      <view class="weui-label">二级密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <text>{{account.secPwd}}</text>
+    </view>
+    <view class="weui-cell__ft">
+      <view class="weui-vcode-btn" data-pwd-type='second' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
     </view>
   </view>
 
@@ -94,6 +107,6 @@
 
 <!-- 操作 -->
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='saveAccount'>保存帐号</button>
+  <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>保存帐号</button>
   <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码</button>
 </view>

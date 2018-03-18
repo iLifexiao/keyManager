@@ -37,5 +37,5 @@
 
 <!-- 确认按钮 -->
 <view class="operation">
-  <button class="weui-btn" type="primary" bindtap='changePassword'>确认修改</button>
+  <button class="weui-btn" type="primary" bindtap='changePassword' style='background-color: #00ADB7'>确认修改</button>
 </view>

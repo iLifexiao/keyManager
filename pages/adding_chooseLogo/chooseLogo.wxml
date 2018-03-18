@@ -1,0 +1,16 @@
+<!-- LOGO分类 begin -->
+<view wx:for="{{logoClassify}}" wx:for-index="typeIndex" wx:for-item="typeItem">
+  <view class="icon-box">
+    <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+    <text style='margin-left: 5px;'>{{typeItem.type}}</text>
+  </view>
+  <view class="weui-grids" style="background-color:#ffffff">
+    <block wx:for="{{typeItem.icons}}" wx:key="*this" wx:for-index="iconIndex" wx:for-item="iconItem">
+      <view bindtap='selectIcon' class="weui-grid" hover-class="weui-grid_active" data-path='{{iconItem.path}}'>
+        <image class="weui-grid__icon" src="{{iconItem.path}}" />
+        <view class="weui-grid__label">{{iconItem.name}}</view>
+      </view>
+    </block>
+  </view>
+</view>
+<!-- LOGO分类 end -->

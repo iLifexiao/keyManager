@@ -34,6 +34,6 @@
 </view>
 
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='creatSecret'>转换</button>
+  <button class="weui-btn" type="primary" bindtap='creatSecret' style='background-color: #00ADB7'>转换</button>
   <button class="weui-btn" type="default" bindtap='copySecret'>复制编码</button>
 </view>

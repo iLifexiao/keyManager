@@ -15,7 +15,7 @@
   </view>
   <view class="weui-cell" bindtap='copyQQMailAddr'>
     <view class="weui-cell__bd">联系方式</view>
-    <view class="weui-cell__ft">710178950@qq.com</view>
+    <view class="weui-cell__ft">{{mailAddr}}</view>
   </view>
 </view>
 

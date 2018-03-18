@@ -47,3 +47,10 @@ page {
 .operationButton {
   margin: 20px 20px 0px 20px
 }
+.icon-box{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+}

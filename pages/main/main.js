@@ -9,42 +9,53 @@ Page({
   data: {
     inputShowed: false,
     inputVal: "",
-    imageURL: "../../images/defaultBG.jpeg",
-    imageFlag: false,
+    imageURL: "/images/defaultBG.jpeg",
+    imageW: 375,
+    imageH: 200,
     accountClassify: [
       {
         "name": "全部",
-        "iconPath": "../../images/all.png",
-        "url":""
+        "iconPath": "/images/all.png",
+        "url":"../showAccount/showaccount?type=0"
       },
       {
         "name": "社交",
-        "iconPath": "../../images/talk.png",
-        "url": ""
+        "iconPath": "/images/talk.png",
+        "url": "../showAccount/showaccount?type=1"
       },
       {
         "name": "游戏",
-        "iconPath": "../../images/game.png",
-        "url": ""
-      },
-      {
-        "name": "论坛",
-        "iconPath": "../../images/bbs.png",
-        "url": ""
+        "iconPath": "/images/game.png",
+        "url": "../showAccount/showaccount?type=2"
       },
       {
         "name": "学习",
-        "iconPath": "../../images/study.png",
-        "url": ""
+        "iconPath": "/images/study.png",
+        "url": "../showAccount/showaccount?type=3"
       },
       {
         "name": "金融",
-        "iconPath": "../../images/money.png",
-        "url": ""
+        "iconPath": "/images/money.png",
+        "url": "../showAccount/showaccount?type=4"
+      },
+      {
+        "name": "论坛",
+        "iconPath": "/images/bbs.png",
+        "url": "../showAccount/showaccount?type=5"
+      },
+      {
+        "name": "邮箱",
+        "iconPath": "/images/mail.png",
+        "url": "../showAccount/showaccount?type=6"
+      },
+      {
+        "name": "其他",
+        "iconPath": "/images/others.png",
+        "url": "../showAccount/showaccount?type=7"
       },
       {
         "name": "添加",
-        "iconPath": "../../images/addClass.png",
+        "iconPath": "/images/addClass.png",
         "url": ""
       }
     ]
@@ -83,11 +94,14 @@ Page({
    */
 
   showInfo: function(e) {
-    var flag = this.data.imageFlag
-    let imgURL = flag ? "https://unsplash.it/375/150/?random" : "https://unsplash.it/376/151/?random"
+    var imageW = this.data.imageW + 1
+    var imageH = this.data.imageH + 1
+    var imageURL = "https://unsplash.it/" + imageW + "/" + imageH +"/?random"
+    
     this.setData({
-      imageURL: imgURL,
-      imageFlag: !flag
+      imageURL: imageURL,
+      imageW: imageW,
+      imageH: imageH
     });
     wx.showToast({
       title: '更换壁纸中...',
@@ -129,25 +143,10 @@ Page({
   onUnload: function () {
     
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+
   }
 })

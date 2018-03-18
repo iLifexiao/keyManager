@@ -10,6 +10,6 @@
 </view>
 
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='sendAdvices'>发送建议</button>
+  <button class="weui-btn" type="primary" bindtap='sendAdvices' style='background-color: #00ADB7'>发送建议</button>
   <button class="weui-btn" type="default" bindtap='reWrite'>重新输入</button>
 </view>
