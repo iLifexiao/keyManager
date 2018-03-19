@@ -12,53 +12,7 @@ Page({
     imageURL: "/images/defaultBG.jpeg",
     imageW: 375,
     imageH: 200,
-    accountClassify: [
-      {
-        "name": "全部",
-        "iconPath": "/images/all.png",
-        "url":"../showAccount/showaccount?type=0"
-      },
-      {
-        "name": "社交",
-        "iconPath": "/images/talk.png",
-        "url": "../showAccount/showaccount?type=1"
-      },
-      {
-        "name": "游戏",
-        "iconPath": "/images/game.png",
-        "url": "../showAccount/showaccount?type=2"
-      },
-      {
-        "name": "学习",
-        "iconPath": "/images/study.png",
-        "url": "../showAccount/showaccount?type=3"
-      },
-      {
-        "name": "金融",
-        "iconPath": "/images/money.png",
-        "url": "../showAccount/showaccount?type=4"
-      },
-      {
-        "name": "论坛",
-        "iconPath": "/images/bbs.png",
-        "url": "../showAccount/showaccount?type=5"
-      },
-      {
-        "name": "邮箱",
-        "iconPath": "/images/mail.png",
-        "url": "../showAccount/showaccount?type=6"
-      },
-      {
-        "name": "其他",
-        "iconPath": "/images/others.png",
-        "url": "../showAccount/showaccount?type=7"
-      },
-      {
-        "name": "添加",
-        "iconPath": "/images/addClass.png",
-        "url": ""
-      }
-    ]
+    accountClassify: []
   },
   /** 
    * 搜索框函数
@@ -113,7 +67,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    const accountClassify = app.globalData.accountClassify
+    this.setData({
+      accountClassify: accountClassify
+    })
   },
 
   /**

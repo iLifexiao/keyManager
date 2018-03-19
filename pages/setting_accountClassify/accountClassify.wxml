@@ -1,0 +1,48 @@
+<!-- 添加分类 -->
+<view class="icon-box">
+  <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+  <text style='margin-left: 5px;'>新增分类</text>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <!-- 分类图标 -->
+  <view class="weui-cell weui-cell_input weui-cell_vcode">
+    <view class="weui-cell__hd">
+      <view class="weui-label">默认图标</view>
+    </view>
+    <view class="weui-cell__bd">
+      <image class="weui-vcode-img" src="{{tempIconPath}}" style='width: 44px'></image>
+    </view>
+    <view class="weui-cell__ft">
+      <view class="weui-vcode-btn" bindtap='selectIcon' style='color: #00ADB7'>更换图标</view>
+    </view>
+  </view>
+
+  <!-- 分类名称 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">名称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder='分类所对应的名称' bindblur='checkAccountClassifyName' />
+    </view>
+  </view>
+</view>
+
+<!-- 确认按钮 -->
+<view class="operationButton">
+  <button class="weui-btn" type="primary" bindtap='addAccountClassify' style='background-color: #00ADB7'>添加</button>
+</view>
+
+<!-- 已经添加分类 -->
+<view class="icon-box">
+  <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+  <text style='margin-left: 5px;'>已有分类</text>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell" wx:for="{{accountClassify}}">
+    <view class="weui-cell__hd">
+      <image src="{{item.iconPath}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+    </view>
+    <view class="weui-cell__bd">{{item.name}}</view>    
+  </view>
+</view>

@@ -17,6 +17,7 @@
     "pages/setting_help/help",
     "pages/setting_about/about",
     "pages/setting_advices/advices",
+    "pages/setting_accountClassify/accountClassify",
     "pages/showAccount/showaccount"
   ],
 "window": {

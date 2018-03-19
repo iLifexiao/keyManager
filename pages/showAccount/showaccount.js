@@ -4,21 +4,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    accType: ["全部帐号", "社交帐号", "游戏帐号", "学习帐号", "金融帐号", "论坛帐号", "邮箱帐号", "其他帐号"],
-    typeIndex: 0
+    accType: "",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const typeIndex = options.type
-    const accType = this.data.accType
+    var tempType = options.type
+    tempType = tempType + '帐号'
     wx.setNavigationBarTitle({
-      title: accType[typeIndex],
-    })
-    this.setData({
-      typeIndex: typeIndex
+      title: tempType,
     })
   },
 

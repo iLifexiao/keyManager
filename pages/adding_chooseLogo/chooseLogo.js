@@ -73,25 +73,30 @@ Page({
    */
   selectIcon: function (e) {
     var pages = getCurrentPages()
-    const iconPath = e.currentTarget.dataset.path        
+    const iconPath = e.currentTarget.dataset.path   
+    const iconName = e.currentTarget.dataset.name
     var that = pages[pages.length - 2]
 
     if (that.__route__ == "pages/adding_randomPwd/randomPwd"){
       wx.navigateBack({
         delta: 1,
         success: res=> {
+          // 回传 图标路径 & 图标名字
           that.setData({
-            tempIcon: iconPath
-          })
+            tempIcon: iconPath,
+            tempName: iconName
+          })          
         }
       })
     } else if (that.__route__ == "pages/adding_account/account") {
       wx.navigateBack({
         delta: 1,
         success: res => {
+          // 回传 图标路径 & 图标名字
           that.setData({
-            tempIcon: iconPath
-          })
+            tempIcon: iconPath,
+            tempName: iconName
+          })          
         }
       })
     }

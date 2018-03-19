@@ -14,15 +14,22 @@ Page({
       remarks: "",
     },
     tempIcon: "/images/keyManager.png",
+    tempName: "",
+    iconTypeList: ['常用图标', '从相册中选择'],
+    iconTypeIndex: 0,
     classify: ["社交", "游戏", "论坛", "学习", "金融"],
     classifyIndex: 0,
   },
   selectIcon: function (e) {
     wx.showActionSheet({
-      itemList: ['常用图标', '从相册中选择'],
+      itemList: this.data.iconTypeList,
       itemColor: '#00ADB7',
       success: res => {
         if (!res.cancel) {
+          // 记录选择的图片来源
+          this.setData({
+            iconTypeIndex: res.tapIndex
+          })
           switch (res.tapIndex) {
             case 0:
               this.chooseOrdinaryIcon();
@@ -68,10 +75,10 @@ Page({
 
   saveAccount: function (e) {
     // 输入信息判断
-    if (this.data.account.name.length == 0) {
+    if (this.data.tempName.length == 0) {
       wx.showToast({
         title: '帐号名称不能为空',
-        image: '/exclamatory-mark.png'
+        image: '/images/exclamatory-mark.png'
       })
       return
     }
@@ -89,25 +96,40 @@ Page({
       })
       return
     }    
-    wx.saveFile({
-      tempFilePath: this.data.tempIcon,
-      success: res => {
+    switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
+      case '常用图标':
         var account = this.data.account
-        account.icon = res.savedFilePath
+        account.icon = this.data.tempIcon
+        account.name = this.data.tempName
         this.setData({
           account: account
         })
-      }
-    })
-    console.log(this.data.account)
+        console.log(this.data.account)
+        break;
+      case '从相册中选择':
+        wx.saveFile({
+          tempFilePath: this.data.tempIcon,
+          success: res => {
+            var account = this.data.account
+            account.icon = res.savedFilePath
+            account.name = this.data.tempName
+            this.setData({
+              account: account
+            })
+            console.log(this.data.account)
+          }
+        })
+        break;
+      default:
+        console.log("图标选择类型错误")
+        break;
+    }
   },
 
   // 输入框失去焦点的响应事件
-  checkAccountName: function (e) {
-    var account = this.data.account
-    account.name = e.detail.value
+  checkAccountName: function (e) {        
     this.setData({
-      account: account
+      tempName: e.detail.value
     })
   },
   checkAccount: function (e) {

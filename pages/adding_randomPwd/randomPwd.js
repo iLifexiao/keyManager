@@ -1,5 +1,4 @@
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -15,7 +14,10 @@ Page({
       remarks: "",
     },
     tempIcon: "/images/keyManager.png",
-    classify: ["社交", "游戏", "论坛", "学习", "金融"],
+    tempName: "",
+    iconTypeList: ['常用图标', '从相册中选择'],
+    iconTypeIndex: 0,
+    classify: ["社交", "游戏", "论坛", "学习", "金融", "论坛", "邮箱", "其他"],
     classifyIndex: 0,
 
     pwdRules: [
@@ -57,10 +59,14 @@ Page({
    */
   selectIcon: function (e) {
     wx.showActionSheet({
-      itemList: ['常用图标', '从相册中选择'],
+      itemList: this.data.iconTypeList,
       itemColor: '#00ADB7',
       success: res => {
         if (!res.cancel) {
+          // 记录选择的图片来源
+          this.setData({
+            iconTypeIndex: res.tapIndex
+          })
           switch (res.tapIndex) {
             case 0:
               this.chooseOrdinaryIcon();
@@ -68,12 +74,12 @@ Page({
             case 1:
               this.chooseIconWithAlbum();
               break;
-            default :
+            default:
               break;
           }
         }
       }
-    })     
+    })
   },
 
   chooseIconWithAlbum: function (e) {
@@ -83,7 +89,7 @@ Page({
         var tempFilePaths = res.tempFilePaths[0]
         this.setData({
           tempIcon: tempFilePaths
-        })        
+        })
       },
     });
   },
@@ -106,7 +112,6 @@ Page({
       account: account
     })
   },
-  
 
   /**
    * 选择密码位数
@@ -188,7 +193,7 @@ Page({
           break;
         default:
           break;
-      }      
+      }
     }
   },
   /**
@@ -196,7 +201,7 @@ Page({
    */
   saveAccount: function (e) {
     // 输入信息判断
-    if (this.data.account.name.length == 0) {
+    if (this.data.tempName.length == 0) {
       wx.showToast({
         title: '帐号名称不能为空',
         image: '/images/exclamatory-mark.png'
@@ -217,18 +222,38 @@ Page({
       })
       return
     }
-    wx.saveFile({
-      tempFilePath: this.data.tempIcon,
-      success: res => {
+
+    switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
+      case '常用图标':
         var account = this.data.account
-        account.icon = res.savedFilePath
+        account.icon = this.data.tempIcon
+        account.name = this.data.tempName
         this.setData({
           account: account
         })
-      }
-    })
-    console.log(this.data.account)
+        console.log(this.data.account)
+        
+        break;
+      case '从相册中选择':
+        wx.saveFile({
+          tempFilePath: this.data.tempIcon,
+          success: res => {
+            var account = this.data.account
+            account.icon = res.savedFilePath
+            account.name = this.data.tempName          
+            this.setData({
+              account: account
+            })
+            console.log(this.data.account)
+          }
+        })
+        break;
+      default:
+        console.log("图标选择类型错误")
+        break;
+    }
   },
+
   /**
    * 拷贝密码
    */
@@ -255,11 +280,11 @@ Page({
           title: '还未填写密码',
           image: '/images/exclamatory-mark.png'
         })
-      }    
-      return  
+      }
+      return
     }
 
-    if (pwd.length != 0 ) {
+    if (pwd.length != 0) {
       wx.setClipboardData({
         data: pwd,
         success: function (res) {
@@ -277,15 +302,13 @@ Page({
         title: '还未填写密码',
         image: '/images/exclamatory-mark.png'
       })
-    }  
+    }
   },
 
   // 输入框失去焦点的响应事件
   checkAccountName: function (e) {
-    var account = this.data.account
-    account.name = e.detail.value
     this.setData({
-      account: account
+      tempName: e.detail.value
     })
   },
   checkAccount: function (e) {
