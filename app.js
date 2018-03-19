@@ -29,8 +29,8 @@ App({
       this.globalData.secret = secret
     }
 
-    // 获取用户的帐号分类
-    var accountClassify = wx.getStorageSync('accountClassify')
+    // 获取用户的帐号分类, 避免发生获取失败的问题
+    var accountClassify = wx.getStorageSync('accountClassify') || []
     if (accountClassify.length == 0) {      
       accountClassify = [
         {

@@ -1,3 +1,4 @@
+var util = require('../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
@@ -17,7 +18,7 @@ Page({
     tempName: "",
     iconTypeList: ['常用图标', '从相册中选择'],
     iconTypeIndex: 0,
-    classify: ["社交", "游戏", "论坛", "学习", "金融"],
+    classify: [],
     classifyIndex: 0,
   },
   selectIcon: function (e) {
@@ -104,7 +105,8 @@ Page({
         this.setData({
           account: account
         })
-        console.log(this.data.account)
+        console.log(account)
+        util.updateAccount(account)
         break;
       case '从相册中选择':
         wx.saveFile({
@@ -116,7 +118,8 @@ Page({
             this.setData({
               account: account
             })
-            console.log(this.data.account)
+            console.log(account)
+            util.updateAccount(account)
           }
         })
         break;
@@ -165,7 +168,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    const accountClassify = wx.getStorageSync('accountClassify')
+    const existClassify = util.getExistClassify(accountClassify)
+    this.setData({
+      classify: existClassify
+    })
   },
 
   /**

@@ -1,5 +1,5 @@
 {
-  "pages":[    
+  "pages": [
     "pages/index/index",
     "pages/main/main",
     "pages/adding/adding",
@@ -20,35 +20,35 @@
     "pages/setting_accountClassify/accountClassify",
     "pages/showAccount/showaccount"
   ],
-"window": {
-  "backgroundTextStyle": "light",
-  "navigationBarBackgroundColor": "#00ADB7",
-  "navigationBarTitleText": "帐号管理",
-  "navigationBarTextStyle": "white",
-  "backgroundColor": "#f8f8f8"
-},
-"tabBar": {
-  "list": [
-    {
-      "pagePath": "pages/main/main",
-      "text": "首页",
-      "selectedIconPath": "images/home.png",
-      "iconPath": "images/before_home.png"
-    },
-    {
-      "pagePath": "pages/adding/adding",
-      "text": "添加",
-      "selectedIconPath": "images/add.png",
-      "iconPath": "images/before_add.png"
-    },
-    {
-      "pagePath": "pages/setting/setting",
-      "text": "管理",
-      "selectedIconPath": "images/key.png",
-      "iconPath": "images/before_key.png"
-    }
-  ],
-  "color": "#D3D3D3",
-  "selectedColor": "#00ADB7"
-}
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#00ADB7",
+    "navigationBarTitleText": "帐号管理",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f8f8f8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "首页",
+        "selectedIconPath": "images/home.png",
+        "iconPath": "images/before_home.png"
+      },
+      {
+        "pagePath": "pages/adding/adding",
+        "text": "添加",
+        "selectedIconPath": "images/add.png",
+        "iconPath": "images/before_add.png"
+      },
+      {
+        "pagePath": "pages/setting/setting",
+        "text": "管理",
+        "selectedIconPath": "images/key.png",
+        "iconPath": "images/before_key.png"
+      }
+    ],
+    "color": "#D3D3D3",
+    "selectedColor": "#00ADB7"
+  }
 }

@@ -1,3 +1,17 @@
+<!-- 已经添加分类 -->
+<view class="icon-box">
+  <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+  <text style='margin-left: 5px;'>已有分类</text>
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <view wx:for="{{accountClassify}}" id='{{item.name}}' class="weui-cell" bindlongpress='changeClassify'>
+    <view class="weui-cell__hd">
+      <image src="{{item.iconPath}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
+    </view>
+    <view class="weui-cell__bd">{{item.name}}</view>    
+  </view>
+</view>
+
 <!-- 添加分类 -->
 <view class="icon-box">
   <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
@@ -23,26 +37,13 @@
       <view class="weui-label">名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder='分类所对应的名称' bindblur='checkAccountClassifyName' />
+      <input wx:if="{{tempName == null}}" class="weui-input" placeholder='分类所对应的名称' bindblur='checkAccountClassifyName' />
+      <input wx:else class="weui-input" value='{{tempName}}' bindblur='checkAccountClassifyName' />
     </view>
   </view>
 </view>
 
 <!-- 确认按钮 -->
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='addAccountClassify' style='background-color: #00ADB7'>添加</button>
-</view>
-
-<!-- 已经添加分类 -->
-<view class="icon-box">
-  <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>已有分类</text>
-</view>
-<view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell" wx:for="{{accountClassify}}">
-    <view class="weui-cell__hd">
-      <image src="{{item.iconPath}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
-    </view>
-    <view class="weui-cell__bd">{{item.name}}</view>    
-  </view>
+  <button id='{{buttonType}}' class="weui-btn" type="primary" bindtap='addAccountClassify' style='background-color: #00ADB7'>{{buttonType}}</button>
 </view>
