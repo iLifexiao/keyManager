@@ -1,3 +1,4 @@
+var util = require('../../utils/util.js')
 //index.js
 //获取应用实例
 const app = getApp()
@@ -7,51 +8,46 @@ Page({
    * 页面的初始数据
    */
   data: {
-    inputShowed: false,
+    inputing: false,
     inputVal: "",
-    imageURL: "/images/defaultBG.jpeg",
+    imageURL: "/images/defaultBG.jpg",
     imageW: 375,
     imageH: 200,
     accountClassify: []
   },
-  /** 
-   * 搜索框函数
-   */ 
-  showInput: function () {
-    this.setData({
-      inputShowed: true
-    });
-    console.log("showInput")
-  },
-  hideInput: function () {
-    this.setData({
-      inputVal: "",
-      inputShowed: false
-    });
-    console.log("hideInput")
-  },
-  clearInput: function () {
-    this.setData({
-      inputVal: ""
-    });
-    console.log("clearInput")
-  },
-  inputTyping: function (e) {
-    this.setData({
-      inputVal: e.detail.value
-    });
-    console.log("inputTyping")
+
+  searchStart: function (e) {
+    const searchKey = e.detail.value
+    if (searchKey == "") {
+      wx.showToast({
+        title: '请输入关键词',
+        image: '/images/exclamatory-mark.png'
+      })
+    }
+    else {
+      const accountList = util.getSearchAccountWith(searchKey)
+      if (accountList.length == 0) {
+        wx.showToast({
+          title: '没有该记录',
+          image: '/images/exclamatory-mark.png'
+        })
+      } else {
+        // 对于复杂数据 采用 JSON.stringify
+        wx.navigateTo({
+          url: "../showAccount/showaccount?accountListJson="+  JSON.stringify({"value": accountList}),
+        })
+      }
+    }
   },
 
   /**
    * changeImage
    */
-
-  showInfo: function(e) {
+  showInfo: function (e) {
     var imageW = this.data.imageW + 1
     var imageH = this.data.imageH + 1
-    var imageURL = "https://unsplash.it/" + imageW + "/" + imageH +"/?random"
-    
+    var imageURL = "https://unsplash.it/" + imageW + "/" + imageH + "/?random"
+
     this.setData({
       imageURL: imageURL,
       imageW: imageW,
@@ -77,28 +73,28 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
   /**
    * 用户点击右上角分享

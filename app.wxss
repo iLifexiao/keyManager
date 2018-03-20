@@ -53,11 +53,9 @@ page {
 }
 
 .icon-box {
-  margin-bottom: 5px;
-  margin-top: 5px;
-  margin-left: 5px;
+  margin: 5px 5px 5px 5px;
   display: flex;
-  align-items: center;
+  align-items: center; 
 }
 
 .emptyPage {

@@ -4,6 +4,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    existIconPathList: [],// 用于判断分类的图片是否已经存在
+    buttonType: "保存帐号",
+    accountIndex: 0,
     account: {
       icon: "/images/keyManager.png",
       kind: "社交",
@@ -11,7 +14,7 @@ Page({
       acc: "",
       pwd: "",
       secPwd: "",
-      pwdCount: 6,
+      pwdCount: 8,
       remarks: "",
     },
     tempIcon: "/images/keyManager.png",
@@ -29,22 +32,23 @@ Page({
     ],
 
     // 10*26*26*10 = 66760??
+    // json转码中 & ? 等符号不能使用
     passwordCompoent: {
       '0-9': ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
       'a-z': ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
       'A-Z': ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
-      '!@#': ['!', '@', '#', '$', '%', '^', '&', '*', ',', '.']
+      '!@#': ['!', '@', '#', '$', '%', '^', '_', '*', ',', '.']
     }
   },
   /**
    * 解决方法一
-   * var that = this
-   * 在wx.request({})，有时候会需要获取页面初始化数据data的情况，
-   * 这个时候，如果使用，this.data来获取，会出现获取不到的情况，调试页面也会报undefiend。
-   * 原因是，在javascript中，this代表着当前对象，会随着程序的执行过程中的上下文改变，
-   * 在wx.request({});方法的回调函数中，对象已经发生改变，所以已经不是wx.request({});方法对象了，data属性也不存在了。
-   * 官方的解决办法是，复制一份当前的对象，如下：
+   * 复制一份当前的对象，如下：
    * var that=this;//把this对象复制到临时变量that
+   * 
+   * 在wx.request({})，有时候会需要获取页面初始化数据data的情况，
+   * 如果使用，this.data来获取，调试页面会报undefiend。
+   * 原因是，在javascript中，this代表着当前对象，会随着程序的执行过程中的上下文改变
+   * 在wx.request({}); 方法的回调函数中，对象已经发生改变，所以已经不是wx.request({});方法对象了，data属性也不存在了。 
    */
 
   /**
@@ -146,6 +150,24 @@ Page({
   },
 
   /**
+   * 随机生成的密码用户可以修改
+   */
+  checkSecPwd: function (e) {
+    var account = this.data.account
+    account.secPwd = e.detail.value
+    this.setData({
+      account: account
+    })
+  },
+
+  checkPwd: function (e) {
+    var account = this.data.account
+    account.pwd = e.detail.value
+    this.setData({
+      account: account
+    })
+  },
+  /**
    * 随机生成密码
    */
   creatPassword: function (e) {
@@ -224,6 +246,12 @@ Page({
       return
     }
 
+    // 判断页面状态
+    if (this.data.buttonType == "更新帐号") {
+      // 更新icon的类型
+      this.isExistIcon()
+    }
+
     switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
       case '常用图标':
         var account = this.data.account
@@ -232,8 +260,12 @@ Page({
         this.setData({
           account: account
         })
-        console.log(account)    
-        util.updateAccount(account)
+        console.log(account)
+        if (this.data.buttonType == "更新帐号") {
+          this.modifyAccount(account, this.data.accountIndex)
+        } else {
+          util.addAccount(account)
+        }
         break;
       case '从相册中选择':
         wx.saveFile({
@@ -241,12 +273,16 @@ Page({
           success: res => {
             var account = this.data.account
             account.icon = res.savedFilePath
-            account.name = this.data.tempName          
+            account.name = this.data.tempName
             this.setData({
               account: account
             })
             console.log(account)
-            util.updateAccount(account)
+            if (this.data.buttonType == "更新帐号") {
+              this.modifyAccount(account, this.data.accountIndex)
+            } else {
+              util.addAccount(account)
+            }
           }
         })
         break;
@@ -254,6 +290,36 @@ Page({
         console.log("图标选择类型错误")
         break;
     }
+  },
+
+  // 
+  /**
+   * 判断图片是否为缓存中 || icon列表中的图片
+   * 是, 则设置图标为普通类型
+   */
+  isExistIcon: function () {
+    // 是否为自定义图片
+    if (this.data.tempIcon.search("//store") != -1) {
+      if (this.data.existIconPathList.indexOf(tempIcon) != -1) {
+        this.setData({
+          iconTypeIndex: 0
+        })
+      }
+    }
+  },
+
+  modifyAccount: function (account, index) {
+    const allAccountList = wx.getStorageSync('account')
+    allAccountList[index] = account
+    wx.setStorage({
+      key: 'account',
+      data: allAccountList,
+      success: res => {
+        wx.showToast({
+          title: '更新成功',
+        })
+      }
+    })
   },
 
   /**
@@ -271,7 +337,7 @@ Page({
             wx.getClipboardData({
               success: function (res) {
                 wx.showToast({
-                  title: '游戏密码拷贝成功, 以 / 分隔',
+                  title: '游戏拷贝成功',
                 })
               }
             })
@@ -328,15 +394,59 @@ Page({
     })
   },
 
+
+  /**
+   * 异步接口在写成工具类的时候，可能会还没获取到数据就返回了
+   */
+  getExistIconPathList: function () {
+    var existFileList = []
+    var existIconPathList = []
+    wx.getSavedFileList({
+      success: res => {
+        existFileList = res.fileList
+        // console.log(existFileList)
+        existFileList.forEach(function (icon, index) {
+          existIconPathList.push(icon.filePath)
+        })
+        console.log('existIconPathList:', existIconPathList)
+        this.setData({
+          existIconPathList: existIconPathList,
+        })        
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const accountClassify = wx.getStorageSync('accountClassify')    
-    const existClassify =  util.getExistClassify(accountClassify)
+    const accountClassify = wx.getStorageSync('accountClassify')
+    const existClassify = util.getExistClassify(accountClassify)
     this.setData({
       classify: existClassify
     })
+
+    // 已有帐号点击显示, 获取帐号在数据缓存中的位置
+    const accountJSON = options.accountJSON || ""
+    if (accountJSON != "") {
+      // 获取已经存在的icon文件地址 
+      this.getExistIconPathList()      
+      const account = JSON.parse(options.accountJSON)
+      const accountIndex = util.getAccountIndexInStore(account)
+      console.log('accountIndex:', accountIndex)
+      const classifyIndex = existClassify.indexOf(account.kind)
+      this.setData({        
+        account: account,
+        accountIndex: accountIndex,
+        tempIcon: account.icon,
+        tempName: account.name,
+        classifyIndex: classifyIndex,
+        buttonType: "更新帐号"
+      })
+      wx.setNavigationBarTitle({
+        title: account.name,
+      })
+    }
   },
 
   /**

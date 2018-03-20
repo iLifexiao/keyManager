@@ -30,8 +30,8 @@
       <view class="weui-label">名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if='{{tempName.length > 0}}' class="weui-input" value="{{tempName}}" bindblur='checkAccountName'/>
-      <input wx:else class="weui-input" placeholder='帐号所对应的名称' bindinput='checkAccountName'/>
+      <input wx:if='{{tempName.length > 0}}' class="weui-input" value="{{tempName}}" bindblur='checkAccountName' />
+      <input wx:else class="weui-input" placeholder='帐号所对应的名称' bindinput='checkAccountName' />
     </view>
   </view>
 
@@ -41,7 +41,8 @@
       <view class="weui-label">帐号</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="名称所对应的帐号" bindblur='checkAccount'/>
+      <input wx:if='{{account.acc.length > 0}}' class="weui-input" value="{{account.acc}}" bindblur='checkAccountName' />
+      <input wx:else class="weui-input" placeholder="名称所对应的帐号" bindblur='checkAccount' />
     </view>
   </view>
 
@@ -51,7 +52,7 @@
       <view class="weui-label">密码位数</view>
     </view>
     <view class="weui-cell__bd">
-      <slider bindchange="accountCountChange" min="6" max="16" show-value/>
+      <slider bindchange="accountCountChange" min="6" max="16" value='{{account.pwdCount}}' activeColor='#00ADB7' show-value/>
     </view>
   </view>
 
@@ -74,7 +75,7 @@
       <view class="weui-label">密码</view>
     </view>
     <view class="weui-cell__bd">
-      <text>{{account.pwd}}</text>
+      <input value='{{account.pwd}}' bindblur='checkPwd'></input>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='first' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
@@ -87,7 +88,7 @@
       <view class="weui-label">二级密码</view>
     </view>
     <view class="weui-cell__bd">
-      <text>{{account.secPwd}}</text>
+      <input value='{{account.secPwd}}' bindblur='checkSecPwd'></input>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='second' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
@@ -100,14 +101,23 @@
       <view class="weui-label">备注</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="可选" bindblur='checkRemarks'/>
+      <input wx:if="{{account.remarks.length > 0}}" class="weui-input" placeholder="{{account.remarks}}" bindblur='checkRemarks' />
+      <input wx:else class="weui-input" placeholder="可选" bindblur='checkRemarks' />
     </view>
   </view>
 </view>
-<view class="weui-cells__tips">不会上传任何信息</view>
+<view wx:if="{{buttonType == '保存帐号'}}" class="weui-cells__tips">不会上传任何信息</view>
 
 <!-- 操作 -->
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>保存帐号</button>
-  <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码</button>
+  <block wx:if="{{buttonType == '更新帐号'}}">
+    <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码
+    </button>
+    <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>{{buttonType}}</button>
+  </block>
+  <block wx:else>
+    <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>{{buttonType}}</button>
+    <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码
+    </button>
+  </block>
 </view>

@@ -1,43 +1,19 @@
 <!--index.wxml-->
-
-<!-- 搜索框 begin -->
-<view class="weui-search-bar">
-  <view class="weui-search-bar__form">
-    <view class="weui-search-bar__box">
-      <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-      <input type="text" class="weui-search-bar__input" placeholder="输入帐号" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
-      <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-        <icon type="clear" size="14"></icon>
-      </view>
-    </view>
-    <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
-      <icon class="weui-icon-search" type="search" size="14"></icon>
-      <view class="weui-search-bar__text">搜索帐号</view>
-    </label>
-  </view>
-  <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+<!-- 背景视图 -->
+<view class='bgView'>
+  <input class='searchBar' placeholder='搜索' bindconfirm='searchStart' confirm-type='搜索'></input>
+  <image class="dailyimage" src="{{imageURL}}" mode="scaleToFill"></image>
 </view>
-<view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
-  <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-    <view class="weui-cell__bd">
-      <view>实时搜索文本</view>
-    </view>
-  </navigator>
-</view>
-<!-- 搜索框 end -->
-
-<!-- 每日背景 begin -->
-<image class="dailyimage" bindtap='showInfo' src="{{imageURL}}" mode="scaleToFill"></image>
-<!-- 每日背景 end -->
 
 <!-- 帐号分类 begin -->
 <view class="icon-box">
   <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
   <text style='margin-left: 5px;'>帐号分类</text>
+  <image src="/images/recycle.png" bindtap='showInfo' style='margin-left: 66%; width: 23px; height: 23px;'></image>
 </view>
 <view class="weui-grids">
   <block wx:for="{{accountClassify}}" wx:key="*this">
-    <navigator  style="background-color:#ffffff" url="{{item.url}}" class="weui-grid" hover-class="weui-grid_active">
+    <navigator style="background-color:#ffffff" url="{{item.url}}" class="weui-grid" hover-class="weui-grid_active">
       <image class="weui-grid__icon" src="{{item.iconPath}}" />
       <view class="weui-grid__label">{{item.name}}</view>
     </navigator>

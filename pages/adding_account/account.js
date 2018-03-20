@@ -11,7 +11,7 @@ Page({
       acc: "",
       pwd: "",
       secPwd: "",
-      pwdCount: 6,
+      pwdCount: 8,
       remarks: "",
     },
     tempIcon: "/images/keyManager.png",
@@ -106,7 +106,7 @@ Page({
           account: account
         })
         console.log(account)
-        util.updateAccount(account)
+        util.addAccount(account)
         break;
       case '从相册中选择':
         wx.saveFile({
@@ -119,7 +119,7 @@ Page({
               account: account
             })
             console.log(account)
-            util.updateAccount(account)
+            util.addAccount(account)
           }
         })
         break;

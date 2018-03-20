@@ -1,3 +1,4 @@
+var util = require('../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
@@ -151,7 +152,7 @@ Page({
    * 更新上一页面的分类信息 & 缓存数据 & 当前的信息
    */
   updateAccountClassifyData: function (accountClassify) {
-    this.getExistClassify(accountClassify)
+    this.getAllClassify(accountClassify)
     var pages = getCurrentPages()
     var that = pages[pages.length - 2]
     if (that.__route__ == "pages/main/main") {
@@ -243,38 +244,35 @@ Page({
     this.updateAccountClassifyData(accountClassify)
   },
 
-
   /**
-   * 获得已经拥有的分类，单分类的状态发生改变，也需要变更
+   * 获取所有分类，包括系统的分类
    */
-  getExistClassify: function (accountClassify) {
+  getAllClassify(accountClassify) {
     var existClassify = []
     accountClassify.forEach(function (classify, index) {
       existClassify.push(classify.name)
     })
-    console.log(existClassify)
     this.setData({
       existClassify: existClassify
     })
   },
 
   /**
-   * 获得以及保存的icon
+   * 异步接口在写成工具类的时候，可能会还没获取到数据就返回了
    */
   getExistIconPathList: function () {
     var existFileList = []
     var existIconPathList = []
     wx.getSavedFileList({
-      success: res=> {        
+      success: res => {
         existFileList = res.fileList
-        console.log(existFileList)
+        // console.log(existFileList)
         existFileList.forEach(function (icon, index) {
           existIconPathList.push(icon.filePath)
         })
-        console.log(existIconPathList)
-        // 更新已存在的icno状态
+        console.log('existIconPathList:', existIconPathList)
         this.setData({
-          existIconPathList: existIconPathList
+          existIconPathList: existIconPathList,
         })
       }
     })
@@ -286,11 +284,12 @@ Page({
   onLoad: function (options) {
     const accountClassify = wx.getStorageSync('accountClassify')
     // 获取已经存在的分类
-    this.getExistClassify(accountClassify)
+    this.getAllClassify(accountClassify)
     this.setData({
       accountClassify: accountClassify,
     })
-    // 获取已经存在的icon文件地址
+
+    // 获取已经存在的icon文件地址 
     this.getExistIconPathList()
   },
 
