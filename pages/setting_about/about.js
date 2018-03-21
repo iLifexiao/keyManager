@@ -4,7 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    openSourceAddr: "https://github.com/iLifexiao/hello-world",
+    openSourceAddr: "https://github.com/iLifexiao/keyManager",
     mailAddr: "710178950@qq.com"
   },
 

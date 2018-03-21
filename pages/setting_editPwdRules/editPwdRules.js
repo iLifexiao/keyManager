@@ -82,10 +82,7 @@ Page({
    */
   onLoad: function (options) {
     const userKeyArray = app.globalData.userKey
-    var userKey = ""
-    for (var i = 0; i < userKeyArray.length; ++i) {
-      userKey = userKey.concat(userKeyArray[i].toString())
-    }
+    const userKey = userKeyArray.join("")
     this.setData({
       userKey: userKey
     })

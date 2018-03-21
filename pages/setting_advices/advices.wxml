@@ -4,12 +4,12 @@
   <view class="weui-cell">
     <view class="weui-cell__bd">
       <textarea class="weui-textarea" value='{{advices}}' style="height: 3.3em" bindinput="writeAdvicesDone"/>
-      <view class="weui-textarea-counter">0/140</view>
+      <view class="weui-textarea-counter">{{advices.length}}/140</view>
     </view>
   </view>
 </view>
 
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='sendAdvices' style='background-color: #00ADB7'>发送建议</button>
+  <button disabled='{{advices.length === 0}}' class="weui-btn" type="primary" bindtap='sendAdvices' style='background-color: #00ADB7'>发送建议</button>
   <button class="weui-btn" type="default" bindtap='reWrite'>重新输入</button>
 </view>

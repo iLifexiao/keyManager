@@ -41,8 +41,8 @@
       <view class="weui-label">帐号</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if='{{account.acc.length > 0}}' class="weui-input" value="{{account.acc}}" bindblur='checkAccountName' />
-      <input wx:else class="weui-input" placeholder="名称所对应的帐号" bindblur='checkAccount' />
+      <input wx:if='{{account.acc.length > 0}}' class="weui-input" value="{{account.acc}}" bindblur='checkAccount' />
+      <input wx:else class="weui-input" placeholder="名称所对应的帐号" bindinput='checkAccount' />
     </view>
   </view>
 
@@ -102,7 +102,7 @@
     </view>
     <view class="weui-cell__bd">
       <input wx:if="{{account.remarks.length > 0}}" class="weui-input" placeholder="{{account.remarks}}" bindblur='checkRemarks' />
-      <input wx:else class="weui-input" placeholder="可选" bindblur='checkRemarks' />
+      <input wx:else class="weui-input" placeholder="可选" bindinput='checkRemarks' />
     </view>
   </view>
 </view>

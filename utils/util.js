@@ -80,19 +80,35 @@ function addAccount(account) {
 }
 
 /**
- * 获取帐号在缓存中的位置
+ * 删除 缓存key 为Array中的数据的任一 index 位置的数据 
  */
-function getAccountIndexInStore(account) {
-  const allAccountList = wx.getStorageSync('account')
-  var accountIndex = 0
-  allAccountList.forEach(function (item, index) {
-    if (JSON.stringify(account) == JSON.stringify(item)) {
-      accountIndex = index      
-    }
-  })
-  return accountIndex
+function deleteArrayInfo(array, index) {
+  const popCount = array.length - index
+  var popArray = []
+  for (var i = 0; i < popCount; ++i) {
+    popArray.push(array.pop())
+  }  
+  popArray = popArray.reverse()
+  for (var i = 1; i < popCount; ++i) {
+    array.push(popArray[i])
+  }
+  console.log('array', array)
+  return array
 }
 
+/**
+ * 获取帐号在对象中数组中的的位置
+ * 
+ */
+function getIndexInObjectArray (theArray, theObject) {
+  var theIndex = 0
+  theArray.forEach(function (item, index) {
+    if (JSON.stringify(theObject) == JSON.stringify(item)) {
+      theIndex = index
+    }
+  })
+  return theIndex
+}
 
 
 /**
@@ -135,9 +151,12 @@ module.exports = {
   formatTime: formatTime,
   getExistClassify: getExistClassify,
   getExistIconPathList: getExistIconPathList,
+
   addAccount: addAccount,
+  deleteArrayInfo: deleteArrayInfo,
+
   getAccountWith: getAccountWith,
   getSearchAccountWith: getSearchAccountWith,
-  getAccountIndexInStore: getAccountIndexInStore
+  getIndexInObjectArray: getIndexInObjectArray
 }
 

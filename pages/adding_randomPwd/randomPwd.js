@@ -432,7 +432,9 @@ Page({
       // 获取已经存在的icon文件地址 
       this.getExistIconPathList()      
       const account = JSON.parse(options.accountJSON)
-      const accountIndex = util.getAccountIndexInStore(account)
+
+      const allAccountList = wx.getStorageSync('account')
+      const accountIndex = util.getIndexInObjectArray(allAccountList, account)
       console.log('accountIndex:', accountIndex)
       const classifyIndex = existClassify.indexOf(account.kind)
       this.setData({        

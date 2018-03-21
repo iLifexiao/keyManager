@@ -69,10 +69,10 @@ Page({
     const classifyIndex = this.data.classifyIndex
     switch (classify[classifyIndex]) {
       case "AES":
-        secret = this.Encrypt(message);
+        secret = this.Encrypt(message, this.data.key, this.data.iv);
         break;
       case "AES(dynamic)":
-        secret = this.Encrypt(message);
+        secret = this.Encrypt(message, this.data.key, this.data.iv);
         break;
       default:
         console.log("default");
@@ -89,7 +89,7 @@ Page({
         wx.getClipboardData({
           success: function (res) {
             wx.showToast({
-              title: '密码拷贝成功',
+              title: '密文拷贝成功',
             })
           }
         })
@@ -98,24 +98,12 @@ Page({
   },
 
   /**
-   * AES 加密/解密
-   */
-  Encrypt: function (word) {
-    // 动态设置加密信息
-    const key = this.data.key
-    const iv = this.data.iv
+* AES 加密
+*/
+  Encrypt: function (word, key, iv) {
     var srcs = fun_aes.CryptoJS.enc.Utf8.parse(word);
     var encrypted = fun_aes.CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: fun_aes.CryptoJS.mode.CBC, padding: fun_aes.CryptoJS.pad.Pkcs7 });
     return encrypted.ciphertext.toString().toUpperCase();
-  },
-  Decrypt: function (word) {
-    const key = this.data.key
-    const iv = this.data.iv
-    var encryptedHexStr = fun_aes.CryptoJS.enc.Hex.parse(word);
-    var srcs = fun_aes.CryptoJS.enc.Base64.stringify(encryptedHexStr);
-    var decrypt = fun_aes.CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: fun_aes.CryptoJS.mode.CBC, padding: fun_aes.CryptoJS.pad.Pkcs7 });
-    var decryptedStr = decrypt.toString(fun_aes.CryptoJS.enc.Utf8);
-    return decryptedStr.toString();
   },
 
   /**

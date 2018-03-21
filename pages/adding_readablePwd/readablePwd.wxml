@@ -39,7 +39,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">
-      <textarea class="weui-textarea" placeholder="请输入明文" style="height: 3.3em" bindinput="getMessage"/>
+      <textarea class="weui-textarea" placeholder="请输入明文" style="height: 3.3em" bindinput="getMessage" maxlength='-1'/>
     </view>
   </view>
 </view>
@@ -49,7 +49,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">
-      <textarea class="weui-textarea" value='{{secret}}'  style="height: 3.3em" disabled="true"/>
+      <textarea class="weui-textarea" value='{{secret}}'  style="height: 3.3em" disabled="true" maxlength='-1'/>
     </view>
   </view>
 </view>

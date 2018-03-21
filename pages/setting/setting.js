@@ -19,7 +19,7 @@ Page({
       },
       {
         "iconPath": "/images/clear.png",
-        "title": "清空密码",
+        "title": "清空帐号",
         "detail": "",
         "url": "/pages/setting_clearAllPwd/clearAllPwd"
       }

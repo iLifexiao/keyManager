@@ -5,14 +5,15 @@ Page({
    */
   data: {
     userKey: "",
-    checkKey: ""
+    checkKey: "",
+    accountList: []
   },
   checkUserKey: function (e) {
     this.setData({
       checkKey: e.detail.value
     })
   },
-  clearAllAccount: function() {
+  clearAllAccount: function () {
     if (this.data.checkKey.length == 0) {
       wx.showToast({
         title: '请验证身份',
@@ -25,27 +26,26 @@ Page({
     const checkKey = this.data.checkKey
 
     // 确认密码
-    if (checkKey == userKey) {
-      wx.showToast({
-        title: '清空完成',
-      })
-      /*
+    if (checkKey == userKey) {                  
       wx.setStorage({
-        key: 'secret',
-        data: changedRule,
+        key: 'account',
+        data: [],
         success: res => {
-          wx.showToast({
-            title: '规则修改成功',
+          wx.navigateBack({
+            complete: res => {
+              wx.showToast({
+                title: '清空完成',
+              })
+            }
           })
         },
         fail: res => {
           wx.showToast({
-            title: '修改失败',
+            title: '清空失败',
             image: "/images/error.png"
           })
         }
       })
-      */
     }
     else {
       wx.showToast({
@@ -59,12 +59,15 @@ Page({
    */
   onLoad: function (options) {
     const userKeyArray = app.globalData.userKey
-    var userKey = ""
-    for (var i = 0; i < userKeyArray.length; ++i) {
-      userKey = userKey.concat(userKeyArray[i].toString())
+    var userKey = userKeyArray.join("")    
+
+    // 判断是否有可导出帐号
+    const accountList = wx.getStorageSync("account") || []
+    if (accountList.length > 0) {
+      this.setData({
+        userKey: userKey,
+        accountList: accountList
+      })
     }
-    this.setData({
-      userKey: userKey
-    })
   },
 })

@@ -182,8 +182,9 @@ Page({
     this.setData({
       currentClassifyIndex: currentClassifyIndex
     })
+    
     // 排除系统定义的分类
-    if (this.data.existClassify.indexOf(classifyName) > 8) {
+    if (currentClassifyIndex > 8) {
       wx.showActionSheet({
         itemList: ["编辑", "删除"],
         itemColor: '#00ADB7',        
@@ -191,10 +192,10 @@ Page({
           if (!res.cancel) {            
             switch (res.tapIndex) {
               case 0:                               
-                this.editClassify(classifyName);
+                this.editClassify(currentClassifyIndex);
                 break;
               case 1:
-                this.deleteClassify(classifyName);
+                this.deleteClassify(currentClassifyIndex);
                 break;
               default:
                 break;
@@ -208,12 +209,10 @@ Page({
   /**
    * 点击分类编辑
    */
-  editClassify: function (classifyName) {   
-    const currentClassifyIndex = this.data.currentClassifyIndex
+  editClassify: function (currentClassifyIndex) {   
     const currentClassify = this.data.accountClassify[currentClassifyIndex]
     console.log(currentClassify)
     this.setData({
-      currentClassifyIndex: currentClassifyIndex,
       tempIconPath: currentClassify.iconPath,
       tempName: currentClassify.name,
       buttonType: "更新"
@@ -223,23 +222,12 @@ Page({
   /**
    * 点击删除
    */
-  deleteClassify: function (classify) {
-    var accountClassify = this.data.accountClassify
-    console.log(accountClassify)
-    const popCount = accountClassify.length - this.data.currentClassifyIndex
-    console.log(popCount)
-    var popArray = []
-    for (var i = 0; i < popCount; ++i) {
-      popArray.push(accountClassify.pop())
-    }
-
-    // 反转Array
-    for (var i = 0; i < popArray.reverse().length - 1; ++i) {
-      accountClassify.push(popArray.pop())
-    }
-    console.log(accountClassify)
+  deleteClassify: function (currentClassifyIndex) {    
+    // 如果这里引用了 this.data 的数据
+    var accountClassify = this.data.accountClassify  
+    // 这里对其修改，不仅仅改变视图层的数据，而且前面的引用也会同时修改
     this.setData({
-      accountClassify: accountClassify
+        accountClassify: util.deleteArrayInfo(accountClassify, currentClassifyIndex)
     })
     this.updateAccountClassifyData(accountClassify)
   },
@@ -247,7 +235,7 @@ Page({
   /**
    * 获取所有分类，包括系统的分类
    */
-  getAllClassify(accountClassify) {
+  getAllClassify: function(accountClassify) {
     var existClassify = []
     accountClassify.forEach(function (classify, index) {
       existClassify.push(classify.name)
@@ -283,12 +271,12 @@ Page({
    */
   onLoad: function (options) {
     const accountClassify = wx.getStorageSync('accountClassify')
-    // 获取已经存在的分类
-    this.getAllClassify(accountClassify)
+    util.getExistClassify(accountClassify)
     this.setData({
       accountClassify: accountClassify,
     })
-
+    // 获取已经存在的分类
+    this.getAllClassify(accountClassify)
     // 获取已经存在的icon文件地址 
     this.getExistIconPathList()
   },

@@ -10,12 +10,14 @@ Page({
     oldPwd: "",
     newPwd: "",
     checkPwd: ""
-  },  
+  },
+
   checkOldPassword: function (e) {
     this.setData({
       oldPwd: e.detail.value
     })
   },
+
   checkNewPassword: function (e) {
     this.setData({
       newPwd: e.detail.value
@@ -26,7 +28,7 @@ Page({
       checkPwd: e.detail.value
     })
   },
-  changePassword: function(e) {    
+  changePassword: function (e) {
     const oldPwd = this.data.oldPwd
     if (oldPwd.length == 0) {
       wx.showToast({
@@ -36,10 +38,10 @@ Page({
       return
     }
 
-    const userKey = this.data.userKey    
+    const userKey = this.data.userKey
     const newPwd = this.data.newPwd
     const checkPwd = this.data.checkPwd
-    
+
     // 判断密码的格式是否正确
     if (oldPwd.length != 6 || newPwd.length != 6 || checkPwd.length != 6) {
       wx.showToast({
@@ -54,16 +56,19 @@ Page({
       if (newPwd == checkPwd) {
         var newPwdArray = []
         for (var i = 0; i < newPwd.length; ++i) {
-          console
           newPwdArray.push(newPwd.charAt(i))
         }
-        console.log(newPwdArray)      
+        console.log(newPwdArray)
         wx.setStorage({
           key: 'primary',
           data: newPwdArray,
           success: res => {
-            wx.showToast({
-              title: '修改成功',
+            wx.navigateBack({
+              complete: res => {
+                wx.showToast({
+                  title: '修改成功',
+                })
+              }
             })
           },
           fail: res => {
@@ -71,9 +76,9 @@ Page({
               title: '修改失败',
               image: "/images/error.png"
             })
-          }          
+          }
         })
-        
+
         // 修改当前密码
         this.setData({
           userKey: newPwd
@@ -97,10 +102,7 @@ Page({
    */
   onLoad: function (options) {
     const userKeyArray = app.globalData.userKey
-    var userKey = ""
-    for (var i = 0; i < userKeyArray.length; ++i) {
-      userKey = userKey.concat(userKeyArray[i].toString())
-    }
+    const userKey = userKeyArray.join("")
     this.setData({
       userKey: userKey
     })

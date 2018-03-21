@@ -16,6 +16,6 @@
 </view>
 
 <view class="operationButton">
-  <button class="weui-btn" type="warn" bindtap="clearAllAccount">清空所有</button>
+  <button disabled='{{accountList.length === 0}}' class="weui-btn" type="warn" bindtap="clearAllAccount">清空所有</button>
 </view>
 

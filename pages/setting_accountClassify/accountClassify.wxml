@@ -4,7 +4,7 @@
   <text style='margin-left: 5px;'>已有分类</text>
 </view>
 <view class="weui-cells weui-cells_after-title">
-  <view wx:for="{{accountClassify}}" id='{{item.name}}' class="weui-cell" bindlongpress='changeClassify'>
+  <view wx:for="{{accountClassify}}" id='{{item.name}}' class="weui-cell" bindlongpress='changeClassify' wx:key="{{item.name}}">
     <view class="weui-cell__hd">
       <image src="{{item.iconPath}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
     </view>
