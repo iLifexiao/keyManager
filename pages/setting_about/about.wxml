@@ -7,7 +7,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">版本</view>
-    <view class="weui-cell__ft">1.0</view>
+    <view class="weui-cell__ft">1.0.2</view>
   </view>
   <view class="weui-cell" bindtap='copyGitHubAddr'>
     <view class="weui-cell__bd">代码开源</view>

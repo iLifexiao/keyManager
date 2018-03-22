@@ -43,7 +43,7 @@ Page({
       success: res => {
         if (!res.cancel) {
           switch (res.tapIndex) {
-            case 0:              
+            case 0:
               this.deleteAccount(account);
               break;
             default:

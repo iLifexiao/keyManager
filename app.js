@@ -7,7 +7,7 @@ App({
     if (key.length == 0) {
       console.log("第一次使用")      
     }else{
-      console.log(key)
+      // console.log(key)
       this.globalData.userKey = key
     }
 
@@ -26,7 +26,7 @@ App({
       wx.setStorageSync("secret", defaultSecrst)
       this.globalData.secret = defaultSecrst
     } else {
-      console.log(secret)
+      // console.log(secret)
       this.globalData.secret = secret
     }
 
@@ -36,7 +36,7 @@ App({
       console.log("用户还未添加帐号")
     } else {
       this.globalData.accountList = accountList
-      console.log(accountList)
+      // console.log(accountList)
     }
 
     // 获取用户的帐号分类, 避免发生获取失败的问题
@@ -91,10 +91,10 @@ App({
       ],
       wx.setStorageSync("accountClassify", accountClassify)
       this.globalData.accountClassify = accountClassify
-      console.log(accountClassify)
+      // console.log(accountClassify)
     } else {
       this.globalData.accountClassify = accountClassify
-      console.log(accountClassify)
+      // console.log(accountClassify)
     }
   },
 

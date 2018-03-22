@@ -482,7 +482,7 @@ Page({
       })
     } else {      
       wx.setNavigationBarTitle({
-        title: "生成随机密码",
+        title: "随机生成密码",
       })
     }
   },

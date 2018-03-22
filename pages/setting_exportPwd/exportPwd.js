@@ -32,8 +32,20 @@ Page({
     if (checkKey == userKey) {
       const accountList = this.data.accountList      
       const remarks = this.Encrypt(JSON.stringify({"accountList": accountList}), this.data.key, this.data.iv)
-      console.log("remarks:", remarks)
-      
+      // console.log("remarks:", remarks)
+      // 同时拷贝到剪切板
+      wx.setClipboardData({
+        data: remarks,
+        success: function (res) {
+          wx.getClipboardData({
+            success: function (res) {
+              wx.showToast({
+                title: '导出信息已拷贝',
+              })
+            }
+          })
+        }
+      })
       wx.addPhoneContact({
         firstName: '帐号管理(备份信息)',
         remark: remarks

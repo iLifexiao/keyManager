@@ -1,6 +1,13 @@
 /**index.wxss**/
+.bgView {
+  width:100%;
+  height: 400rpx;
+  display: flex;
+  justify-content: center;
+}
 .dailyimage {
   position:absolute;
+  left: 0px;
   width: 100%;
   height: 400rpx;
   z-index: -1;
@@ -17,11 +24,4 @@
   opacity: 0.4;
   background-color: #fff;
   text-align: center;
-  
-}
-.bgView {
-  width:100%;
-  height: 400rpx;
-  display: flex;
-  justify-content: center;
 }

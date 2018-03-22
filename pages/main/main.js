@@ -10,7 +10,7 @@ Page({
   data: {
     inputing: false,
     inputVal: "",
-    imageURL: "/images/defaultBG.jpg",
+    imageURL: "/images/defaultBG.jpeg",
     imageW: 375,
     imageH: 200,
     accountClassify: []
@@ -46,7 +46,7 @@ Page({
   showInfo: function (e) {
     var imageW = this.data.imageW + 1
     var imageH = this.data.imageH + 1
-    var imageURL = "https://unsplash.it/" + imageW + "/" + imageH + "/?random"
+    var imageURL = "https://picsum.photos/" + imageW + "/" + imageH + "/?random"
 
     this.setData({
       imageURL: imageURL,
