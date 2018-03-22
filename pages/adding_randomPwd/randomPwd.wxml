@@ -30,7 +30,7 @@
       <view class="weui-label">名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if='{{tempName.length > 0}}' class="weui-input" value="{{tempName}}" bindblur='checkAccountName' />
+      <input wx:if='{{tempName.length > 0}}' class="weui-input" value="{{tempName}}" bindinput='checkAccountName' />
       <input wx:else class="weui-input" placeholder='帐号所对应的名称' bindinput='checkAccountName' />
     </view>
   </view>
@@ -41,7 +41,7 @@
       <view class="weui-label">帐号</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if='{{account.acc.length > 0}}' class="weui-input" value="{{account.acc}}" bindblur='checkAccount' />
+      <input wx:if='{{account.acc.length > 0}}' class="weui-input" value="{{account.acc}}" bindinput='checkAccount' />
       <input wx:else class="weui-input" placeholder="名称所对应的帐号" bindinput='checkAccount' />
     </view>
   </view>
@@ -75,7 +75,7 @@
       <view class="weui-label">密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input value='{{account.pwd}}' bindblur='checkPwd'></input>
+      <input value='{{account.pwd}}' bindinput='checkPwd'></input>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='first' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
@@ -88,7 +88,7 @@
       <view class="weui-label">二级密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input value='{{account.secPwd}}' bindblur='checkSecPwd'></input>
+      <input value='{{account.secPwd}}' bindinput='checkSecPwd'></input>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='second' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
@@ -101,7 +101,7 @@
       <view class="weui-label">备注</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if="{{account.remarks.length > 0}}" class="weui-input" placeholder="{{account.remarks}}" bindblur='checkRemarks' />
+      <input wx:if="{{account.remarks.length > 0}}" class="weui-input" placeholder="{{account.remarks}}" bindinput='checkRemarks' />
       <input wx:else class="weui-input" placeholder="可选" bindinput='checkRemarks' />
     </view>
   </view>

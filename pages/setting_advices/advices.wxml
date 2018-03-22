@@ -1,15 +1,9 @@
 <!-- 建议框 -->
-<view class="weui-cells__title">我的建议</view>
-<view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell">
-    <view class="weui-cell__bd">
-      <textarea class="weui-textarea" value='{{advices}}' style="height: 3.3em" bindinput="writeAdvicesDone"/>
-      <view class="weui-textarea-counter">{{advices.length}}/140</view>
-    </view>
-  </view>
+<view class="page__hd">
+  <view class="page__title">提示</view>
+  <view class="page__desc">碰到了问题，或者有什么建议可以通过下方按钮联系客服</view>
 </view>
 
 <view class="operationButton">
-  <button disabled='{{advices.length === 0}}' class="weui-btn" type="primary" bindtap='sendAdvices' style='background-color: #00ADB7'>发送建议</button>
-  <button class="weui-btn" type="default" bindtap='reWrite'>重新输入</button>
+  <button class="weui-btn" type="primary" open-type="contact" style='background-color: #00ADB7'>联系客服</button>
 </view>

@@ -1,4 +1,5 @@
 var util = require('../../utils/util.js')
+var app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -16,10 +17,12 @@ Page({
   showDetail: function (e) {
     const account = e.currentTarget.dataset.account
     // 数组对象的比较还包括了指针, 所以即使内容完全一样，也无法查找到
-    const allAccountList = wx.getStorageSync('account')
-    const accountIndex = util.getIndexInObjectArray(allAccountList, account)
+    const allAccountList = app.globalData.accountList
+    const accountIndex = util.getIndexInObjectArray(allAccountList, account)    
+
+    // 传递type & 当前的点击位置信息，用来修改信息
     wx.navigateTo({
-      url: '../adding_randomPwd/randomPwd?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex,
+      url: '../adding_randomPwd/randomPwd?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + this.data.currentAccountIndex,
     })
   },
 
@@ -62,18 +65,21 @@ Page({
     })
 
     // 缓存信息
-    const allAccountList = wx.getStorageSync('account')    
+    const allAccountList = app.globalData.accountList
     const accountIndex = util.getIndexInObjectArray(allAccountList,account)
     console.log('accountIndex',accountIndex)
+    const newAccountList = util.deleteArrayInfo(allAccountList, accountIndex)
     wx.setStorage({
       key: 'account',
-      data: util.deleteArrayInfo(allAccountList, accountIndex),
+      data: newAccountList,
       success: res=> {
         wx.showToast({
           title: '删除成功',
         })
       }
-    })    
+    })
+    // 更新全局变量
+    app.globalData.accountList = newAccountList 
   },
 
   /**
@@ -82,6 +88,7 @@ Page({
   onLoad: function (options) {
     // 判断跳转类型
     var tempType = options.type || ""
+    // 搜索跳转
     if (tempType == "") {
       wx.setNavigationBarTitle({
         title: "搜索结果",
@@ -95,16 +102,18 @@ Page({
       wx.setNavigationBarTitle({
         title: tempType + '帐号',
       })
-      const accountList = util.getAccountWith(tempType)
-      this.setData({
-        accType: tempType,
-        accountList: accountList
-      })
+      const accountList = util.getAccountWith(tempType, app.globalData.accountList)
       if (accountList.length == 0) {
         this.setData({
+          accType: tempType,
           emptyInfo: "暂无 " + tempType + " 的帐号"
         })
-      }
+      } else {
+        this.setData({
+          accType: tempType,
+          accountList: accountList
+        })
+      }      
     }
   },
 })

@@ -47,11 +47,15 @@ Page({
           { "name": "薄荷", "path": "/images/logo/boohee.png" },
           { "name": "京东", "path": "/images/logo/jingdong.png" },
           { "name": "美团", "path": "/images/logo/meituan.png" },
+          { "name": "饿了吗", "path": "/images/logo/ele.png" },
           { "name": "滴滴", "path": "/images/logo/didi.png" },
           { "name": "苏宁易购", "path": "/images/logo/suning.png" },
           { "name": "闲鱼", "path": "/images/logo/fleamarket.png" },
           { "name": "淘宝", "path": "/images/logo/taobao.png" },
+          { "name": "天猫", "path": "/images/logo/tmall.png" },
           { "name": "携程旅行", "path": "/images/logo/ctrip.png" },
+          { "name": "大众点评", "path": "/images/logo/dianping.png" },
+          
         ]
       },
       {
@@ -61,6 +65,14 @@ Page({
           { "name": "TED", "path": "/images/logo/ted.png" },
           { "name": "映像笔记", "path": "/images/logo/evernote.png" },
           { "name": "谷歌", "path": "/images/logo/chrome.png" },
+          { "name": "智联招聘", "path": "/images/logo/zhaopin.png" },
+          { "name": "豆瓣", "path": "/images/logo/douban.png" },
+          { "name": "全能扫描王", "path": "/images/logo/camscanner.png" },
+          { "name": "百词斩", "path": "/images/logo/card.png" },
+          { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },          
+          
+          
+          
         ]
       },
     ]

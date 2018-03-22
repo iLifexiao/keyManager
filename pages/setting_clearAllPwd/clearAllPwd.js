@@ -26,7 +26,8 @@ Page({
     const checkKey = this.data.checkKey
 
     // 确认密码
-    if (checkKey == userKey) {                  
+    if (checkKey == userKey) {
+      app.globalData.accountList = []
       wx.setStorage({
         key: 'account',
         data: [],
@@ -62,7 +63,7 @@ Page({
     var userKey = userKeyArray.join("")    
 
     // 判断是否有可导出帐号
-    const accountList = wx.getStorageSync("account") || []
+    const accountList = app.globalData.accountList
     if (accountList.length > 0) {
       this.setData({
         userKey: userKey,

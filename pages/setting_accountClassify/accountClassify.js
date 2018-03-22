@@ -1,4 +1,5 @@
 var util = require('../../utils/util.js')
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -149,7 +150,7 @@ Page({
   },
 
   /**
-   * 更新上一页面的分类信息 & 缓存数据 & 当前的信息
+   * 更新上一页面的分类信息 & 缓存数据 & 当前的信息 & 全局变量
    */
   updateAccountClassifyData: function (accountClassify) {
     this.getAllClassify(accountClassify)
@@ -160,6 +161,9 @@ Page({
         accountClassify: accountClassify
       })
     }
+    // 全局变量，用于提高数据加载速度
+    app.globalData.accountClassify = accountClassify
+
     wx.setStorage({
       key: 'accountClassify',
       data: accountClassify,
@@ -270,8 +274,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const accountClassify = wx.getStorageSync('accountClassify')
-    util.getExistClassify(accountClassify)
+    const accountClassify = app.globalData.accountClassify
     this.setData({
       accountClassify: accountClassify,
     })

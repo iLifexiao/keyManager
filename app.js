@@ -16,6 +16,7 @@ App({
       "key": "",
       "iv": ""
       }
+
     if (secret.key.length != 16 || secret.iv.length != 16) {
       console.log("设置默认密钥")
       const defaultSecrst = {
@@ -27,6 +28,15 @@ App({
     } else {
       console.log(secret)
       this.globalData.secret = secret
+    }
+
+    // 获取用户的添加帐号
+    var accountList = wx.getStorageSync('account') || []
+    if (accountList.length == 0) {
+      console.log("用户还未添加帐号")
+    } else {
+      this.globalData.accountList = accountList
+      console.log(accountList)
     }
 
     // 获取用户的帐号分类, 避免发生获取失败的问题
@@ -87,9 +97,11 @@ App({
       console.log(accountClassify)
     }
   },
+
   globalData: {
     userKey: [],
     secret: {},
     accountClassify: [],
+    accountList: []
   }
 })

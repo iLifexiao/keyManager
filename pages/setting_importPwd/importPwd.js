@@ -15,6 +15,7 @@ Page({
       backInfo: e.detail.value
     })
   },
+
   importAccount: function (e) {
     const backInfo = this.data.backInfo
     if (backInfo.length == 0) {
@@ -43,6 +44,7 @@ Page({
         })
       }
     })
+    app.globalData.accountList = backAccountList
   },
 
  /**

@@ -52,6 +52,9 @@ Page({
         "key": key,
         "iv": iv
       }
+      // 修改全局变量，提高速度访问
+      app.globalData.secret = changedRule
+      
       wx.setStorage({
         key: 'secret',
         data: changedRule,

@@ -30,7 +30,7 @@
       <view class="weui-label">名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if='{{tempName.length > 0}}' class="weui-input" value="{{tempName}}" bindblur='checkAccountName'/>
+      <input wx:if='{{tempName.length > 0}}' class="weui-input" value="{{tempName}}" bindinput='checkAccountName'/>
       <input wx:else class="weui-input" placeholder='帐号所对应的名称' bindinput='checkAccountName'/>
     </view>
   </view>

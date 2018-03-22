@@ -1,9 +1,12 @@
 var util = require('../../utils/util.js')
+var app = getApp()
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    tapIndex: 0,
+    accType: "",
     existIconPathList: [],// 用于判断分类的图片是否已经存在
     buttonType: "保存帐号",
     accountIndex: 0,
@@ -128,6 +131,7 @@ Page({
       account: account
     })
   },
+
   /**
    * 修改成成的密码规则
    */
@@ -264,7 +268,8 @@ Page({
         if (this.data.buttonType == "更新帐号") {
           this.modifyAccount(account, this.data.accountIndex)
         } else {
-          util.addAccount(account)
+          const newAccountList = util.addAccount(account, app.globalData.accountList)
+          app.globalData.accountList = newAccountList
         }
         break;
       case '从相册中选择':
@@ -281,7 +286,8 @@ Page({
             if (this.data.buttonType == "更新帐号") {
               this.modifyAccount(account, this.data.accountIndex)
             } else {
-              util.addAccount(account)
+              const newAccountList = util.addAccount(account, app.globalData.accountList)
+              app.globalData.accountList = newAccountList
             }
           }
         })
@@ -309,8 +315,27 @@ Page({
   },
 
   modifyAccount: function (account, index) {
-    const allAccountList = wx.getStorageSync('account')
+    const allAccountList = app.globalData.accountList
     allAccountList[index] = account
+    app.globalData.accountList = allAccountList
+
+    // 更新上一页面的信息
+    const accType = this.data.accType
+    const tapIndex = this.data.tapIndex
+    var pages = getCurrentPages()
+    var that = pages[pages.length - 2]
+    var beforeAccountList = that.data.accountList
+    if (accType == account.kind || accType == "全部") {      
+      beforeAccountList[tapIndex] = account
+    } else {
+      beforeAccountList = util.deleteArrayInfo(beforeAccountList, tapIndex)
+    }
+    if (that.__route__ == "pages/showAccount/showaccount") {
+      that.setData({
+        accountList: beforeAccountList
+      })
+    }
+
     wx.setStorage({
       key: 'account',
       data: allAccountList,
@@ -319,7 +344,7 @@ Page({
           title: '更新成功',
         })
       }
-    })
+    })    
   },
 
   /**
@@ -379,6 +404,7 @@ Page({
       tempName: e.detail.value
     })
   },
+
   checkAccount: function (e) {
     var account = this.data.account
     account.acc = e.detail.value
@@ -386,6 +412,7 @@ Page({
       account: account
     })
   },
+
   checkRemarks: function (e) {
     var account = this.data.account
     account.remarks = e.detail.value
@@ -420,7 +447,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const accountClassify = wx.getStorageSync('accountClassify')
+    const accountClassify = app.globalData.accountClassify
     const existClassify = util.getExistClassify(accountClassify)
     this.setData({
       classify: existClassify
@@ -432,13 +459,18 @@ Page({
       // 获取已经存在的icon文件地址 
       this.getExistIconPathList()      
       const account = JSON.parse(options.accountJSON)
+      // 获取帐号的点击位置（上一页）和类型（未修改时）
+      const accType = options.accType
+      const tapIndex = options.tapIndex
 
-      const allAccountList = wx.getStorageSync('account')
+      const allAccountList = app.globalData.accountList
       const accountIndex = util.getIndexInObjectArray(allAccountList, account)
       console.log('accountIndex:', accountIndex)
       const classifyIndex = existClassify.indexOf(account.kind)
       this.setData({        
         account: account,
+        accType: accType,
+        tapIndex: tapIndex,
         accountIndex: accountIndex,
         tempIcon: account.icon,
         tempName: account.name,
@@ -447,6 +479,10 @@ Page({
       })
       wx.setNavigationBarTitle({
         title: account.name,
+      })
+    } else {      
+      wx.setNavigationBarTitle({
+        title: "生成随机密码",
       })
     }
   },

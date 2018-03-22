@@ -1,6 +1,6 @@
 <!-- 已经添加分类 -->
 <view class="icon-box">
-  <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+  <image src="/images/classify.png" style='width: 23px; height: 23px'></image>
   <text style='margin-left: 5px;'>已有分类</text>
 </view>
 <view class="weui-cells weui-cells_after-title">
@@ -14,7 +14,7 @@
 
 <!-- 添加分类 -->
 <view class="icon-box">
-  <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+  <image src="/images/newClassify.png" style='width: 23px; height: 23px'></image>
   <text style='margin-left: 5px;'>新增分类</text>
 </view>
 <view class="weui-cells weui-cells_after-title">

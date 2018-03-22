@@ -25,7 +25,7 @@ Page({
       })
     }
     else {
-      const accountList = util.getSearchAccountWith(searchKey)
+      const accountList = util.getSearchAccountWith(searchKey, app.globalData.accountList)
       if (accountList.length == 0) {
         wx.showToast({
           title: '没有该记录',
@@ -56,7 +56,7 @@ Page({
     wx.showToast({
       title: '更换壁纸中...',
       icon: "loading",
-      duration: 1000
+      duration: 1500
     })
   },
   /**

@@ -1,4 +1,5 @@
 var util = require('../../utils/util.js')
+var app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -106,7 +107,9 @@ Page({
           account: account
         })
         console.log(account)
-        util.addAccount(account)
+        const newAccountList = util.addAccount(account, app.globalData.accountList)
+        // 更新全局变量
+        app.globalData.accountList = newAccountList        
         break;
       case '从相册中选择':
         wx.saveFile({
@@ -119,7 +122,9 @@ Page({
               account: account
             })
             console.log(account)
-            util.addAccount(account)
+            const newAccountList = util.addAccount(account, app.globalData.accountList)
+            // 更新全局变量
+            app.globalData.accountList = newAccountList
           }
         })
         break;
@@ -168,7 +173,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const accountClassify = wx.getStorageSync('accountClassify')
+    const accountClassify = app.globalData.accountClassify
     const existClassify = util.getExistClassify(accountClassify)
     this.setData({
       classify: existClassify
