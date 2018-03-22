@@ -5,13 +5,14 @@
 - 用于管理你的帐号密码
 
 ## 预览
-- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223014.jpg)
-- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223017.jpg)
-- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223021.jpg)
-- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223034.jpg)
-- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223043.jpg)
-- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223051.jpg)
 
+| 主页 | 添加  | 设置 |
+| :--: | :--: | :--: |
+|  <image src="https://raw.githubusercontent.com/iLifexiao/hello-world/master/keyManagerImages/S80322-223014.jpg" width="216" height="380"></image>    |   <image src="https://raw.githubusercontent.com/iLifexiao/hello-world/master/keyManagerImages/S80322-223017.jpg"  width="216" height="380"></image>   |   <image src="https://raw.githubusercontent.com/iLifexiao/hello-world/master/keyManagerImages/S80322-223021.jpg"  width="216" height="380"></image> |
+
+| 显示帐号 | 随机密码 | 导出帐号 |
+|:--: | :--: | :--: |
+|   <image src="https://raw.githubusercontent.com/iLifexiao/hello-world/master/keyManagerImages/S80322-223034.jpg"  width="216" height="380"></image>   |   <image src="https://raw.githubusercontent.com/iLifexiao/hello-world/master/keyManagerImages/S80322-223043.jpg"  width="216" height="380"></image>   |   <image src="https://raw.githubusercontent.com/iLifexiao/hello-world/master/keyManagerImages/S80322-223051.jpg"  width="216" height="380"></image>   |
 
 ## 感谢
 - 该程序是使用[WEUI](https://github.com/weui/weui)来制作，作为学习小程序(前端)开发的一个入门
