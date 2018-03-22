@@ -5,7 +5,13 @@
 - 用于管理你的帐号密码
 
 ## 预览
-- comming soon
+- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223014.jpg)
+- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223017.jpg)
+- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223021.jpg)
+- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223034.jpg)
+- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223043.jpg)
+- ![image](https://github.com/iLifexiao/hello-world/blob/master/keyManagerImages/S80322-223051.jpg)
+
 
 ## 感谢
 - 该程序是使用[WEUI](https://github.com/weui/weui)来制作，作为学习小程序(前端)开发的一个入门
