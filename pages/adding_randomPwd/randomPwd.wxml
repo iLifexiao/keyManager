@@ -30,8 +30,7 @@
       <view class="weui-label">名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if='{{accType.length > 0}}' class="weui-input" value="{{tempName}}" bindinput='checkAccountName' />
-      <input wx:else class="weui-input" placeholder='帐号所对应的名称' bindinput='checkAccountName' />
+      <input  class="weui-input" value="{{tempName}}" placeholder='帐号所对应的名称' bindinput='checkAccountName' />
     </view>
   </view>
 
@@ -41,8 +40,7 @@
       <view class="weui-label">帐号</view>
     </view>
     <view class="weui-cell__bd">
-      <input wx:if='{{accType.length > 0}}' class="weui-input" value="{{account.acc}}" bindinput='checkAccount' />
-      <input wx:else class="weui-input" placeholder="名称所对应的帐号" bindinput='checkAccount' />
+      <input class="weui-input" value="{{account.acc}}" placeholder="名称所对应的帐号" bindinput='checkAccount' />
     </view>
   </view>
 

@@ -18,11 +18,14 @@ Page({
     const account = e.currentTarget.dataset.account
     // 数组对象的比较还包括了指针, 所以即使内容完全一样，也无法查找到
     const allAccountList = app.globalData.accountList
-    const accountIndex = util.getIndexInObjectArray(allAccountList, account)    
+    const accountIndex = util.getIndexInObjectArray(allAccountList, account)
+    const tapIndex = util.getIndexInObjectArray(this.data.accountList, account)
 
     // 传递type & 当前的点击位置信息，用来修改信息
+    const url = '../adding_randomPwd/randomPwd?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex
+    console.log("url:",url)    
     wx.navigateTo({
-      url: '../adding_randomPwd/randomPwd?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + this.data.currentAccountIndex,
+      url: url,
     })
   },
 
