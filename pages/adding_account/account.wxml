@@ -30,7 +30,7 @@
       <view class="weui-label">名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder='帐号所对应的名称' bindinput='checkAccountName'/>
+      <input class="weui-input" value="{{tempName}}" placeholder='帐号所对应的名称' bindinput='checkAccountName'/>
     </view>
   </view>
 

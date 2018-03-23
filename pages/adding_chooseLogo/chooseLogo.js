@@ -3,7 +3,7 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {    
+  data: {
     logoClassify: [
       {
         "type": "通信",
@@ -55,7 +55,7 @@ Page({
           { "name": "天猫", "path": "/images/logo/tmall.png" },
           { "name": "携程旅行", "path": "/images/logo/ctrip.png" },
           { "name": "大众点评", "path": "/images/logo/dianping.png" },
-          
+
         ]
       },
       {
@@ -69,10 +69,7 @@ Page({
           { "name": "豆瓣", "path": "/images/logo/douban.png" },
           { "name": "全能扫描王", "path": "/images/logo/camscanner.png" },
           { "name": "百词斩", "path": "/images/logo/card.png" },
-          { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },          
-          
-          
-          
+          { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },
         ]
       },
     ]
@@ -85,19 +82,19 @@ Page({
    */
   selectIcon: function (e) {
     var pages = getCurrentPages()
-    const iconPath = e.currentTarget.dataset.path   
+    const iconPath = e.currentTarget.dataset.path
     const iconName = e.currentTarget.dataset.name
     var that = pages[pages.length - 2]
 
-    if (that.__route__ == "pages/adding_randomPwd/randomPwd"){
+    if (that.__route__ == "pages/adding_randomPwd/randomPwd") {
       wx.navigateBack({
         delta: 1,
-        success: res=> {
+        success: res => {
           // 回传 图标路径 & 图标名字
           that.setData({
             tempIcon: iconPath,
             tempName: iconName
-          })          
+          })
         }
       })
     } else if (that.__route__ == "pages/adding_account/account") {
@@ -108,7 +105,7 @@ Page({
           that.setData({
             tempIcon: iconPath,
             tempName: iconName
-          })          
+          })
         }
       })
     }
