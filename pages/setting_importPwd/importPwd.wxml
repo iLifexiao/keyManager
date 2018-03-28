@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">提示</view>
-  <view class="page__desc">复制电话簿中（备份帐号）的备注信息到下面的输入区域，点击导入即可，注意备份会覆盖当前的帐号数据</view>
+  <view class="page__desc">复制电话簿中（备份帐号）的备注信息到下面的输入区域或者你自行保存的信息，点击导入即可。（注意备份会覆盖当前的帐号数据）</view>
 </view>
 
 <view class="weui-cells__title">输入区域</view>

@@ -23,11 +23,13 @@ Page({
       newPwd: e.detail.value
     })
   },
+
   checkSamePassword: function (e) {
     this.setData({
       checkPwd: e.detail.value
     })
   },
+
   changePassword: function (e) {
     const oldPwd = this.data.oldPwd
     if (oldPwd.length == 0) {
@@ -63,6 +65,8 @@ Page({
           key: 'primary',
           data: newPwdArray,
           success: res => {
+            // 更新缓存的信息
+            app.globalData.userKey = newPwdArray
             wx.navigateBack({
               complete: res => {
                 wx.showToast({

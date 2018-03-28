@@ -1,8 +1,4 @@
 <!-- 添加帐号 begin  -->
-<view class="icon-box">
-  <image src="../../images/codeStyle.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>添加帐号</text>
-</view>
 <view class="weui-cells weui-cells_after-title">
   <block wx:for="{{addList}}" wx:key="*this">
     <navigator url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -18,8 +14,6 @@
 
 <!-- 添加帐号 begin  -->
 <view class="icon-box">
-  <image src="../../images/hashtag.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>加密方式</text>
 </view>
 <view class="weui-cells weui-cells_after-title">
   <block wx:for="{{codeList}}" wx:key="*this">

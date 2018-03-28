@@ -1,9 +1,4 @@
 <!-- 密码管理 begin  -->
-<view class="icon-box">
-  <image src="../../images/manager.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>密码管理</text>
-</view>
-
 <view class="weui-cells weui-cells_after-title">
   <block wx:for="{{pwdManagerList}}" wx:key="*this">
     <navigator url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -19,8 +14,6 @@
 
 <!-- 加密设置 begin  -->
 <view class="icon-box">
-  <image src="../../images/pwdSetting.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>加密设置</text>
 </view>
 
 <view class="weui-cells weui-cells_after-title">
@@ -39,8 +32,6 @@
 
 <!-- 软件设置 begin  -->
 <view class="icon-box">
-  <image src="../../images/setting.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>软件设置</text>
 </view>
 
 <view class="weui-cells weui-cells_after-title">

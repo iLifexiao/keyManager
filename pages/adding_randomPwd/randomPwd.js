@@ -155,10 +155,13 @@ Page({
 
   /**
    * 随机生成的密码用户可以修改
+   * 如果用户修改了密码的状态，同时也要修改密码长度
    */
   checkSecPwd: function (e) {
     var account = this.data.account
-    account.secPwd = e.detail.value
+    const secPwd = e.detail.value
+    account.secPwd = secPwd
+    account.pwdCount = secPwd.length
     this.setData({
       account: account
     })

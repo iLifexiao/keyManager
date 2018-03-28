@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">提示</view>
-  <view class="page__desc">通过建立一个 名为（帐号管理）备注为（帐号的加密信息）的手机联系人。务必记住当前的加密规则(使用帮助->默认的AES密码是多少？或者记住你自己修改过的加密规则）。同时可以将已经拷贝的加密信息粘贴到记事本里</view>
+  <view class="page__desc">通过新建立一个名为（帐号管理）并添加备注信息为（导出的帐号信息）的手机联系人来保存。同时会拷贝导出的信息，可以自行复制到安全的记事本等地方。（加密由加密规则来完成，务必保存好）</view>
 </view>
 
 <view class="weui-cells weui-cells_after-title">

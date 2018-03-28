@@ -53,6 +53,7 @@ Page({
       imageW: imageW,
       imageH: imageH
     });
+    
     wx.showToast({
       title: '更换壁纸中...',
       icon: "loading",

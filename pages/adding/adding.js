@@ -25,7 +25,7 @@ Page({
         "url": "../adding_readablePwd/readablePwd"
       },
       {
-        "iconPath": "../../images/decode.png",
+        "iconPath": "../../images/hashtag.png",
         "title": "哈希散列",
         "detail": "",
         "url": "../adding_hashPwd/hashPwd"
