@@ -1,0 +1,22 @@
+<view class="page__hd">
+  <view class="page__title">提示</view>
+  <view class="page__desc">对有指纹识别的手机提供指纹验证技术，使得使用软件更加地方便和安全</view>
+</view>
+
+<view class="weui-cells weui-cells_after-title">
+  <!-- 登录密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">登录密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="请验证身份" bindinput='checkUserKey' maxlength='6' type='number' password='true'/>
+    </view>
+  </view>
+</view>
+
+<view class="operationButton">
+  <button wx:if="{{supportFinger == '1' && openFingerPrint == '0'}}" class="weui-btn" type="primary" data-setting='open' bindtap="settingFingerPrint" style='background-color: #00ADB7'>开启指纹识别</button>
+  <button wx:elif="{{supportFinger == '1' && openFingerPrint == '1'}}" class="weui-btn" type="primary" data-setting='close' bindtap="settingFingerPrint" style='background-color: #00ADB7'>关闭指纹识别</button>
+  <button wx:else disabled='true' class="weui-btn" type="primary" style='background-color: #00ADB7'>不支持指纹</button>
+</view>

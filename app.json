@@ -18,6 +18,7 @@
     "pages/setting_about/about",
     "pages/setting_advices/advices",
     "pages/setting_accountClassify/accountClassify",
+    "pages/setting_fingerPrint/fingerPrint",
     "pages/showAccount/showaccount"
   ],
   "window": {

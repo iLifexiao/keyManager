@@ -9,7 +9,8 @@ Page({
     tishi: "输入密码",
     pwd: [],
     userKey: [],
-    confirmKey: []
+    confirmKey: [],
+    openFingerPrint: "0"
   },
   /**
    * 数字按钮
@@ -50,6 +51,8 @@ Page({
           key: 'primary',
           data: currentPwd,
           success: res => {
+            // 记得修改全局变量，因为当前的数据都是依赖与全局变量
+            app.globalData.userKey = currentPwd
             wx.showToast({
               title: '设置成功',
             })
@@ -152,6 +155,20 @@ Page({
       })
     }
   },
+
+  // 开启指纹识别
+  checkFingerPrint: function (e) {
+    wx.startSoterAuthentication({
+      requestAuthModes: ['fingerPrint'],
+      challenge: '123456',
+      authContent: '请用指纹解锁',
+      success(res) {
+        wx.switchTab({
+          url: '../main/main',
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -169,6 +186,12 @@ Page({
     }else{
       console.log(app.globalData.userKey)
     }
+
+    // 指纹识别
+    const openFingerPrint = app.globalData.openFingerPrint
+    this.setData({      
+      openFingerPrint: openFingerPrint,      
+    })
   },
 
   /**

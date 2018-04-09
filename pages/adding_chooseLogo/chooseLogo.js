@@ -101,6 +101,8 @@ Page({
           { "name": "百词斩", "path": "/images/logo/card.png" },
           { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },
           { "name": "中关村在线", "path": "/images/logo/zol.png" },
+          { "name": "CET4", "path": "/images/logo/cet4.png" },
+          { "name": "CET6", "path": "/images/logo/cet6.png" },          
         ]
       },
       {

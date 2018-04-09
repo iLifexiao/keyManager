@@ -1,7 +1,6 @@
 //app.js
 App({
   onLaunch: function () {
-
     // 获取用户的primaryKEY
     var key = wx.getStorageSync('primary')
     if (key.length == 0) {
@@ -96,12 +95,42 @@ App({
       this.globalData.accountClassify = accountClassify
       // console.log(accountClassify)
     }
+
+    // 检测是否支持指纹识别
+    wx.checkIsSupportSoterAuthentication({
+      success: res => {
+        let supportMode = res.supportMode
+        if (supportMode.length != 0) {
+          var isSupport = false
+          // forEach里不能使用 this
+          // 同之前的一样
+          supportMode.forEach(function (mode, index) {
+            if (mode == "fingerPrint") {
+              isSupport = true              
+            }
+          })
+          if (isSupport) {
+            this.globalData.supportFinger = "1"
+            console.log("支持指纹识别")
+          }       
+        }
+        else {
+          console.log("不支持指纹识别")
+        }
+      },
+    })
+
+    // 判断是否开启了指纹验证
+    var openFingerPrint = wx.getStorageSync('openFingerPrint') || '0'
+    this.globalData.openFingerPrint = openFingerPrint
   },
 
   globalData: {
     userKey: [],
     secret: {},
     accountClassify: [],
-    accountList: []
+    accountList: [],
+    supportFinger: '0',
+    openFingerPrint: '0'
   }
 })

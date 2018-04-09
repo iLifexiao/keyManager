@@ -11,6 +11,7 @@ Page({
     key: null,
     iv: null
   },
+  
   checkUserKey: function (e) {
     this.setData({
       checkKey: e.detail.value

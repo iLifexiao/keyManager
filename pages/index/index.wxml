@@ -15,8 +15,8 @@
 <!-- 数字按钮（1~9） -->
 <view class='numberKeyBoard' wx:for="{{[1, 4, 7]}}" wx:for-item="begin" wx:key="*this">
   <view class="weui-flex">
-    <view class="weui-flex__item" wx:for="{{[1,2,3]}}" wx:for-index="inc" wx:key="*this" >
-      <button  class='numButton' bindtap='numTap' data-num="{{begin+inc}}">{{begin+inc}}</button>
+    <view class="weui-flex__item" wx:for="{{[1,2,3]}}" wx:for-index="inc" wx:key="*this">
+      <button class='numButton' bindtap='numTap' data-num="{{begin+inc}}">{{begin+inc}}</button>
     </view>
   </view>
 </view>
@@ -24,13 +24,13 @@
 <!-- 重置按钮，删除按钮，0 -->
 <view class='numberKeyBoard'>
   <view class="weui-flex">
-    <view class="weui-flex__item" >
+    <view class="weui-flex__item">
       <button class='numButton' bindtap='clearTap'>CLR</button>
     </view>
-    <view class="weui-flex__item" >
-      <button class='numButton' bindtap='numTap'>0</button>
+    <view class="weui-flex__item">
+      <button class='numButton' bindtap='numTap' data-num="0">0</button>
     </view>
-    <view class="weui-flex__item" >
+    <view class="weui-flex__item">
       <button class='numButton' bindtap='deleteTap'>DEL</button>
     </view>
   </view>
@@ -38,9 +38,12 @@
 
 <!-- 忘记上一次的密码 按钮  -->
 
-<button class='setPwdAgain' bindtap='clearStoreKey' class="weui-btn" type="primary" plain="true" size="mini" wx:if="{{tishi == '在输入一次'}}" >重新设置</button>
+<view class='setPwdAgain'>
+  <button wx:if="{{tishi == '在输入一次'}}" bindtap='clearStoreKey' class="weui-btn" type="primary" plain="true" size="mini" style='color: #00ADB7;border: 1px solid #00ADB7'>重新设置</button>
+</view>
 
-<!-- <button class='setPwdAgain' bindtap='resetLoginPwd' class="weui-btn" type="primary" plain="true" size="mini" >重新设置</button>  -->
+<view class='setPwdAgain'>
+  <button wx:if="{{openFingerPrint == '1'}}" bindtap='checkFingerPrint' class="weui-btn" type="primary" plain="true" size="mini" style='color: #00ADB7;border: 1px solid #00ADB7'>指纹验证</button>
+</view>
 
-
-
+    <!-- <button class='setPwdAgain' bindtap='resetLoginPwd' class="weui-btn" type="primary" plain="true" size="mini" >重新设置</button>  -->

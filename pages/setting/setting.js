@@ -36,6 +36,12 @@ Page({
         "title": "修改登录密码",
         "detail": "",
         "url": "/pages/setting_modifyUserKey/modifyUserKey"
+      },
+      {
+        "iconPath": "/images/fingerprint.png",
+        "title": "设置指纹识别",
+        "detail": "",
+        "url": "/pages/setting_fingerPrint/fingerPrint"
       }
     ],
     softSettingList: [

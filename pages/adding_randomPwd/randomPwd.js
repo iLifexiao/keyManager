@@ -160,8 +160,7 @@ Page({
   checkSecPwd: function (e) {
     var account = this.data.account
     const secPwd = e.detail.value
-    account.secPwd = secPwd
-    account.pwdCount = secPwd.length
+    account.secPwd = secPwd    
     this.setData({
       account: account
     })
@@ -169,7 +168,9 @@ Page({
 
   checkPwd: function (e) {
     var account = this.data.account
-    account.pwd = e.detail.value
+    const pwd = e.detail.value
+    account.pwdCount = pwd.length
+    account.pwd = pwd
     this.setData({
       account: account
     })
