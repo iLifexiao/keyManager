@@ -1,18 +1,18 @@
 <!--index.wxml-->
 <!-- 背景视图 -->
 <view class='bgView'>
-  <input class='searchBar' placeholder='搜索' bindconfirm='searchStart' confirm-type='搜索'></input>
+  <input class='searchBar' placeholder='Search' bindconfirm='searchStart' confirm-type='搜索'></input>
   <image class="dailyimage" src="{{imageURL}}" mode="scaleToFill"></image>
 </view>
 
 <!-- 帐号分类 begin -->
 <view class="icon-box">
-  <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+  <image src="/images/tag.png" style='width: 20px; height: 20px'></image>
   <text style='margin-left: 5px;'>帐号分类</text>
   <image src="/images/recycle.png" bindtap='showInfo' style='margin-left: 66%; width: 23px; height: 23px;'></image>
 </view>
 <view class="weui-grids">
-  <block wx:for="{{accountClassify}}" wx:key="*this">
+  <block wx:for="{{accountClassify}}" wx:key="{{item.name}}">
     <navigator style="background-color:#ffffff" url="{{item.url}}" class="weui-grid" hover-class="weui-grid_active">
       <image class="weui-grid__icon" src="{{item.iconPath}}" />
       <view class="weui-grid__label">{{item.name}}</view>

@@ -50,7 +50,7 @@
       <view class="weui-label">密码位数</view>
     </view>
     <view class="weui-cell__bd">
-      <slider bindchange="accountCountChange" min="6" max="16" value='{{account.pwdCount}}' activeColor='#00ADB7' show-value/>
+      <slider bindchange="accountCountChange" min="0" max="16" value='{{account.pwdCount}}' activeColor='#00ADB7' show-value/>
     </view>
   </view>
 
@@ -73,7 +73,7 @@
       <view class="weui-label">密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input value='{{account.pwd}}' bindinput='checkPwd'></input>
+      <input value='{{account.pwd}}' bindinput='checkPwd' maxlength='16'></input>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='first' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
@@ -86,7 +86,7 @@
       <view class="weui-label">二级密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input value='{{account.secPwd}}' bindinput='checkSecPwd'></input>
+      <input value='{{account.secPwd}}' bindinput='checkSecPwd' maxlength='16'></input>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='second' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
@@ -109,9 +109,9 @@
 <!-- 操作 -->
 <view class="operationButton">
   <block wx:if="{{buttonType == '更新帐号'}}">
-    <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码
+    <button class="weui-btn" type="primary" bindtap='copyPwd' style='background-color: #00ADB7'>复制密码
     </button>
-    <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>{{buttonType}}</button>
+    <button class="weui-btn" type="default" bindtap='saveAccount'>{{buttonType}}</button>
   </block>
   <block wx:else>
     <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>{{buttonType}}</button>

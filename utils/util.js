@@ -128,8 +128,22 @@ function getSearchAccountWith(accName, allAccountList) {
   return accountList
 }
 
+function isEmptyInput(data, info) {
+  if (data.length == 0) {
+    wx.showToast({
+      title: info,
+      image: '/images/exclamatory-mark.png'
+    })
+    return true
+  }
+  return false
+}
+
+
+
 module.exports = {
   formatTime: formatTime,
+  isEmptyInput: isEmptyInput,
   deleteArrayInfo: deleteArrayInfo,
   getIndexInObjectArray: getIndexInObjectArray,
 
@@ -139,5 +153,6 @@ module.exports = {
   getAccountWith: getAccountWith,
   getSearchAccountWith: getSearchAccountWith,
   
+
 }
 

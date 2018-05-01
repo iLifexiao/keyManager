@@ -24,7 +24,6 @@ Page({
       classifyIndex: classifyIndex,
     })
   },
-
   checkKey: function (e) {
     this.setData({
       key: e.detail.value
@@ -35,7 +34,6 @@ Page({
       iv: e.detail.value
     })
   },
-
   getMessage: function (e) {
     this.setData({
       message: e.detail.value
@@ -47,13 +45,12 @@ Page({
       // 输入信息判断
       if (this.data.key.length != 16 || this.data.iv.length != 16) {
         wx.showToast({
-          title: '加密规则格式错误',
+          title: '规则格式错误',
           image: '/images/exclamatory-mark.png'
         })
         return
       }
     }
-
     if (this.data.message.length == 0) {
       wx.showToast({
         title: '明文不能为空',
@@ -62,20 +59,18 @@ Page({
       return
     }
 
-
-    var secret = ""
-    const message = this.data.message
-    const classify = this.data.classify
-    const classifyIndex = this.data.classifyIndex
-    switch (classify[classifyIndex]) {
+    var secret = ""    
+    const classify = this.data.classify    
+    switch (classify[this.data.classifyIndex]) {
       case "AES":
-        secret = this.Encrypt(message, this.data.key, this.data.iv);
+        secret = this.Encrypt(this.data.message, this.data.key, this.data.iv);
         break;
-      case "AES(dynamic)":
-        secret = this.Encrypt(message, this.data.key, this.data.iv);
+      case "AES(动态)":
+        secret = this.Encrypt(this.data.message, this.data.key, this.data.iv);
         break;
       default:
-        console.log("default");
+        console.log("default")
+        break;
     }
     this.setData({
       secret: secret
@@ -98,8 +93,8 @@ Page({
   },
 
   /**
-* AES 加密
-*/
+  * AES 加密
+  */
   Encrypt: function (word, key, iv) {
     var srcs = fun_aes.CryptoJS.enc.Utf8.parse(word);
     var encrypted = fun_aes.CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: fun_aes.CryptoJS.mode.CBC, padding: fun_aes.CryptoJS.pad.Pkcs7 });
@@ -118,33 +113,5 @@ Page({
       key: key,
       iv: iv
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
   }
 })

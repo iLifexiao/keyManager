@@ -157,15 +157,6 @@ Page({
    * 随机生成的密码用户可以修改
    * 如果用户修改了密码的状态，同时也要修改密码长度
    */
-  checkSecPwd: function (e) {
-    var account = this.data.account
-    const secPwd = e.detail.value
-    account.secPwd = secPwd    
-    this.setData({
-      account: account
-    })
-  },
-
   checkPwd: function (e) {
     var account = this.data.account
     const pwd = e.detail.value
@@ -175,6 +166,15 @@ Page({
       account: account
     })
   },
+  checkSecPwd: function (e) {
+    var account = this.data.account
+    const secPwd = e.detail.value
+    account.secPwd = secPwd
+    this.setData({
+      account: account
+    })
+  },
+
   /**
    * 随机生成密码
    */
@@ -207,24 +207,25 @@ Page({
 
       // 判断当前密码的种类
       const pwdType = e.currentTarget.dataset.pwdType
+      var account = this.data.account
       switch (pwdType) {
-        case "first":
-          var account = this.data.account
-          account.pwd = tempPwd
-          this.setData({
-            account: account
-          })
+        case "first":          
+          account.pwd = tempPwd          
           break;
         case "second":
-          var account = this.data.account
           account.secPwd = tempPwd
-          this.setData({
-            account: account
-          })
           break;
         default:
           break;
       }
+      this.setData({
+        account: account
+      })
+    } else {
+      wx.showToast({
+        title: '至少有一个规则',
+        image: '/images/exclamatory-mark.png'
+      })
     }
   },
   /**
@@ -232,27 +233,15 @@ Page({
    */
   saveAccount: function (e) {
     // 输入信息判断
-    if (this.data.tempName.length == 0) {
-      wx.showToast({
-        title: '帐号名称不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.tempName, "帐号名称不能为空")) {
       return
     }
-    if (this.data.account.acc.length == 0) {
-      wx.showToast({
-        title: '帐号不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.account.acc, "帐号不能为空")) {
       return
     }
-    if (this.data.account.pwd.length == 0) {
-      wx.showToast({
-        title: '密码不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.account.pwd, "密码不能为空")) {
       return
-    }
+    } 
 
     // 判断页面状态
     if (this.data.buttonType == "更新帐号") {
@@ -262,38 +251,14 @@ Page({
 
     switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
       case '常用图标':
-        var account = this.data.account
-        account.icon = this.data.tempIcon
-        account.name = this.data.tempName
-        this.setData({
-          account: account
-        })
-        console.log(account)
-        if (this.data.buttonType == "更新帐号") {
-          this.modifyAccount(account, this.data.accountIndex)
-        } else {
-          const newAccountList = util.addAccount(account, app.globalData.accountList)
-          app.globalData.accountList = newAccountList
-        }
+        this.saveWithIconPath(this.data.tempIcon)      
         break;
       case '从相册中选择':
         wx.saveFile({
           tempFilePath: this.data.tempIcon,
           success: res => {
-            var account = this.data.account
-            account.icon = res.savedFilePath
-            account.name = this.data.tempName
-            this.setData({
-              account: account
-            })
-            console.log(account)
-            if (this.data.buttonType == "更新帐号") {
-              this.modifyAccount(account, this.data.accountIndex)
-            } else {
-              const newAccountList = util.addAccount(account, app.globalData.accountList)
-              app.globalData.accountList = newAccountList
-            }
-          }
+            this.saveWithIconPath(res.savedFilePath)            
+            }          
         })
         break;
       default:
@@ -302,7 +267,22 @@ Page({
     }
   },
 
-  // 
+  saveWithIconPath: function (path) {          
+    var account = this.data.account
+    account.icon = path
+    account.name = this.data.tempName
+    this.setData({
+      account: account
+    })
+    console.log(account)
+    if (this.data.buttonType == "更新帐号") {
+      this.modifyAccount(account, this.data.accountIndex)
+    } else {
+      const newAccountList = util.addAccount(account, app.globalData.accountList)
+      app.globalData.accountList = newAccountList
+    }
+  },
+
   /**
    * 判断图片是否为缓存中 || icon列表中的图片
    * 是, 则设置图标为普通类型
@@ -319,6 +299,7 @@ Page({
   },
 
   modifyAccount: function (account, index) {
+    // 全局信息
     const allAccountList = app.globalData.accountList
     allAccountList[index] = account
     app.globalData.accountList = allAccountList
@@ -451,8 +432,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const accountClassify = app.globalData.accountClassify
-    const existClassify = util.getExistClassify(accountClassify)
+    const existClassify = util.getExistClassify(app.globalData.accountClassify)
     this.setData({
       classify: existClassify
     })
@@ -464,18 +444,12 @@ Page({
       this.getExistIconPathList()      
       const account = JSON.parse(options.accountJSON)
       // 获取帐号的点击位置（上一页）和类型（未修改时）
-      const accType = options.accType
-      const tapIndex = options.tapIndex
-
-      const allAccountList = app.globalData.accountList
-      const accountIndex = util.getIndexInObjectArray(allAccountList, account)
-      console.log('accountIndex:', accountIndex)
       const classifyIndex = existClassify.indexOf(account.kind)
       this.setData({        
         account: account,
-        accType: accType,
-        tapIndex: tapIndex,
-        accountIndex: accountIndex,
+        accType: options.accType,
+        tapIndex: options.tapIndex,
+        accountIndex: options.accountIndex,
         tempIcon: account.icon,
         tempName: account.name,
         classifyIndex: classifyIndex,
@@ -490,32 +464,4 @@ Page({
       })
     }
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  }
 })

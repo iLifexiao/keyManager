@@ -1,4 +1,7 @@
 <!-- 添加帐号 begin  -->
+<view class="icon-box">
+</view>
+
 <view class="weui-cells weui-cells_after-title">
   <block wx:for="{{addList}}" wx:key="*this">
     <navigator url="{{item.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">

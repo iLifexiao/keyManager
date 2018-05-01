@@ -22,7 +22,6 @@ Page({
       classifyIndex: classifyIndex,
     })
   },
-
   getMessage: function (e) {
     this.setData({
       message: e.detail.value
@@ -43,9 +42,8 @@ Page({
 
     var secret = ""
     const message = this.data.message
-    const classify = this.data.classify
-    const classifyIndex = this.data.classifyIndex
-    switch (classify[classifyIndex]) {
+    const classify = this.data.classify    
+    switch (classify[this.data.classifyIndex]) {
       case "MD5":
         secret = fun_md5.hex_md5(message);
         break;
@@ -91,32 +89,4 @@ Page({
   onLoad: function (options) {
 
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  }
 })

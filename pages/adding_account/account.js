@@ -22,6 +22,7 @@ Page({
     classify: [],
     classifyIndex: 0,
   },
+
   selectIcon: function (e) {
     wx.showActionSheet({
       itemList: this.data.iconTypeList,
@@ -77,54 +78,24 @@ Page({
 
   saveAccount: function (e) {
     // 输入信息判断
-    if (this.data.tempName.length == 0) {
-      wx.showToast({
-        title: '帐号名称不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.tempName, "帐号名称不能为空")) {
       return
     }
-    if (this.data.account.acc.length == 0) {
-      wx.showToast({
-        title: '帐号不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.account.acc, "帐号不能为空")) {
       return
     }
-    if (this.data.account.pwd.length == 0) {
-      wx.showToast({
-        title: '密码不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.account.pwd, "密码不能为空")) {
       return
-    }    
+    }   
     switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
       case '常用图标':
-        var account = this.data.account
-        account.icon = this.data.tempIcon
-        account.name = this.data.tempName
-        this.setData({
-          account: account
-        })
-        console.log(account)
-        const newAccountList = util.addAccount(account, app.globalData.accountList)
-        // 更新全局变量
-        app.globalData.accountList = newAccountList        
+        this.saveWithIconPath(this.data.tempIcon)
         break;
       case '从相册中选择':
         wx.saveFile({
           tempFilePath: this.data.tempIcon,
           success: res => {
-            var account = this.data.account
-            account.icon = res.savedFilePath
-            account.name = this.data.tempName
-            this.setData({
-              account: account
-            })
-            console.log(account)
-            const newAccountList = util.addAccount(account, app.globalData.accountList)
-            // 更新全局变量
-            app.globalData.accountList = newAccountList
+            this.saveWithIconPath(res.savedFilePath)            
           }
         })
         break;
@@ -133,6 +104,20 @@ Page({
         break;
     }
   },
+
+  saveWithIconPath: function(path) {
+    var account = this.data.account
+    account.icon = path
+    account.name = this.data.tempName
+    this.setData({
+      account: account
+    })
+    console.log(account)
+    const newAccountList = util.addAccount(account, app.globalData.accountList)
+    // 更新全局变量
+    app.globalData.accountList = newAccountList
+  },
+
 
   // 输入框失去焦点的响应事件
   checkAccountName: function (e) {        
@@ -172,39 +157,10 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    const accountClassify = app.globalData.accountClassify
-    const existClassify = util.getExistClassify(accountClassify)
+  onLoad: function (options) {    
+    const existClassify = util.getExistClassify(app.globalData.accountClassify)
     this.setData({
       classify: existClassify
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
-  }
 })

@@ -7,7 +7,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">版本</view>
-    <view class="weui-cell__ft">1.1.1</view>
+    <view class="weui-cell__ft">1.2.0</view>
   </view>
   <view class="weui-cell" bindtap='copyGitHubAddr'>
     <view class="weui-cell__bd">代码开源</view>
@@ -21,7 +21,7 @@
 
 <view class="page__hd">
   <view class="page__desc">
-    程序提供保存帐号密码、导出、导入、清空本帐号地密码等功能。一键生成密码、添加已有密码、本地信息加密。第一次使用需要设置登录密。有任何建议和问题可以通过下方的吐槽链接联系我们！
+    程序提供保存帐号密码、导出、导入、清空本帐号地密码等功能。一键生成密码、添加已有密码、本地信息加密。第一次使用需要设置登录密码，并且对支持指纹识别的机器提供支持。有任何建议和问题可以通过下方的吐槽链接联系我们！
   </view>
 </view>
 

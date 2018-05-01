@@ -13,6 +13,7 @@ Page({
       checkKey: e.detail.value
     })
   },
+  
   clearAllAccount: function () {
     if (this.data.checkKey.length == 0) {
       wx.showToast({

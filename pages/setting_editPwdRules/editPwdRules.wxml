@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">密码规则</view>
-  <view class="page__desc">AES对称加密，需要使用密钥(key)，和密钥偏移量(iv)来完成工作，导入/导出的帐号是通过 key & iv 完成加密/解密。所以请妥善保存该信息，修改密码后原先备份的数据将不能使用</view>
+  <view class="page__desc">AES对称加密，需要使用密钥(key)，和密钥偏移量(iv)来完成工作。导入/导出的帐号是通过 key & iv 完成加密/解密。请妥善保存该信息，修改密码后原先备份的数据将不能使用!!!</view>
 </view>
 
 <view class="weui-cells weui-cells_after-title">
@@ -20,7 +20,7 @@
       <view class="weui-label">加密规则</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入16位数字" bindblur='checkKey' maxlength='16' type='number'/>
+      <input class="weui-input" placeholder="16位数字十六进制" bindblur='checkKey' maxlength='16' type='number'/>
     </view>
   </view>
 
@@ -30,7 +30,7 @@
       <view class="weui-label">密码偏移</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入16位数字" bindinput='checkIV' maxlength='16' type='number' />
+      <input class="weui-input" placeholder="16位数字十六进制" bindinput='checkIV' maxlength='16' type='number' />
     </view>
   </view>
 </view>

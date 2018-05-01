@@ -17,13 +17,12 @@ Page({
   showDetail: function (e) {
     const account = e.currentTarget.dataset.account
     // 数组对象的比较还包括了指针, 所以即使内容完全一样，也无法查找到
-    const allAccountList = app.globalData.accountList
-    const accountIndex = util.getIndexInObjectArray(allAccountList, account)
+    const accountIndex = util.getIndexInObjectArray(app.globalData.accountList, account)
     const tapIndex = util.getIndexInObjectArray(this.data.accountList, account)
 
     // 传递type & 当前的点击位置信息，用来修改信息
     const url = '../adding_randomPwd/randomPwd?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex
-    console.log("url:",url)    
+    // console.log("url:",url)    
     wx.navigateTo({
       url: url,
     })
@@ -34,12 +33,12 @@ Page({
    */
   showOperation: function (e) {
     // 记录当前点击的行（显示的数据）
-    const account = e.currentTarget.dataset.account    
-    const currentAccountIndex = util.getIndexInObjectArray(this.data.accountList, account)
-    console.log(currentAccountIndex)
+    const account = e.currentTarget.dataset.account        
     this.setData({
-      currentAccountIndex: currentAccountIndex
+      currentAccountIndex: util.getIndexInObjectArray(this.data.accountList, account)
     })
+
+    // TODO: 添加分享操作
     wx.showActionSheet({
       itemList: ["删除"],
       itemColor: '#00ADB7',
@@ -59,19 +58,14 @@ Page({
 
   // Source下方可以使用断点调试
   deleteAccount: function (account) { 
-    // 当前信息   
-    const accountList = this.data.accountList
-    const currentAccountIndex = this.data.currentAccountIndex
-    const newArray = util.deleteArrayInfo(accountList, currentAccountIndex)
+    // 当前信息               
     this.setData({
-      accountList: newArray
+      accountList: util.deleteArrayInfo(this.data.accountList, this.data.currentAccountIndex)
     })
 
     // 缓存信息
-    const allAccountList = app.globalData.accountList
-    const accountIndex = util.getIndexInObjectArray(allAccountList,account)
-    console.log('accountIndex',accountIndex)
-    const newAccountList = util.deleteArrayInfo(allAccountList, accountIndex)
+    const accountIndex = util.getIndexInObjectArray(app.globalData.accountList, account)
+    const newAccountList = util.deleteArrayInfo(app.globalData.accountList, accountIndex)
     wx.setStorage({
       key: 'account',
       data: newAccountList,
@@ -81,8 +75,38 @@ Page({
         })
       }
     })
+
     // 更新全局变量
     app.globalData.accountList = newAccountList 
+  },
+
+  handleSearchList: function (accountListJson) {
+    wx.setNavigationBarTitle({
+      title: "搜索结果",
+    })
+    const accountDict = JSON.parse(accountListJson)
+    const accountList = accountDict.value
+    this.setData({
+      accountList: accountList
+    })
+  },
+
+  handleTypeList: function (tempType) {
+    wx.setNavigationBarTitle({
+      title: tempType + '帐号',
+    })
+    const accountList = util.getAccountWith(tempType, app.globalData.accountList)
+    if (accountList.length == 0) {
+      this.setData({
+        accType: tempType,
+        emptyInfo: "暂无 " + tempType + " 的帐号"
+      })
+    } else {
+      this.setData({
+        accType: tempType,
+        accountList: accountList
+      })
+    }    
   },
 
   /**
@@ -90,33 +114,11 @@ Page({
    */
   onLoad: function (options) {
     // 判断跳转类型
-    var tempType = options.type || ""
-    // 搜索跳转
+    var tempType = options.type || ""    
     if (tempType == "") {
-      wx.setNavigationBarTitle({
-        title: "搜索结果",
-      })
-      const accountDict = JSON.parse(options.accountListJson)
-      const accountList = accountDict.value
-      this.setData({
-        accountList: accountList
-      })
+      this.handleSearchList(options.accountListJson)
     } else {
-      wx.setNavigationBarTitle({
-        title: tempType + '帐号',
-      })
-      const accountList = util.getAccountWith(tempType, app.globalData.accountList)
-      if (accountList.length == 0) {
-        this.setData({
-          accType: tempType,
-          emptyInfo: "暂无 " + tempType + " 的帐号"
-        })
-      } else {
-        this.setData({
-          accType: tempType,
-          accountList: accountList
-        })
-      }      
+      this.handleTypeList(tempType)
     }
   },
 })

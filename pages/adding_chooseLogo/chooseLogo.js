@@ -1,5 +1,4 @@
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -129,19 +128,16 @@ Page({
    * 二、可以通过设置数据存储 wx.setStorage
    */
   selectIcon: function (e) {
-    var pages = getCurrentPages()
-    const iconPath = e.currentTarget.dataset.path
-    const iconName = e.currentTarget.dataset.name
+    var pages = getCurrentPages()     
     var that = pages[pages.length - 2]
-
     if (that.__route__ == "pages/adding_randomPwd/randomPwd") {
       wx.navigateBack({
         delta: 1,
         success: res => {
           // 回传 图标路径 & 图标名字
           that.setData({
-            tempIcon: iconPath,
-            tempName: iconName
+            tempIcon: e.currentTarget.dataset.path,
+            tempName: e.currentTarget.dataset.name
           })
         }
       })
@@ -151,8 +147,8 @@ Page({
         success: res => {
           // 回传 图标路径 & 图标名字
           that.setData({
-            tempIcon: iconPath,
-            tempName: iconName
+            tempIcon: e.currentTarget.dataset.path,
+            tempName: e.currentTarget.dataset.name
           })
         }
       })
@@ -164,11 +160,4 @@ Page({
   onLoad: function (options) {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

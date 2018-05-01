@@ -1,8 +1,7 @@
 <!-- 已经添加分类 -->
 <view class="icon-box">
-  <image src="/images/classify.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>已有分类</text>
 </view>
+
 <view class="weui-cells weui-cells_after-title">
   <view wx:for="{{accountClassify}}" id='{{item.name}}' class="weui-cell" bindlongpress='changeClassify' wx:key="{{item.name}}">
     <view class="weui-cell__hd">
@@ -14,8 +13,8 @@
 
 <!-- 添加分类 -->
 <view class="icon-box">
-  <image src="/images/newClassify.png" style='width: 23px; height: 23px'></image>
-  <text style='margin-left: 5px;'>新增分类</text>
+  <image src="/images/classify.png" style='width: 20px; height: 20px'></image>
+  <text style='margin-left: 5px;'>管理分类</text>
 </view>
 <view class="weui-cells weui-cells_after-title">
   <!-- 分类图标 -->
@@ -24,7 +23,7 @@
       <view class="weui-label">默认图标</view>
     </view>
     <view class="weui-cell__bd">
-      <image class="weui-vcode-img" src="{{tempIconPath}}" style='width: 44px'></image>
+      <image src="{{tempIconPath}}" style="margin-right: 5px;vertical-align: middle;width:30px; height: 30px;"></image>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" bindtap='selectIcon' style='color: #00ADB7'>更换图标</view>

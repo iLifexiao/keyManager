@@ -89,8 +89,7 @@ App({
         }
       ],
       wx.setStorageSync("accountClassify", accountClassify)
-      this.globalData.accountClassify = accountClassify
-      // console.log(accountClassify)
+      this.globalData.accountClassify = accountClassify      
     } else {
       this.globalData.accountClassify = accountClassify
       // console.log(accountClassify)
