@@ -52,6 +52,7 @@ page {
   width: 100%;
   height: 100%;
   display: flex;
+  margin-top: 80px;
   flex-direction: column;
   justify-content: center;
   align-items: center;

@@ -10,7 +10,7 @@
       <view class="weui-label">旧密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入旧密码" bindblur='checkOldPassword' maxlength='6' type='number' password='true'/>
+      <input class="weui-input" placeholder="请输入旧密码" bindinput='checkOldPassword' maxlength='6' type='number' password='true'/>
     </view>
   </view>
 
@@ -20,7 +20,7 @@
       <view class="weui-label">新密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入6位新密码" bindblur='checkNewPassword' maxlength='6' type='number' password='true'/>
+      <input class="weui-input" placeholder="请输入6位新密码" bindinput='checkNewPassword' maxlength='6' type='number' password='true'/>
     </view>
   </view>
 

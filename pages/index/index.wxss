@@ -22,7 +22,7 @@
 .numberKeyBoard {
   align-items: center;
   padding: 20px;
-  margin-top: 40px 20px 0px 20px;
+  margin-top: 20px 20px 0px 20px;
 }
 .numButton {
   width: 60px;

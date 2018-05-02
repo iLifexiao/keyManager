@@ -14,6 +14,13 @@ function formatNumber(n) {
   return n[1] ? n : '0' + n
 }
 
+function hideKeyboard(value, len) {
+  //收起键盘
+  if (value.length == len) {
+    wx.hideKeyboard();
+  }
+}
+
 /**
  * 删除 Array中的数据的任一 index 位置的数据 
  */
@@ -153,6 +160,6 @@ module.exports = {
   getAccountWith: getAccountWith,
   getSearchAccountWith: getSearchAccountWith,
   
-
+  hideKeyboard: hideKeyboard
 }
 

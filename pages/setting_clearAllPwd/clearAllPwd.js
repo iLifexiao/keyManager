@@ -1,3 +1,4 @@
+const util = require('../../utils/util.js')
 const app = getApp()
 Page({
   /**
@@ -8,26 +9,23 @@ Page({
     checkKey: "",
     accountList: []
   },
+
   checkUserKey: function (e) {
     this.setData({
       checkKey: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 6)    
   },
-  
+
   clearAllAccount: function () {
-    if (this.data.checkKey.length == 0) {
-      wx.showToast({
-        title: '请验证身份',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {
       return
     }
 
-    const userKey = this.data.userKey
     const checkKey = this.data.checkKey
-
     // 确认密码
-    if (checkKey == userKey) {
+    if (checkKey == this.data.userKey) {
       app.globalData.accountList = []
       wx.setStorage({
         key: 'account',
@@ -61,7 +59,7 @@ Page({
    */
   onLoad: function (options) {
     const userKeyArray = app.globalData.userKey
-    var userKey = userKeyArray.join("")    
+    var userKey = userKeyArray.join("")
 
     // 判断是否有可导出帐号
     const accountList = app.globalData.accountList

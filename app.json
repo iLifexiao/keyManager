@@ -12,6 +12,7 @@
     "pages/setting_exportPwd/exportPwd",
     "pages/setting_importPwd/importPwd",
     "pages/setting_clearAllPwd/clearAllPwd",
+    "pages/setting_resetSoft/resetSoft",
     "pages/setting_editPwdRules/editPwdRules",
     "pages/setting_modifyUserKey/modifyUserKey",
     "pages/setting_help/help",
@@ -19,7 +20,8 @@
     "pages/setting_advices/advices",
     "pages/setting_accountClassify/accountClassify",
     "pages/setting_fingerPrint/fingerPrint",
-    "pages/showAccount/showaccount"
+    "pages/showAccount/showaccount",
+    "pages/shareAccount/shareAccount"
   ],
   "window": {
     "backgroundTextStyle": "light",

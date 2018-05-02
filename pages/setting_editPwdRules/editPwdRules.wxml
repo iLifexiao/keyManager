@@ -10,7 +10,7 @@
       <view class="weui-label">登录密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请验证身份" bindblur='checkUserKey' maxlength='6' type='number' password='true'/>
+      <input class="weui-input" placeholder="请验证身份" bindinput='checkUserKey' maxlength='6' type='number' password='true'/>
     </view>
   </view>
 
@@ -20,7 +20,7 @@
       <view class="weui-label">加密规则</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="16位数字十六进制" bindblur='checkKey' maxlength='16' type='number'/>
+      <input class="weui-input" placeholder="16位数字十六进制" bindinput='checkKey' maxlength='16' type='number'/>
     </view>
   </view>
 

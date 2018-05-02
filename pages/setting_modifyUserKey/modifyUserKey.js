@@ -1,4 +1,4 @@
-//获取应用实例
+const util = require('../../utils/util.js')
 const app = getApp()
 
 Page({
@@ -16,27 +16,29 @@ Page({
     this.setData({
       oldPwd: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 6)    
   },
 
   checkNewPassword: function (e) {
     this.setData({
       newPwd: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 6)
   },
 
   checkSamePassword: function (e) {
     this.setData({
       checkPwd: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 6)
   },
 
   changePassword: function (e) {
-    const oldPwd = this.data.oldPwd
-    if (oldPwd.length == 0) {
-      wx.showToast({
-        title: '请验证身份',
-        image: '/images/exclamatory-mark.png'
-      })
+    const oldPwd = this.data.oldPwd    
+    if (util.isEmptyInput(oldPwd, '请验证身份')) {      
       return
     }
 

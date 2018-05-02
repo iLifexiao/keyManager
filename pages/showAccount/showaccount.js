@@ -62,7 +62,6 @@ Page({
     this.setData({
       accountList: util.deleteArrayInfo(this.data.accountList, this.data.currentAccountIndex)
     })
-
     // 缓存信息
     const accountIndex = util.getIndexInObjectArray(app.globalData.accountList, account)
     const newAccountList = util.deleteArrayInfo(app.globalData.accountList, accountIndex)
@@ -75,7 +74,6 @@ Page({
         })
       }
     })
-
     // 更新全局变量
     app.globalData.accountList = newAccountList 
   },
@@ -120,5 +118,5 @@ Page({
     } else {
       this.handleTypeList(tempType)
     }
-  },
+  },  
 })

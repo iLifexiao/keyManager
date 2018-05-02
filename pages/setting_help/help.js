@@ -75,10 +75,10 @@ Page({
         "qAnswer": "主页背景图片上有一个半透明的搜索框，输入帐号的名称即可搜索"
       },
       {
-        "question": "我有建议和问题怎么联系你？",
+        "question": "可以分享帐号吗？",
         "qIndex": 14,
-        "qAnswer": "设置->关于软件里面有我的邮箱帐号，也可以通过设置->我要吐槽告诉我，或者GitHub联系我"
-      }  
+        "qAnswer": "到你要分享的帐号的里，点击页面的右上角的三个点，在弹出来的选项中选中转发即可"
+      }, 
     ]
   },
 
@@ -88,7 +88,6 @@ Page({
      * 不能有大写(大写会自动转成小写)如data-element-type，
      * 最终在 event.currentTarget.dataset 中会将连字符转成驼峰elementType
      */
-
     const qIndex = e.currentTarget.dataset.qIndex    
     const qAnswer = this.data.helpList[qIndex].qAnswer
     wx.showModal({

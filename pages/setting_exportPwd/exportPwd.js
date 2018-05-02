@@ -1,3 +1,4 @@
+const util = require('../../utils/util.js')
 var fun_aes = require('../../utils/aes.js')
 const app = getApp()
 Page({
@@ -16,14 +17,12 @@ Page({
     this.setData({
       checkKey: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 6)    
   },
 
   exportAllAccount: function (e) {
-    if (this.data.checkKey.length == 0) {
-      wx.showToast({
-        title: '请验证身份',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {      
       return
     }
     const userKey = this.data.userKey

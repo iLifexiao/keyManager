@@ -16,6 +16,12 @@ Page({
           { "name": "谷歌", "path": "/images/logo/chrome.png" },
           { "name": "LINE", "path": "/images/logo/line.png" },
           { "name": "易信", "path": "/images/logo/yixin.png" },
+          { "name": "Twitter", "path": "/images/logo/twitter.png" },
+          { "name": "Facebook", "path": "/images/logo/Facebook.png" },
+          { "name": "Skype", "path": "/images/logo/skype.png" },
+          { "name": "Ins", "path": "/images/logo/ins.png" },
+          { "name": "MOMO", "path": "/images/logo/momo.png" },
+          { "name": "易信", "path": "/images/logo/yixin.png" },
         ]
       },
       {
@@ -83,11 +89,21 @@ Page({
           { "name": "去哪儿", "path": "/images/logo/qunaer.png" },
           { "name": "滴滴", "path": "/images/logo/didi.png" },
           { "name": "携程旅行", "path": "/images/logo/ctrip.png" },
+          { "name": "12306", "path": "/images/logo/12306.png" },
+        ]
+      },
+      {
+        "type": "游戏",
+        "icons": [
+          { "name": "腾讯游戏", "path": "/images/logo/tg.png" },
+          { "name": "网易游戏", "path": "/images/logo/wyg.png" },
+          { "name": "Steam", "path": "/images/logo/steam.png" },          
         ]
       },
       {
         "type": "学习",
-        "icons": [
+        "icons": [          
+          { "name": "GitHub", "path": "/images/logo/GitHub.png" },
           { "name": "VOA", "path": "/images/logo/voa.png" },
           { "name": "必应词典", "path": "/images/logo/bingdic.png" },
           { "name": "沪江网校", "path": "/images/logo/hjclass.png" },
@@ -100,6 +116,7 @@ Page({
           { "name": "百词斩", "path": "/images/logo/card.png" },
           { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },
           { "name": "中关村在线", "path": "/images/logo/zol.png" },
+          { "name": "CSDN", "path": "/images/logo/csdn.png" },          
           { "name": "CET4", "path": "/images/logo/cet4.png" },
           { "name": "CET6", "path": "/images/logo/cet6.png" },          
         ]
@@ -110,6 +127,7 @@ Page({
           { "name": "随手记", "path": "/images/logo/mymoney.png" },
           { "name": "UC", "path": "/images/logo/uc.png" },
           { "name": "VPN", "path": "/images/logo/vpn.png" },
+          { "name": "API", "path": "/images/logo/APIInterface.png" },
           { "name": "豌豆荚", "path": "/images/logo/wandoujia.png" },
           { "name": "猪八戒", "path": "/images/logo/zhubajie.png" },
           { "name": "LBE安全大师", "path": "/images/logo/lbe.png" },
@@ -117,6 +135,7 @@ Page({
           { "name": "火狐", "path": "/images/logo/firefox.png" },
           { "name": "映像笔记", "path": "/images/logo/evernote.png" },
           { "name": "全能扫描王", "path": "/images/logo/camscanner.png" },
+          { "name": "Wordpress", "path": "/images/logo/wordpress.png" },                    
         ]
       },
     ]

@@ -21,6 +21,12 @@ Page({
         "title": "清空帐号",
         "detail": "",
         "url": "/pages/setting_clearAllPwd/clearAllPwd"
+      },
+      {
+        "iconPath": "/images/reset.png",
+        "title": "重置软件",
+        "detail": "",
+        "url": "/pages/setting_resetSoft/resetSoft"
       }
     ],
     encodeSettingList: [

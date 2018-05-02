@@ -1,4 +1,4 @@
-var util = require('../../utils/util.js')
+const util = require('../../utils/util.js')
 const app = getApp()
 
 Page({
@@ -20,7 +20,7 @@ Page({
     }
 
     const accountList = util.getSearchAccountWith(searchKey, app.globalData.accountList)
-    if (util.isEmptyInput(accountList, '没有 ' + searchKey + '帐号信息')) { 
+    if (util.isEmptyInput(accountList, '无 ' + searchKey + ' 的信息')) { 
       return
     } 
     // 对于复杂数据 采用 JSON.stringify
@@ -54,5 +54,11 @@ Page({
     this.setData({
       accountClassify: app.globalData.accountClassify
     })
+  },
+  /**
+   * 用户点击右上角分享
+  */
+  onShareAppMessage: function () {
+
   }
 })

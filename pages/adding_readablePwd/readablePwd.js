@@ -1,7 +1,6 @@
-// 导入全局数据和模块
-const app = getApp()
+const util = require('../../utils/util.js')
 var fun_aes = require('../../utils/aes.js')
-
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -28,11 +27,13 @@ Page({
     this.setData({
       key: e.detail.value
     })
+    util.hideKeyboard(e.detail.value, 16)
   },
   checkIV: function (e) {
     this.setData({
       iv: e.detail.value
     })
+    util.hideKeyboard(e.detail.value, 16)
   },
   getMessage: function (e) {
     this.setData({
@@ -51,13 +52,9 @@ Page({
         return
       }
     }
-    if (this.data.message.length == 0) {
-      wx.showToast({
-        title: '明文不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.message, "明文不能为")) {
       return
-    }
+    }        
 
     var secret = ""    
     const classify = this.data.classify    

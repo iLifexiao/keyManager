@@ -1,5 +1,5 @@
-var util = require('../../utils/util.js')
-var app = getApp()
+const util = require('../../utils/util.js')
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -78,7 +78,7 @@ Page({
 
   saveAccount: function (e) {
     // 输入信息判断
-    if (util.isEmptyInput(this.data.tempName, "帐号名称不能为空")) {
+    if (util.isEmptyInput(this.data.tempName, "名称不能为空")) {
       return
     }
     if (util.isEmptyInput(this.data.account.acc, "帐号不能为空")) {
@@ -117,7 +117,6 @@ Page({
     // 更新全局变量
     app.globalData.accountList = newAccountList
   },
-
 
   // 输入框失去焦点的响应事件
   checkAccountName: function (e) {        

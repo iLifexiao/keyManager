@@ -1,0 +1,76 @@
+<view class="weui-cells weui-cells_after-title">
+  <!-- 帐号图标 -->
+  <view class="weui-cell weui-cell_input weui-cell_vcode">
+    <view class="weui-cell__hd">
+      <view class="weui-label">图标</view>
+    </view>
+    <view class="weui-cell__bd">
+      <image class="weui-vcode-img" src="{{account.icon}}" style='width: 44px'></image>
+    </view>    
+  </view>
+
+  <!-- 帐号分类 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">分类</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" disabled='true' value="{{account.kind}}"/>
+    </view>
+  </view>
+
+  <!-- 帐号名称 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">名称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" disabled='true' value="{{account.name}}"/>
+    </view>
+  </view>
+
+  <!-- 帐号 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">帐号</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" value="{{account.acc}}"/>
+    </view>
+  </view>
+
+  <!-- 密码 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" value="{{account.pwd}}"/>
+    </view>
+  </view>
+
+  <!-- 二级密码 -->
+  <view class="weui-cell weui-cell_input" wx:if="{{account.kind == '游戏'}}">
+    <view class="weui-cell__hd">
+      <view class="weui-label">二级密码</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" value="{{account.secPwd}}"/>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">备注</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="可选" value="{{account.remarks}}"/>
+    </view>
+  </view>
+</view>
+
+<!-- 操作 -->
+<view class="operationButton">
+  <button class="weui-btn" type="primary" bindtap='copyPwd' style='background-color: #00ADB7'>复制密码</button>
+</view>

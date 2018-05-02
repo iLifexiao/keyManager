@@ -1,3 +1,4 @@
+const util = require('../../utils/util.js')
 var app = getApp()
 Page({
 
@@ -15,17 +16,15 @@ Page({
     this.setData({
       checkKey: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 6)    
   },
 
   settingFingerPrint: function (e) {
     const settingType = e.currentTarget.dataset.setting
-    if (this.data.checkKey.length == 0) {
-      wx.showToast({
-        title: '请验证身份',
-        image: '/images/exclamatory-mark.png'
-      })
+    if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {
       return
-    }
+    }    
     let userKey = this.data.userKey
     if (userKey == this.data.checkKey) {
       if (settingType == "open") {
@@ -35,10 +34,12 @@ Page({
           success: res => {
             app.globalData.openFingerPrint = "1"
             wx.navigateBack({
-            })
-            wx.showToast({
-              title: '开启成功',
-            })
+              success: res => {
+                wx.showToast({
+                  title: '开启成功',
+                })
+              }
+            })            
           }
         })
       }
@@ -73,7 +74,6 @@ Page({
     const userKey = userKeyArray.join("")
     const supportFinger = app.globalData.supportFinger
     const openFingerPrint = app.globalData.openFingerPrint
-
 
     this.setData({
       userKey: userKey,

@@ -1,5 +1,5 @@
-var util = require('../../utils/util.js')
-var app = getApp()
+const util = require('../../utils/util.js')
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -191,20 +191,7 @@ Page({
 
     // 必须有选择密码种类
     if (rules.length > 0) {
-      const pwdCount = this.data.account.pwdCount
-      const passwordCompoent = this.data.passwordCompoent
-      for (var i = 0; i < pwdCount; ++i) {
-        // 随机选择一个种类
-        var kindIndex = Math.floor(Math.random() * rules.length)
-        var kind = rules[kindIndex]
-        var compoent = passwordCompoent[kind]
-
-        // 随机种类中的随机元素
-        var compoentIndex = Math.floor(Math.random() * compoent.length)
-        var randomValue = compoent[compoentIndex]
-        tempPwd += randomValue
-      }
-
+      tempPwd = this.creatRandomPwdWithRules(rules)
       // 判断当前密码的种类
       const pwdType = e.currentTarget.dataset.pwdType
       var account = this.data.account
@@ -229,11 +216,28 @@ Page({
     }
   },
   /**
+   * 根据密码规则，生成随机密码
+   */
+  creatRandomPwd: function (rules) {
+    randomPwd = ""        
+    for (var i = 0; i < this.data.account.pwdCount; ++i) {
+      // 随机选择一个种类
+      const kindIndex = Math.floor(Math.random() * rules.length)
+      const kind = rules[kindIndex]
+      const compoent = this.data.passwordCompoent[kind]
+      // 随机种类中的随机元素
+      const compoentIndex = Math.floor(Math.random() * compoent.length)
+      var randomValue = compoent[compoentIndex]
+      randomPwd += randomValue
+    }
+    return randomPwd
+  },
+  /**
    * 保存帐号
    */
   saveAccount: function (e) {
     // 输入信息判断
-    if (util.isEmptyInput(this.data.tempName, "帐号名称不能为空")) {
+    if (util.isEmptyInput(this.data.tempName, "名称不能为空")) {
       return
     }
     if (util.isEmptyInput(this.data.account.acc, "帐号不能为空")) {
@@ -464,4 +468,22 @@ Page({
       })
     }
   },
+
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: this.data.tempName + '（帐号分享)',
+      path: '/pages/shareAccount/shareAccount?accountJSON=' + JSON.stringify(this.data.account),
+      imageUrl: this.data.tempIcon,
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  }
 })

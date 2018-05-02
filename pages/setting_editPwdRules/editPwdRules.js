@@ -1,3 +1,4 @@
+const util = require('../../utils/util.js')
 const app = getApp()
 Page({
   /**
@@ -13,24 +14,27 @@ Page({
     this.setData({
       checkKey: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 6)    
   },
   checkKey: function(e) {
     this.setData({
       key: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 16)
   },
   checkIV: function(e) {
     this.setData({
       iv: e.detail.value
     })
+    //收起键盘
+    util.hideKeyboard(e.detail.value, 16)
   },
+
   changeRules: function(e) {
     const checkKey = this.data.checkKey
-    if (checkKey.length == 0) {
-      wx.showToast({
-        title: '请验证身份',
-        image: '/images/exclamatory-mark.png'
-      })
+    if(util.isEmptyInput(checkKey, "请验证身份")) {
       return
     }
     const userKey = this.data.userKey
@@ -68,9 +72,7 @@ Page({
             title: '修改失败',
             image: "/images/error.png"
           })
-        }
-        
-      
+        }              
       })
     }
     else {
@@ -89,33 +91,5 @@ Page({
     this.setData({
       userKey: userKey
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
   }
 })

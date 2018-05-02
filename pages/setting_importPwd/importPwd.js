@@ -1,5 +1,6 @@
+const util = require('../../utils/util.js')
 var fun_aes = require('../../utils/aes.js')
-var app = getApp()
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -13,22 +14,18 @@ Page({
   getBackInfo: function (e) {
     this.setData({
       backInfo: e.detail.value
-    })
+    })    
   },
 
   importAccount: function (e) {
-    const backInfo = this.data.backInfo
-    if (backInfo.length == 0) {
-      wx.showToast({
-        title: '输入内容不能为空',
-        image: '/images/exclamatory-mark.png'
-      })
+    const backInfo = this.data.backInfo    
+    if (util.isEmptyInput(backInfo, "输入不能为")) {      
       return
     }
-    const accountInfo = this.Decrypt(backInfo, this.data.key, this.data.iv)
+    const accountInfo = this.Decrypt(backInfo, this.data.key, this.data.iv) || []
     if (accountInfo.length == 0) {
       wx.showToast({
-        title: '密文有误',
+        title: '密文或规则有误',
         image: '/images/error.png'
       })
       return
@@ -40,7 +37,7 @@ Page({
       data: backAccountList,
       success: res=> {
         wx.showToast({
-          title: '导入成功',
+          title: '导入成功:' + backAccountList.length,
         })
       }
     })
@@ -51,10 +48,16 @@ Page({
   * AES 解密
   */
   Decrypt: function(word, key, iv) {
-    var encryptedHexStr = fun_aes.CryptoJS.enc.Hex.parse(word);
-    var srcs = fun_aes.CryptoJS.enc.Base64.stringify(encryptedHexStr);
-    var decrypt = fun_aes.CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: fun_aes.CryptoJS.mode.CBC, padding: fun_aes.CryptoJS.pad.Pkcs7 });
-    var decryptedStr = decrypt.toString(fun_aes.CryptoJS.enc.Utf8);
+    
+    var encryptedHexStr = fun_aes.CryptoJS.enc.Hex.parse(word);    
+    var srcs = fun_aes.CryptoJS.enc.Base64.stringify(encryptedHexStr);    
+    var decrypt = fun_aes.CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: fun_aes.CryptoJS.mode.CBC, padding: fun_aes.CryptoJS.pad.Pkcs7 });    
+    // 避免发生异常
+    try {
+      var decryptedStr = decrypt.toString(fun_aes.CryptoJS.enc.Utf8);
+    } catch (e) {
+      return ""      
+    }    
     return decryptedStr.toString();
   },
 

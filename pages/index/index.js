@@ -21,11 +21,16 @@ Page({
     this.setData({
       pwd: currentPwd
     })
+    this.handleOperation(this.data.tishi, currentPwd)
+  },
 
-    // 触发确认密码，根据标题来判断情况
-    if (this.data.tishi == "请设置密码") {
+  /**
+   * 触发确认密码，根据标题来判断情况
+   */  
+  handleOperation: function (status, currentPwd) {
+    if (status == "请设置密码") {
       this.settingPwd(currentPwd)
-    } else if (this.data.tishi == "再输入一次") {
+    } else if (status == "再输入一次") {
       this.confirmPwd(currentPwd)
     } else {
       this.loginPwd(currentPwd)
@@ -36,39 +41,29 @@ Page({
     this.setData({
       userKey: currentPwd
     })
-
-    // 完成一次密码输入，切换状态到[再输入一次]
-    if (this.data.userKey.length == 6) {
+    if (this.isChangeStatus()) {
       this.setData({
         pwd: [],
         tishi: "再输入一次"
       })
+    }          
+  },
+
+  /**
+   * 完成一次密码输入，切换状态
+   */
+  isChangeStatus:function() {
+    if (this.data.pwd.length == 6) {
+      return true
     }
+    return false          
   },
 
   confirmPwd: function (currentPwd) {
-    // 设置密码成功
-    if (currentPwd.length == 6) {
-      // 验证密码
-      if (this.data.userKey.toString() == currentPwd.toString()) {
-        // 保存密码
-        wx.setStorage({
-          key: 'primary',
-          data: currentPwd,
-          success: res => {
-            // 记得修改全局变量，因为当前的数据都是依赖与全局变量
-            app.globalData.userKey = currentPwd
-          }
-        })
-        // 自动登录
-        wx.switchTab({
-          url: '../main/main',
-          success: function (res) {
-            wx.showToast({
-              title: '设置成功',
-            })
-          }
-        })
+    if (this.isChangeStatus()) {
+      // 验证密码成功
+      if (this.data.userKey.toString() == currentPwd.toString()) {        
+        this.setStorageAndLogin(currentPwd)
       } else {
         this.setData({
           pwd: [],
@@ -77,6 +72,26 @@ Page({
         })
       }
     }
+  },
+
+  /**
+   * 保存密码 & 自动登录
+   */
+  setStorageAndLogin: function (currentPwd) {
+    // 记得修改全局变量，因为当前的数据都是依赖与全局变量
+    app.globalData.userKey = currentPwd
+    wx.setStorage({
+      key: 'primary',
+      data: currentPwd,
+      success: res => {        
+        wx.showToast({
+          title: '设置成功',
+        })
+      }
+    })    
+    wx.switchTab({
+      url: '../main/main',     
+    })
   },
 
   loginPwd: function (currentPwd) {
@@ -117,7 +132,6 @@ Page({
     this.setData({
       pwd: currentPwd,
     })
-
     if (this.data.tishi == "请设置密码") {
       this.setData({
         userKey: currentPwd

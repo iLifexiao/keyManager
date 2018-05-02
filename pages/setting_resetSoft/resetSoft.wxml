@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">提示</view>
-  <view class="page__desc">该操作不可逆，请确认已经完全备份!!!</view>
+  <view class="page__desc">把软件还原到未使用的状态（包括帐号信息、软件设置等），重置后请重新启动软件（关闭小程序后台）</view>
 </view>
 
 <view class="weui-cells weui-cells_after-title">
@@ -16,5 +16,6 @@
 </view>
 
 <view class="operationButton">
-  <button disabled='{{accountList.length === 0}}' class="weui-btn" type="warn" bindtap="clearAllAccount">清空所有</button>
+  <button class="weui-btn" type="warn" bindtap="resetSoft">确认重置</button>
 </view>
+
