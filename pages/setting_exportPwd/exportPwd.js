@@ -1,5 +1,5 @@
 const util = require('../../utils/util.js')
-var fun_aes = require('../../utils/aes.js')
+const fun_aes = require('../../utils/aes.js')
 const app = getApp()
 Page({
   /**
@@ -60,8 +60,8 @@ Page({
   },
 
   /**
- * AES 加密
- */
+   * AES 加密
+   */
   Encrypt: function(word, key, iv) {
     var srcs = fun_aes.CryptoJS.enc.Utf8.parse(word);
     var encrypted = fun_aes.CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: fun_aes.CryptoJS.mode.CBC, padding: fun_aes.CryptoJS.pad.Pkcs7 });
@@ -92,35 +92,5 @@ Page({
       key: key,
       iv: iv
     })
-  },
-
-  // 9B5709974CE1F88186B40E7CA881B7C4
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
   }
 })

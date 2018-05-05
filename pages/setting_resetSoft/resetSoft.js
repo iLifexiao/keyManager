@@ -36,6 +36,7 @@ Page({
   },
 
   clearAllData: function() {
+    // 全局信息
     app.globalData = {
       userKey: [],
       secret: {},
@@ -44,12 +45,33 @@ Page({
       supportFinger: '0',
       openFingerPrint: '0'
     }
+
+    // 保存的文件
+    wx.getSavedFileList({
+      success: res => {              
+        res.fileList.forEach(function (icon, index) {
+          wx.removeSavedFile({
+            filePath: icon.filePath,
+            complete: function (res) {
+              console.log(res)
+            }
+          })          
+        })                
+      }
+    })
+
+    // 缓存
     try {
       wx.clearStorageSync()
-      wx.showToast({
-        title: '重置完成',
-      })  
+      wx.navigateBack({
+        complete: res => {
+          wx.showToast({
+            title: '重置完成',
+          }) 
+        }
+      })       
     } catch (e) {
+      wx.hideLoading()
       wx.showToast({
         title: '重置失败',
         image: "/images/error.png"

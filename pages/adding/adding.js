@@ -1,20 +1,17 @@
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     addList: [
       {
-        "iconPath":"../../images/random.png",
-        "title":"随机生成密码",
-        "detail":"",
-        "url": "../adding_randomPwd/randomPwd"
+        "iconPath": "../../images/random.png",
+        "title": "随机生成密码",
+        "detail": "",
+        "url": "../adding_account/account?pageType=随机"
       },
       {
         "iconPath": "../../images/account.png",
         "title": "添加已有帐号",
         "detail": "",
-        "url": "../adding_account/account"
+        "url": "../adding_account/account?pageType=已有"
       },
     ],
     codeList: [
@@ -37,6 +34,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-  },
+
+  }
 })

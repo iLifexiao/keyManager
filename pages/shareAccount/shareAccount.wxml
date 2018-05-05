@@ -25,7 +25,7 @@
       <view class="weui-label">名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" disabled='true' value="{{account.name}}"/>
+      <input class="weui-input" bindinput='checkAccountName' value="{{account.name}}"/>
     </view>
   </view>
 
@@ -35,7 +35,7 @@
       <view class="weui-label">帐号</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" value="{{account.acc}}"/>
+      <input class="weui-input" bindinput='checkAccount' value="{{account.acc}}"/>
     </view>
   </view>
 
@@ -45,7 +45,7 @@
       <view class="weui-label">密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" value="{{account.pwd}}"/>
+      <input class="weui-input" bindinput='checkPwd' value="{{account.pwd}}"/>
     </view>
   </view>
 
@@ -55,7 +55,7 @@
       <view class="weui-label">二级密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" value="{{account.secPwd}}"/>
+      <input class="weui-input" bindinput='checkSecPwd' value="{{account.secPwd}}"/>
     </view>
   </view>
 
@@ -65,12 +65,13 @@
       <view class="weui-label">备注</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="可选" value="{{account.remarks}}"/>
+      <input class="weui-input" bindinput='checkRemarks' placeholder="可选" value="{{account.remarks}}"/>
     </view>
   </view>
 </view>
 
 <!-- 操作 -->
 <view class="operationButton">
-  <button class="weui-btn" type="primary" bindtap='copyPwd' style='background-color: #00ADB7'>复制密码</button>
+  <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>保存帐号</button>
+  <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码</button>
 </view>

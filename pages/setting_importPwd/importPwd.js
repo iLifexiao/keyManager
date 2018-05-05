@@ -1,5 +1,5 @@
 const util = require('../../utils/util.js')
-var fun_aes = require('../../utils/aes.js')
+const fun_aes = require('../../utils/aes.js')
 const app = getApp()
 Page({
   /**

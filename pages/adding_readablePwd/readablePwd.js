@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    classify: ["AES", "AES(Dynamic)"],
+    classify: ["AES", "AES(动态)"],
     classifyIndex: 0,
     message: "",
     secret: "",

@@ -73,7 +73,7 @@ function getExistClassify(accountClassify) {
  */
 function addAccount(account, allAccountList) {
   var existflag = false
-  // const allAccountList = wx.getStorageSync('account') || []
+  // const allAccountList = wx.getStorageSync('account') || []  
   allAccountList.forEach(function (item, index) {
     if (JSON.stringify(account) == JSON.stringify(item)) {
       wx.showToast({
@@ -83,8 +83,9 @@ function addAccount(account, allAccountList) {
       existflag = true
     }
   })
+  // 当存在相同的帐号时，返回一个空的数组表示添加失败
   if (existflag) {
-    return
+    return []
   }
   allAccountList.push(account)
   wx.setStorage({
@@ -108,14 +109,14 @@ function getAccountWith(accType, allAccountList) {
   // const allAccountList = wx.getStorageSync('account') || []
   // 显示全部或其他分类
   if (accType == "全部") {
-    accountList = allAccountList
-  } else {
-    allAccountList.forEach(function (account, index) {
-      if (account.kind == accType) {
-        accountList.push(account)
-      }
-    })
-  }
+    return allAccountList
+  } 
+
+  allAccountList.forEach(function (account, index) {
+    if (account.kind == accType) {
+      accountList.push(account)
+    }
+  })  
   return accountList
 }
 
@@ -135,6 +136,9 @@ function getSearchAccountWith(accName, allAccountList) {
   return accountList
 }
 
+/**
+ * 判断输入的信息是否为空
+ */
 function isEmptyInput(data, info) {
   if (data.length == 0) {
     wx.showToast({
@@ -146,10 +150,64 @@ function isEmptyInput(data, info) {
   return false
 }
 
+/**
+ * 处理拷贝密码
+ */
+function handleCopyPwd(data, info, errInfo) {
+  var dataLen = data.length
+  if (info == "游戏拷贝成功") {
+    dataLen -= 1
+  }
+  if (dataLen > 0) {
+    wx.setClipboardData({
+      data: data,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            wx.showToast({
+              title: info,
+            })
+          }
+        })
+      }
+    })
+  } else {
+    wx.showToast({
+      title: errInfo,
+      image: '/images/exclamatory-mark.png'
+    })
+  }
+}
 
+/**
+ * 保存帐号的限制特殊符号：-、&、？
+ */
+function checkSpecialMark(info) {
+  var re = new RegExp("[-&?]");
+  const index = info.search(re)
+  // console.log("index:", index)
+  if (index != -1) {
+    wx.showModal({
+      title: '保存提示',
+      content: '帐号里不能包含「-、&、?」这三个特殊符号',
+      showCancel: false
+    })
+    return true
+  }
+  return false
+}
+
+// 替换 # --> \ 因为微信的转发信息用 # 来分割，导致字典被破坏
+function replaceAll(data, source, target) {
+  var re = new RegExp(source, 'gm');
+  var str = data.replace(re, target)
+  return str
+}
 
 module.exports = {
   formatTime: formatTime,
+  replaceAll: replaceAll,
+  checkSpecialMark: checkSpecialMark,
   isEmptyInput: isEmptyInput,
   deleteArrayInfo: deleteArrayInfo,
   getIndexInObjectArray: getIndexInObjectArray,
@@ -160,6 +218,8 @@ module.exports = {
   getAccountWith: getAccountWith,
   getSearchAccountWith: getSearchAccountWith,
   
-  hideKeyboard: hideKeyboard
+  hideKeyboard: hideKeyboard,
+
+  handleCopyPwd: handleCopyPwd  
 }
 

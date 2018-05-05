@@ -1,7 +1,4 @@
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     logoClassify: [
       {
@@ -97,12 +94,12 @@ Page({
         "icons": [
           { "name": "腾讯游戏", "path": "/images/logo/tg.png" },
           { "name": "网易游戏", "path": "/images/logo/wyg.png" },
-          { "name": "Steam", "path": "/images/logo/steam.png" },          
+          { "name": "Steam", "path": "/images/logo/steam.png" },
         ]
       },
       {
         "type": "学习",
-        "icons": [          
+        "icons": [
           { "name": "GitHub", "path": "/images/logo/GitHub.png" },
           { "name": "VOA", "path": "/images/logo/voa.png" },
           { "name": "必应词典", "path": "/images/logo/bingdic.png" },
@@ -116,9 +113,9 @@ Page({
           { "name": "百词斩", "path": "/images/logo/card.png" },
           { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },
           { "name": "中关村在线", "path": "/images/logo/zol.png" },
-          { "name": "CSDN", "path": "/images/logo/csdn.png" },          
+          { "name": "CSDN", "path": "/images/logo/csdn.png" },
           { "name": "CET4", "path": "/images/logo/cet4.png" },
-          { "name": "CET6", "path": "/images/logo/cet6.png" },          
+          { "name": "CET6", "path": "/images/logo/cet6.png" },
         ]
       },
       {
@@ -135,7 +132,7 @@ Page({
           { "name": "火狐", "path": "/images/logo/firefox.png" },
           { "name": "映像笔记", "path": "/images/logo/evernote.png" },
           { "name": "全能扫描王", "path": "/images/logo/camscanner.png" },
-          { "name": "Wordpress", "path": "/images/logo/wordpress.png" },                    
+          { "name": "Wordpress", "path": "/images/logo/wordpress.png" },
         ]
       },
     ]
@@ -147,32 +144,26 @@ Page({
    * 二、可以通过设置数据存储 wx.setStorage
    */
   selectIcon: function (e) {
-    var pages = getCurrentPages()     
+    var pages = getCurrentPages()
     var that = pages[pages.length - 2]
-    if (that.__route__ == "pages/adding_randomPwd/randomPwd") {
-      wx.navigateBack({
-        delta: 1,
-        success: res => {
-          // 回传 图标路径 & 图标名字
-          that.setData({
-            tempIcon: e.currentTarget.dataset.path,
-            tempName: e.currentTarget.dataset.name
-          })
-        }
-      })
-    } else if (that.__route__ == "pages/adding_account/account") {
-      wx.navigateBack({
-        delta: 1,
-        success: res => {
-          // 回传 图标路径 & 图标名字
-          that.setData({
-            tempIcon: e.currentTarget.dataset.path,
-            tempName: e.currentTarget.dataset.name
-          })
-        }
-      })
-    }
+    this.backAndPassData(that, e.currentTarget.dataset.path, e.currentTarget.dataset.name)
   },
+
+  /**
+   * 回传 图标路径 & 图标名字
+   */
+  backAndPassData: function (that, tempIcon, tempName) {
+    wx.navigateBack({
+      delta: 1,
+      success: res => {
+        that.setData({
+          tempIcon: tempIcon,
+          tempName: tempName
+        })
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

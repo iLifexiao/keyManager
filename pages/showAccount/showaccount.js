@@ -1,5 +1,5 @@
-var util = require('../../utils/util.js')
-var app = getApp()
+const util = require('../../utils/util.js')
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -19,9 +19,11 @@ Page({
     // 数组对象的比较还包括了指针, 所以即使内容完全一样，也无法查找到
     const accountIndex = util.getIndexInObjectArray(app.globalData.accountList, account)
     const tapIndex = util.getIndexInObjectArray(this.data.accountList, account)
+    
+    console.log("account:", account)
 
     // 传递type & 当前的点击位置信息，用来修改信息
-    const url = '../adding_randomPwd/randomPwd?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex
+    const url = '../adding_account/account?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex
     // console.log("url:",url)    
     wx.navigateTo({
       url: url,
@@ -90,9 +92,6 @@ Page({
   },
 
   handleTypeList: function (tempType) {
-    wx.setNavigationBarTitle({
-      title: tempType + '帐号',
-    })
     const accountList = util.getAccountWith(tempType, app.globalData.accountList)
     if (accountList.length == 0) {
       this.setData({
@@ -104,7 +103,10 @@ Page({
         accType: tempType,
         accountList: accountList
       })
-    }    
+    }
+    wx.setNavigationBarTitle({
+      title: tempType + '帐号',
+    })  
   },
 
   /**
@@ -118,5 +120,5 @@ Page({
     } else {
       this.handleTypeList(tempType)
     }
-  },  
+  },
 })
