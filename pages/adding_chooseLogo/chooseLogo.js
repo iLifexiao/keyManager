@@ -29,7 +29,13 @@ Page({
           { "name": "领英", "path": "/images/logo/linkedin.png" },
           { "name": "移动", "path": "/images/logo/10086.png" },
           { "name": "联通", "path": "/images/logo/10010.png" },
-          { "name": "电信", "path": "/images/logo/10000.jpeg" },
+          { "name": "电信", "path": "/images/logo/10000.png" },
+          { "name": "Apple", "path": "/images/logo/apple.png" },
+          { "name": "微软", "path": "/images/logo/windows.png" },
+          { "name": "华为", "path": "/images/logo/huawei.png" },
+          { "name": "小米", "path": "/images/logo/mi.png" },          
+          { "name": "魅族", "path": "/images/logo/meizu.png" },
+          { "name": "锤子", "path": "/images/logo/chizi.png" },
         ]
       },
       {
@@ -72,6 +78,7 @@ Page({
           { "name": "薄荷", "path": "/images/logo/boohee.png" },
           { "name": "京东", "path": "/images/logo/jingdong.png" },
           { "name": "美团", "path": "/images/logo/meituan.png" },
+          { "name": "当当", "path": "/images/logo/dangdang.png" },
           { "name": "饿了吗", "path": "/images/logo/ele.png" },
           { "name": "苏宁易购", "path": "/images/logo/suning.png" },
           { "name": "闲鱼", "path": "/images/logo/fleamarket.png" },
@@ -95,6 +102,12 @@ Page({
           { "name": "腾讯游戏", "path": "/images/logo/tg.png" },
           { "name": "网易游戏", "path": "/images/logo/wyg.png" },
           { "name": "Steam", "path": "/images/logo/steam.png" },
+          { "name": "我的世界", "path": "/images/logo/minecraft.png" },
+          { "name": "梦幻西游", "path": "/images/logo/mhxy.png" },
+          { "name": "旅行青蛙", "path": "/images/logo/lxqw.png" },
+          { "name": "崩坏3", "path": "/images/logo/mihoyo.png" },
+          { "name": "部落冲突", "path": "/images/logo/blct.png" },
+          { "name": "虚荣", "path": "/images/logo/vainglory.png" },          
         ]
       },
       {
@@ -124,6 +137,7 @@ Page({
           { "name": "随手记", "path": "/images/logo/mymoney.png" },
           { "name": "UC", "path": "/images/logo/uc.png" },
           { "name": "VPN", "path": "/images/logo/vpn.png" },
+          { "name": "迅雷", "path": "/images/logo/xunlei.png" },
           { "name": "API", "path": "/images/logo/APIInterface.png" },
           { "name": "豌豆荚", "path": "/images/logo/wandoujia.png" },
           { "name": "猪八戒", "path": "/images/logo/zhubajie.png" },

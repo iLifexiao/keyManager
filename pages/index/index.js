@@ -21,22 +21,27 @@ Page({
     this.setData({
       pwd: currentPwd
     })
-    this.handleOperation(this.data.tishi, currentPwd)
+    this.handleOperation(currentPwd)
   },
 
   /**
    * 触发确认密码，根据标题来判断情况
    */  
-  handleOperation: function (status, currentPwd) {
-    if (status == "请设置密码") {
+  handleOperation: function (currentPwd) {
+    if (this.data.tishi == "请设置密码") {
       this.settingPwd(currentPwd)
-    } else if (status == "再输入一次") {
+      return
+    } 
+    if (this.data.tishi == "再输入一次") {
       this.confirmPwd(currentPwd)
-    } else {
-      this.loginPwd(currentPwd)
+      return
     }
+    this.loginPwd(currentPwd)    
   },
 
+  /**
+   * 请设置密码
+   */
   settingPwd: function (currentPwd) {
     this.setData({
       userKey: currentPwd
@@ -50,28 +55,56 @@ Page({
   },
 
   /**
-   * 完成一次密码输入，切换状态
+   * 确认密码
    */
-  isChangeStatus:function() {
-    if (this.data.pwd.length == 6) {
-      return true
-    }
-    return false          
-  },
-
   confirmPwd: function (currentPwd) {
     if (this.isChangeStatus()) {
       // 验证密码成功
       if (this.data.userKey.toString() == currentPwd.toString()) {        
         this.setStorageAndLogin(currentPwd)
       } else {
-        this.setData({
-          pwd: [],
-        })
-        wx.vibrateLong({
-        })
+        this.confirmError()
       }
     }
+  },
+
+  /**
+   * 用户登录
+   */
+  loginPwd: function (currentPwd) {
+    if (currentPwd.length == 6) {
+      if (currentPwd.toString() == this.data.userKey.toString()) {
+        wx.switchTab({
+          url: '../main/main',
+        })
+      } else {
+        this.confirmError()
+        this.setData({          
+          tishi: "密码错误"
+        })        
+      }
+    }
+  },
+
+  /**
+   * 完成一次密码输入，切换状态
+   */
+  isChangeStatus: function () {
+    if (this.data.pwd.length == 6) {
+      return true
+    }
+    return false
+  },
+
+  /**
+   * 密码不正确
+   */
+  confirmError: function() {
+    this.setData({
+      pwd: [],
+    })
+    wx.vibrateLong({
+    })
   },
 
   /**
@@ -94,37 +127,19 @@ Page({
     })
   },
 
-  loginPwd: function (currentPwd) {
-    if (currentPwd.length == 6) {
-      if (currentPwd.toString() == this.data.userKey.toString()) {
-        wx.switchTab({
-          url: '../main/main',
-        })
-      } else {
-        this.setData({
-          pwd: [],
-          tishi: "密码错误"
-        })
-        wx.vibrateLong({
-        })
-      }
-    }
-  },
-
-  // 清除按钮
+  /**
+   * 清除按钮
+   */
   clearTap: function (e) {
     this.setData({
       pwd: [],
     })
-
-    if (this.data.tishi == "请设置密码") {
-      this.setData({
-        userKey: []
-      })
-    }
+    this.resetOnSettingPwd([])
   },
 
-  // 删除按钮   
+  /**
+   * 删除按钮
+   */  
   deleteTap: function (e) {
     // 提取出公共部分
     const currentPwd = this.data.pwd
@@ -132,9 +147,16 @@ Page({
     this.setData({
       pwd: currentPwd,
     })
+    this.resetOnSettingPwd(currentPwd)
+  },
+
+  /**
+   * 再设置密码的状态下删除/清除密码
+   */
+  resetOnSettingPwd: function(info) {
     if (this.data.tishi == "请设置密码") {
       this.setData({
-        userKey: currentPwd
+        userKey: info
       })
     }
   },

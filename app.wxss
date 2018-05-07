@@ -45,7 +45,7 @@ page {
 .icon-box {
   margin: 5px 5px 5px 5px;
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
 .emptyPage {

@@ -1,7 +1,7 @@
 <!-- LOGO分类 begin -->
-<view wx:for="{{logoClassify}}" wx:for-index="typeIndex" wx:for-item="typeItem">
+<view wx:for="{{logoClassify}}" wx:for-index="typeIndex" wx:for-item="typeItem" wx:key="typeItem.type">
   <view class="icon-box">
-    <image src="/images/tag.png" style='width: 23px; height: 23px'></image>
+    <image src="/images/tag_icon.png" style='width: 23px; height: 23px'></image>
     <text style='margin-left: 5px;'>{{typeItem.type}}</text>
   </view>
   <view class="weui-grids">

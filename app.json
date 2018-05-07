@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/main/main",
-    "pages/adding/adding",    
+    "pages/adding/adding",
     "pages/adding_account/account",
     "pages/adding_readablePwd/readablePwd",
     "pages/adding_hashPwd/hashPwd",

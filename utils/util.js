@@ -14,15 +14,17 @@ function formatNumber(n) {
   return n[1] ? n : '0' + n
 }
 
-function hideKeyboard(value, len) {
-  //收起键盘
+/**
+ * 根据输入数据的长度，来自动收起键盘
+ */
+function hideKeyboard(value, len) {  
   if (value.length == len) {
     wx.hideKeyboard();
   }
 }
 
 /**
- * 删除 Array中的数据的任一 index 位置的数据 
+ * 删除Array中index位置的数据，并返回新的数组
  */
 function deleteArrayInfo(array, index) {
   const popCount = array.length - index
@@ -73,7 +75,6 @@ function getExistClassify(accountClassify) {
  */
 function addAccount(account, allAccountList) {
   var existflag = false
-  // const allAccountList = wx.getStorageSync('account') || []  
   allAccountList.forEach(function (item, index) {
     if (JSON.stringify(account) == JSON.stringify(item)) {
       wx.showToast({
@@ -87,6 +88,7 @@ function addAccount(account, allAccountList) {
   if (existflag) {
     return []
   }
+
   allAccountList.push(account)
   wx.setStorage({
     key: 'account',
@@ -105,30 +107,27 @@ function addAccount(account, allAccountList) {
  */
 function getAccountWith(accType, allAccountList) {
   var accountList = []
-  // 采用缓存，提高存取速度
-  // const allAccountList = wx.getStorageSync('account') || []
   // 显示全部或其他分类
   if (accType == "全部") {
     return allAccountList
-  } 
+  }
 
   allAccountList.forEach(function (account, index) {
     if (account.kind == accType) {
       accountList.push(account)
     }
-  })  
+  })
   return accountList
 }
 
 /**
- * 根据帐号名称获取帐号信息
+ * 根据（名称、帐号、备注）获取帐号信息
  */
-function getSearchAccountWith(accName, allAccountList) {
-  var accountList = []
-  // const allAccountList = wx.getStorageSync('account') || []
+function getSearchAccountWith(key, allAccountList) {
+  var accountList = []  
   // 获取帐号
   allAccountList.forEach(function (account, index) {
-    if (account.name.search(accName) != -1) {
+    if (account.name.search(key) != -1 || account.acc.search(key) != -1 || account.remarks.search(key) != -1) {
       accountList.push(account)
     }
   })
@@ -137,7 +136,7 @@ function getSearchAccountWith(accName, allAccountList) {
 }
 
 /**
- * 判断输入的信息是否为空
+ * 判断输入的信息(数组)是否为空
  */
 function isEmptyInput(data, info) {
   if (data.length == 0) {
@@ -217,9 +216,9 @@ module.exports = {
   addAccount: addAccount,
   getAccountWith: getAccountWith,
   getSearchAccountWith: getSearchAccountWith,
-  
+
   hideKeyboard: hideKeyboard,
 
-  handleCopyPwd: handleCopyPwd  
+  handleCopyPwd: handleCopyPwd
 }
 

@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
 }
+
 .dailyimage {
   position:absolute;
   left: 0px;
@@ -13,6 +14,7 @@
   z-index: -1;
   background-color: #eee
 }
+
 .searchBar {
   /* 绝对布局方式 */
   position: absolute;

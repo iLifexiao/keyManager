@@ -438,7 +438,7 @@ Page({
         existFileList.forEach(function (icon, index) {
           existIconPathList.push(icon.filePath)
         })
-        console.log('existIconPathList:', existIconPathList)
+        // console.log('existIconPathList:', existIconPathList)
         this.setData({
           existIconPathList: existIconPathList,
         })

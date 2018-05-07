@@ -16,7 +16,6 @@ Page({
       remarks: "",
     }
   },
-  
 
   // 输入框失去焦点的响应事件
   checkAccountName: function (e) {
@@ -36,7 +35,7 @@ Page({
     this.updataAccount(account)
   },
   checkSecPwd: function (e) {
-    var account = this.data.account    
+    var account = this.data.account
     account.secPwd = e.detail.value
     this.updataAccount(account)
   },
@@ -105,11 +104,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var accountJSON = options.accountJSON || ""    
+    var accountJSON = options.accountJSON || ""
     if (accountJSON != "") {
       accountJSON = util.replaceAll(accountJSON, "-", "#")
       console.log(accountJSON)
-      const account = JSON.parse(accountJSON)      
+      const account = JSON.parse(accountJSON)
       this.setData({
         account: account,
       })
@@ -123,7 +122,7 @@ Page({
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
-    }    
+    }
     const account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')
     console.log(account)
     return {

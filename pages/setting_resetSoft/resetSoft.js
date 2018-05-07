@@ -6,7 +6,7 @@ Page({
    */
   data: {
     userKey: "",
-    checkKey: ""    
+    checkKey: ""
   },
 
   checkUserKey: function (e) {
@@ -14,18 +14,18 @@ Page({
       checkKey: e.detail.value
     })
     //收起键盘
-    util.hideKeyboard(e.detail.value, 6)    
+    util.hideKeyboard(e.detail.value, 6)
   },
 
-  resetSoft: function () {    
-    if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {        
+  resetSoft: function () {
+    if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {
       return
     }
-    
+
     const checkKey = this.data.checkKey
     // 确认密码
     if (checkKey == this.data.userKey) {
-      this.clearAllData()      
+      this.clearAllData()
     }
     else {
       wx.showToast({
@@ -35,7 +35,7 @@ Page({
     }
   },
 
-  clearAllData: function() {
+  clearAllData: function () {
     // 全局信息
     app.globalData = {
       userKey: [],
@@ -48,15 +48,15 @@ Page({
 
     // 保存的文件
     wx.getSavedFileList({
-      success: res => {              
+      success: res => {
         res.fileList.forEach(function (icon, index) {
           wx.removeSavedFile({
             filePath: icon.filePath,
             complete: function (res) {
               console.log(res)
             }
-          })          
-        })                
+          })
+        })
       }
     })
 
@@ -67,16 +67,16 @@ Page({
         complete: res => {
           wx.showToast({
             title: '重置完成',
-          }) 
+          })
         }
-      })       
+      })
     } catch (e) {
       wx.hideLoading()
       wx.showToast({
         title: '重置失败',
         image: "/images/error.png"
-      })    
-    }            
+      })
+    }
   },
 
   /**

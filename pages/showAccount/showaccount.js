@@ -19,7 +19,7 @@ Page({
     // 数组对象的比较还包括了指针, 所以即使内容完全一样，也无法查找到
     const accountIndex = util.getIndexInObjectArray(app.globalData.accountList, account)
     const tapIndex = util.getIndexInObjectArray(this.data.accountList, account)
-    
+
     console.log("account:", account)
 
     // 传递type & 当前的点击位置信息，用来修改信息
@@ -35,12 +35,11 @@ Page({
    */
   showOperation: function (e) {
     // 记录当前点击的行（显示的数据）
-    const account = e.currentTarget.dataset.account        
+    const account = e.currentTarget.dataset.account
     this.setData({
       currentAccountIndex: util.getIndexInObjectArray(this.data.accountList, account)
     })
 
-    // TODO: 添加分享操作
     wx.showActionSheet({
       itemList: ["删除"],
       itemColor: '#00ADB7',
@@ -59,7 +58,7 @@ Page({
   },
 
   // Source下方可以使用断点调试
-  deleteAccount: function (account) { 
+  deleteAccount: function (account) {
     // 当前信息               
     this.setData({
       accountList: util.deleteArrayInfo(this.data.accountList, this.data.currentAccountIndex)
@@ -70,16 +69,19 @@ Page({
     wx.setStorage({
       key: 'account',
       data: newAccountList,
-      success: res=> {
+      success: res => {
         wx.showToast({
           title: '删除成功',
         })
       }
     })
     // 更新全局变量
-    app.globalData.accountList = newAccountList 
+    app.globalData.accountList = newAccountList
   },
 
+  /**
+   * 搜索跳转
+   */
   handleSearchList: function (accountListJson) {
     wx.setNavigationBarTitle({
       title: "搜索结果",
@@ -90,7 +92,10 @@ Page({
       accountList: accountList
     })
   },
-
+  
+  /**
+   * 正常跳转
+   */
   handleTypeList: function (tempType) {
     const accountList = util.getAccountWith(tempType, app.globalData.accountList)
     if (accountList.length == 0) {
@@ -106,7 +111,7 @@ Page({
     }
     wx.setNavigationBarTitle({
       title: tempType + '帐号',
-    })  
+    })
   },
 
   /**
@@ -114,7 +119,7 @@ Page({
    */
   onLoad: function (options) {
     // 判断跳转类型
-    var tempType = options.type || ""    
+    var tempType = options.type || ""
     if (tempType == "") {
       this.handleSearchList(options.accountListJson)
     } else {
