@@ -386,7 +386,7 @@ Page({
       that.setData({
         accountList: beforeAccountList,
         emptyInfo: "暂无 " + this.data.accType + " 的帐号"
-      })
+      })   
     }
   },
 
@@ -514,15 +514,15 @@ Page({
 
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
-      // 来自页面内转发按钮
+      // 来自页面内转发按钮 this.data.tempIcon,
       console.log(res.target)
     }
     const account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')    
     console.log(account) 
     return {
-      title: this.data.tempName + '（帐号分享)',
+      title: this.data.tempName + '（帐号分享）',
       path: '/pages/shareAccount/shareAccount?accountJSON=' + account,
-      imageUrl: this.data.tempIcon,
+      imageUrl: "/images/shareImage.png",
       success: function (res) {
         // 转发成功
       },

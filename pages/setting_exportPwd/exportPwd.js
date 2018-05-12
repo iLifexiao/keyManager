@@ -40,7 +40,7 @@ Page({
           wx.getClipboardData({
             success: function (res) {
               wx.showToast({
-                title: '导出信息已拷贝',
+                title: '复制成功:' + accountList.length,
               })
             }
           })

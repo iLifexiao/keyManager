@@ -1,0 +1,2 @@
+/* pages/setting_showVersion/showVersion.wxss */
+@import "/wxParse/wxParse.wxss";

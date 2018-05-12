@@ -126,9 +126,9 @@ Page({
     const account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')
     console.log(account)
     return {
-      title: this.data.account.name + '(帐号分享)',
+      title: this.data.account.name + '（帐号分享）',
       path: '/pages/shareAccount/shareAccount?accountJSON=' + account,
-      imageUrl: this.data.account.icon,
+      imageUrl: "/images/shareImage.png",
       success: function (res) {
         // 转发成功
       },

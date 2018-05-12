@@ -7,6 +7,12 @@ Page({
     mailAddr: "710178950@qq.com"
   },
 
+  showVersion: function(e) {
+    wx.navigateTo({
+      url: '../setting_showVersion/showVersion',
+    })
+  },
+
   copyGitHubAddr: function(e) {
     wx.setClipboardData({
       data: this.data.openSourceAddr,

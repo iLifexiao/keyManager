@@ -41,12 +41,14 @@ Page({
    */
   randomBGButton: function() {
     var isOpenRandomImg = this.data.isOpenRandomImg
-    if (isOpenRandomImg == '1') {
-      isOpenRandomImg = '0'
-      this.updateImageStatue(isOpenRandomImg, '关闭随机壁纸')
-    } else {
-      isOpenRandomImg = '1'
-      this.updateImageStatue(isOpenRandomImg, '开启随机壁纸')
+    if (isOpenRandomImg == '1') {      
+      this.updateImageStatue('0', '关闭随机壁纸')
+    } else {      
+      this.updateImageStatue('1', '开启随机壁纸')
+      this.setData({
+        imageURL: "https://picsum.photos/375/200/?random"
+      })
+      
     }        
   },
 
@@ -83,5 +85,5 @@ Page({
       accountClassify: app.globalData.accountClassify,
       isOpenRandomImg: isOpenRandomImg
     })
-  },
+  }
 })

@@ -16,6 +16,7 @@
     "pages/setting_modifyUserKey/modifyUserKey",
     "pages/setting_help/help",
     "pages/setting_about/about",
+    "pages/setting_showVersion/showVersion",
     "pages/setting_advices/advices",
     "pages/setting_accountClassify/accountClassify",
     "pages/setting_fingerPrint/fingerPrint",

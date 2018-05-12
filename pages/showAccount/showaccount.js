@@ -59,10 +59,10 @@ Page({
 
   // Source下方可以使用断点调试
   deleteAccount: function (account) {
-    // 当前信息               
+    // 当前信息            
     this.setData({
       accountList: util.deleteArrayInfo(this.data.accountList, this.data.currentAccountIndex)
-    })
+    })        
     // 缓存信息
     const accountIndex = util.getIndexInObjectArray(app.globalData.accountList, account)
     const newAccountList = util.deleteArrayInfo(app.globalData.accountList, accountIndex)
@@ -76,20 +76,21 @@ Page({
       }
     })
     // 更新全局变量
-    app.globalData.accountList = newAccountList
+    app.globalData.accountList = newAccountList  
+    this.updateAccountCount()  
   },
 
   /**
    * 搜索跳转
    */
   handleSearchList: function (accountListJson) {
-    wx.setNavigationBarTitle({
-      title: "搜索结果",
-    })
     const accountDict = JSON.parse(accountListJson)
     const accountList = accountDict.value
     this.setData({
       accountList: accountList
+    })
+    wx.setNavigationBarTitle({
+      title: "搜索结果(" + accountList.length + ')',
     })
   },
   
@@ -108,9 +109,13 @@ Page({
         accType: tempType,
         accountList: accountList
       })
-    }
+    }    
+  },
+
+  // 更新导航栏上显示的帐号数量
+  updateAccountCount: function() {
     wx.setNavigationBarTitle({
-      title: tempType + '帐号',
+      title: this.data.accType + '帐号(' + this.data.accountList.length + ')',
     })
   },
 
@@ -126,4 +131,10 @@ Page({
       this.handleTypeList(tempType)
     }
   },
+
+  onShow: function () {
+    if (this.data.accType != "") {
+      this.updateAccountCount()
+    }    
+  }
 })
