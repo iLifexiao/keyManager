@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    pageType: "",
     accType: "",
     accountList: [],
     emptyInfo: "",
@@ -87,7 +88,8 @@ Page({
     const accountDict = JSON.parse(accountListJson)
     const accountList = accountDict.value
     this.setData({
-      accountList: accountList
+      accountList: accountList,
+      pageType: "搜索"
     })
     wx.setNavigationBarTitle({
       title: "搜索结果(" + accountList.length + ')',
@@ -119,16 +121,23 @@ Page({
     })
   },
 
+  // 右下角的浮动按钮
+  jumpToAdd: function() {
+    wx.navigateTo({
+      url: '../adding_account/account?accType=' + this.data.accType + '&pageType=随机',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     // 判断跳转类型
-    var tempType = options.type || ""
-    if (tempType == "") {
+    var pageType = options.type || ""
+    if (pageType == "") {
       this.handleSearchList(options.accountListJson)
     } else {
-      this.handleTypeList(tempType)
+      this.handleTypeList(pageType)
     }
   },
 

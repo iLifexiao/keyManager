@@ -20,7 +20,7 @@ Page({
       return
     }
     const accountList = util.getSearchAccountWith(searchKey, app.globalData.accountList)
-    if (util.isEmptyInput(accountList, 'Nothing...')) { 
+    if (util.isEmptyInput(accountList, '没有该类帐号')) { 
       return
     } 
     this.jumpToResultPage(accountList)
@@ -43,6 +43,9 @@ Page({
     var isOpenRandomImg = this.data.isOpenRandomImg
     if (isOpenRandomImg == '1') {      
       this.updateImageStatue('0', '关闭随机壁纸')
+      this.setData({
+        imageURL: "/images/defaultBG.jpeg"
+      })
     } else {      
       this.updateImageStatue('1', '开启随机壁纸')
       this.setData({

@@ -18,3 +18,6 @@
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line" style='background-color:#F8F8F8;'>{{emptyInfo}}</view>
   </view>
 </view>
+
+<!-- 浮动的添加按钮 -->
+<image wx:if="{{pageType == ''}}" class='jumpAddBtn' src="/images/jumpAdd.png" bindtap='jumpToAdd' ></image>

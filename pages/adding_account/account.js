@@ -53,10 +53,8 @@ Page({
    * 如果使用，this.data来获取，调试页面会报undefiend。
    * 原因是，在javascript中，this代表着当前对象，会随着程序的执行过程中的上下文改变
    * 在wx.request({}); 方法的回调函数中，对象已经发生改变，所以已经不是wx.request({});方法对象了，data属性也不存在了。 
-   */
-
-  /**
-   * 解决方法二
+   *
+   *  解决方法二
    * 将回调函数换一种声明方式
    * success: res=> {
    *   this.
@@ -247,7 +245,7 @@ Page({
     this.setData({
       account: account
     })
-  },    
+  },
 
   /**
    * 保存帐号
@@ -263,7 +261,7 @@ Page({
     if (util.isEmptyInput(this.data.account.pwd, "密码不能为空")) {
       return
     }
-    
+
     // 特殊符号检查
     if (util.checkSpecialMark(this.data.account.name)) {
       return
@@ -274,7 +272,7 @@ Page({
     if (util.checkSpecialMark(this.data.account.pwd)) {
       return
     }
-    if (util.checkSpecialMark(this.data.account.secPwd)) {     
+    if (util.checkSpecialMark(this.data.account.secPwd)) {
       return
     }
     if (util.checkSpecialMark(this.data.account.remarks)) {
@@ -331,9 +329,29 @@ Page({
       const newAccountList = util.addAccount(account, app.globalData.accountList)
       if (newAccountList.length != 0) {
         app.globalData.accountList = newAccountList
+        // 处理跳转来自帐号显示
+        this.updataAddPage(account)
       }      
     }
     console.log(account)
+  },
+
+  /**
+   * 处理上一页面为帐号显示的添加帐号
+   * 此时更新原来的帐号列表
+   */
+  updataAddPage: function (account) {
+    var pages = getCurrentPages()
+    var that = pages[pages.length - 2]
+    if (that.__route__ == "pages/showAccount/showaccount") {
+      if (that.data.accType == account.kind || that.data.accType == "全部") {
+        var beforeAccountList = that.data.accountList
+        beforeAccountList.push(account)
+        that.setData({
+          accountList: beforeAccountList,
+        })
+      }
+    }
   },
 
   /**
@@ -386,7 +404,7 @@ Page({
       that.setData({
         accountList: beforeAccountList,
         emptyInfo: "暂无 " + this.data.accType + " 的帐号"
-      })   
+      })
     }
   },
 
@@ -475,14 +493,21 @@ Page({
     }
 
     // url字符串中不需要添加 引号
-    const pageType = options.pageType || ""    
+    const pageType = options.pageType || ""
+    this.settingPageType(pageType)
+  },
+
+  /**
+   * 设置页面显示状态
+   */
+  settingPageType: function(pageType) {
     if (pageType == "随机") {
       this.setData({
         pageType: "随机"
       }),
-        wx.setNavigationBarTitle({
-          title: "随机生成密码",
-        })
+      wx.setNavigationBarTitle({
+        title: "随机生成密码",
+      })
       return
     }
 
@@ -490,9 +515,9 @@ Page({
       this.setData({
         pageType: "已有"
       }),
-        wx.setNavigationBarTitle({
-          title: "添加已有帐号",
-        })
+      wx.setNavigationBarTitle({
+        title: "添加已有帐号",
+      })
       return
     }
 
@@ -501,24 +526,36 @@ Page({
     }
   },
 
+  // 处理从 showAccount 处的跳转
+  jumpFromShowAccount: function (accType, classify) {
+    const classifyIndex = classify.indexOf(accType)
+    var account = this.data.account    
+    account.kind = accType
+    if (classifyIndex != -1) {
+      this.setData({
+        classifyIndex: classifyIndex,
+        account: account        
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const existClassify = util.getExistClassify(app.globalData.accountClassify)
+    const existClassify = util.getExistClassify(app.globalData.accountClassify)    
+    this.jumpFromShowAccount(options.accType, existClassify)
     this.setData({
-      classify: existClassify
+      classify: existClassify,
     })
     this.handlePageShowType(options, existClassify)
   },
 
+  /**
+   * 用户分享
+   */
   onShareAppMessage: function (res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮 this.data.tempIcon,
-      console.log(res.target)
-    }
-    const account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')    
-    console.log(account) 
+    const account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')  
     return {
       title: this.data.tempName + '（帐号分享）',
       path: '/pages/shareAccount/shareAccount?accountJSON=' + account,

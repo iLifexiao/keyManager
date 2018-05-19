@@ -18,7 +18,7 @@ Page({
       data: this.data.openSourceAddr,
       success: res=> {
         wx.showToast({
-          title: '代码地址拷贝成功',
+          title: '网址拷贝成功',
           image: '/images/GitHub.png'
         })
       }
@@ -30,7 +30,7 @@ Page({
       data: this.data.mailAddr,
       success: res => {
         wx.showToast({
-          title: '邮箱地址拷贝成功',
+          title: '邮箱拷贝成功',
           image: '/images/QQMail.png'
         })
       }
