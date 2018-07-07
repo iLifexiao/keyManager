@@ -20,4 +20,4 @@
 </view>
 
 <!-- 浮动的添加按钮 -->
-<image wx:if="{{pageType == ''}}" class='jumpAddBtn' src="/images/jumpAdd.png" bindtap='jumpToAdd' ></image>
+<image wx:if="{{pageType == ''}}" class='jumpAddBtn' src="/images/jumpAdd.png" bindtap='jumpToAdd'></image>

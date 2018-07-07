@@ -528,15 +528,50 @@ Page({
 
   // 处理从 showAccount 处的跳转
   jumpFromShowAccount: function (accType, classify) {
+    // 判断跳转过来的分类
     const classifyIndex = classify.indexOf(accType)
-    var account = this.data.account    
+    // 更改帐号的分类 & 图标
+    var account = this.data.account   
+    account.icon = this.accTypeToIcon(accType)
     account.kind = accType
     if (classifyIndex != -1) {
       this.setData({
         classifyIndex: classifyIndex,
-        account: account        
+        account: account,
+        tempIcon: this.accTypeToIcon(accType) 
       })
     }
+  },
+
+  // 根据showAccount的 type 显示分类图标
+  accTypeToIcon: function (accType) {
+    var returnImg = ""
+    switch (accType) {
+      case "社交":
+        returnImg = "/images/talk_icon.png"
+        break
+      case "游戏":
+        returnImg = "/images/game_icon.png"
+        break
+      case "学习":
+        returnImg = "/images/study_icon.png"
+        break
+      case "金融":
+        returnImg = "/images/money_icon.png"
+        break
+      case "论坛":
+        returnImg = "/images/bbs_icon.png"
+        break
+      case "邮箱":
+        returnImg = "/images/mail_icon.png"
+        break
+      case "其他":
+        returnImg = "/images/others_icon.png"
+        break
+      default:
+        returnImg = "/images/keyManager.png"
+    }    
+    return returnImg
   },
 
   /**

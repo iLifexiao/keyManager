@@ -18,7 +18,7 @@ Page({
           { "name": "Skype", "path": "/images/logo/skype.png" },
           { "name": "Ins", "path": "/images/logo/ins.png" },
           { "name": "MOMO", "path": "/images/logo/momo.png" },
-          { "name": "易信", "path": "/images/logo/yixin.png" },
+          { "name": "易信", "path": "/images/logo/yixin.png" }
         ]
       },
       {
@@ -90,10 +90,12 @@ Page({
       {
         "type": "出行",
         "icons": [
+          { "name": "12306", "path": "/images/logo/12306.png" },
           { "name": "去哪儿", "path": "/images/logo/qunaer.png" },
           { "name": "滴滴", "path": "/images/logo/didi.png" },
           { "name": "携程旅行", "path": "/images/logo/ctrip.png" },
-          { "name": "12306", "path": "/images/logo/12306.png" },
+          { "name": "途牛旅游", "path": "/images/logo/tnly.png" },
+          { "name": "同程旅游", "path": "/images/logo/tcly.png" },
         ]
       },
       {
@@ -117,13 +119,18 @@ Page({
           { "name": "VOA", "path": "/images/logo/voa.png" },
           { "name": "必应词典", "path": "/images/logo/bingdic.png" },
           { "name": "沪江网校", "path": "/images/logo/hjclass.png" },
+          { "name": "ANKI", "path": "/images/logo/anki.png" },
           { "name": "掌上阅读", "path": "/images/logo/palmebook.png" },
           { "name": "知乎", "path": "/images/logo/zhihu.png" },
+          { "name": "读者", "path": "/images/logo/reader.png" },
           { "name": "TED", "path": "/images/logo/ted.png" },
           { "name": "映像笔记", "path": "/images/logo/evernote.png" },
           { "name": "智联招聘", "path": "/images/logo/zhaopin.png" },
+          { "name": "51Job", "path": "/images/logo/51job.png" },
+          { "name": "牛客网", "path": "/images/logo/nowcoder.png" },
           { "name": "豆瓣", "path": "/images/logo/douban.png" },
           { "name": "百词斩", "path": "/images/logo/card.png" },
+          { "name": "粉笔网", "path": "/images/logo/fb.png" },
           { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },
           { "name": "中关村在线", "path": "/images/logo/zol.png" },
           { "name": "CSDN", "path": "/images/logo/csdn.png" },

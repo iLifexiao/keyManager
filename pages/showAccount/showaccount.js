@@ -109,7 +109,9 @@ Page({
     } else {
       this.setData({
         accType: tempType,
-        accountList: accountList
+        accountList: accountList,
+        // 避免删除分类下最后一个帐号后，不会显示信息
+        emptyInfo: "暂无 " + tempType + " 的帐号"
       })
     }    
   },

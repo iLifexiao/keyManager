@@ -13,6 +13,23 @@ Page({
    */
   onLoad: function (options) {
     var article = `
+##  版本 v1.5.2
+
+> 日期：2018-07-07
+
+**new**
+
+1. 新增&更新部分图标
+2. 快捷添加帐号可以根据帐号类别自动更换图标了
+
+**other** 
+
+1. bug fix
+2. 细节优化
+
+![3](/images/line.png)
+
+
 ##  版本 v1.5.0
 
 > 日期：2018-05-14
