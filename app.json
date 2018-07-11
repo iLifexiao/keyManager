@@ -1,11 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/main/main",
-    "pages/adding/adding",
+    "pages/main/main",    
     "pages/adding_account/account",
-    "pages/adding_readablePwd/readablePwd",
-    "pages/adding_hashPwd/hashPwd",
     "pages/adding_chooseLogo/chooseLogo",
     "pages/setting/setting",
     "pages/setting_exportPwd/exportPwd",
@@ -37,12 +34,6 @@
         "text": "主页",
         "selectedIconPath": "images/home.png",
         "iconPath": "images/before_home.png"
-      },
-      {
-        "pagePath": "pages/adding/adding",
-        "text": "添加",
-        "selectedIconPath": "images/add.png",
-        "iconPath": "images/before_add.png"
       },
       {
         "pagePath": "pages/setting/setting",

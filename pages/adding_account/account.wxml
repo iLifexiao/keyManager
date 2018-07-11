@@ -45,7 +45,7 @@
   </view>
 
   <!-- 帐号的位数 -->
-  <view wx:if="{{pageType == '随机'}}" class="weui-cell weui-cell_input">
+  <view class="weui-cell weui-cell_input" wx:if="{{pageType == '随机'}}">
     <view class="weui-cell__hd">
       <view class="weui-label">密码位数</view>
     </view>
@@ -55,16 +55,24 @@
   </view>
 
   <!-- 密码规则生成 -->
-  <checkbox-group wx:if="{{pageType == '随机'}}" bindchange="pwdRuleChange">
-    <label class="weui-cell weui-check__label" wx:for="{{pwdRules}}" wx:key="value">
-      <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
-      <view class="weui-cell__hd weui-check__hd_in-checkbox">
-        <icon class="weui-icon-checkbox_circle" type="circle" size="23" color='#00ADB7' wx:if="{{!item.checked}}"></icon>
-        <icon class="weui-icon-checkbox_success" type="success" size="23" color='#00ADB7' wx:if="{{item.checked}}"></icon>
-      </view>
-      <view class="weui-cell__bd">{{item.name}}</view>
-    </label>
-  </checkbox-group>
+  <view class="weui-cell weui-cell_input">
+    <view class="weui-cell__hd">
+      <view class="weui-label">密码规则</view>
+    </view>
+    <view class="weui-cell__bd">
+      <checkbox-group style='display:flex; flex-direction:row; justify-content:space-between' wx:if="{{pageType == '随机'}}" bindchange="pwdRuleChange">
+        <label class="weui-check__label" wx:for="{{pwdRules}}" wx:key="value">
+          <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+          <!-- 由于对Class的内容、调试工具和布局问题不熟悉，导致无法对齐元素 -->
+          <view>
+            <icon class="weui-icon-checkbox_circle" type="circle" size="23" color='#00ADB7' wx:if="{{!item.checked}}"></icon>
+            <icon class="weui-icon-checkbox_success" type="success" size="23" color='#00ADB7' wx:if="{{item.checked}}"></icon>
+          </view>
+          <view style='text-align: center;'>{{item.name}}</view>
+        </label>
+      </checkbox-group>
+    </view>
+  </view>
 
   <!-- 生成的密码 -->
   <view class="weui-cell weui-cell_input weui-cell_vcode">
@@ -104,11 +112,11 @@
       <view class="weui-label">备注</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" value="{{account.remarks}}" placeholder="选填" bindinput='checkRemarks'/>      
+      <input class="weui-input" value="{{account.remarks}}" placeholder="选填" bindinput='checkRemarks' />
     </view>
   </view>
 </view>
-<view wx:if="{{buttonType == '保存帐号'}}" class="weui-cells__tips">不会上传任何信息</view>
+<view wx:if="{{buttonType == '保存帐号'}}" class="weui-cells__tips">所有信息均保存在本地</view>
 
 <!-- 操作 -->
 <view class="operationButton">
