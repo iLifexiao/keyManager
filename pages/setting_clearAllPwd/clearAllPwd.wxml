@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">提示</view>
-  <view class="page__desc">该操作不可逆，请确认已经完全备份!!!</view>
+  <view class="page__desc">将删除你保存的所有帐号。该操作不可逆，请确认已经完全备份!!!</view>
 </view>
 
 <view class="weui-cells weui-cells_after-title">

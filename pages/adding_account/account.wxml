@@ -45,7 +45,7 @@
   </view>
 
   <!-- 帐号的位数 -->
-  <view class="weui-cell weui-cell_input" wx:if="{{pageType == '随机'}}">
+  <view class="weui-cell weui-cell_input">
     <view class="weui-cell__hd">
       <view class="weui-label">密码位数</view>
     </view>
@@ -60,7 +60,7 @@
       <view class="weui-label">密码规则</view>
     </view>
     <view class="weui-cell__bd">
-      <checkbox-group style='display:flex; flex-direction:row; justify-content:space-between' wx:if="{{pageType == '随机'}}" bindchange="pwdRuleChange">
+      <checkbox-group style='display:flex; flex-direction:row; justify-content:space-between' bindchange="pwdRuleChange">
         <label class="weui-check__label" wx:for="{{pwdRules}}" wx:key="value">
           <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
           <!-- 由于对Class的内容、调试工具和布局问题不熟悉，导致无法对齐元素 -->
@@ -79,13 +79,10 @@
     <view class="weui-cell__hd">
       <view class="weui-label">密码</view>
     </view>
-    <view wx:if="{{pageType == '已有'}}" class="weui-cell__bd">
-      <input class="weui-input" placeholder='帐号所对应的密码' bindinput='checkPwd' maxlength='16'></input>
-    </view>
-    <view wx:elif="{{pageType == '随机'}}" class="weui-cell__bd">
-      <input class="weui-input" value='{{account.pwd}}' bindinput='checkPwd' maxlength='16'></input>
-    </view>
-    <view wx:if="{{pageType == '随机'}}" class="weui-cell__ft">
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder='帐号所对应的密码' value='{{account.pwd}}' bindinput='checkPwd' maxlength='16'></input>
+    </view>    
+    <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='first' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
     </view>
   </view>
@@ -95,13 +92,10 @@
     <view class="weui-cell__hd">
       <view class="weui-label">二级密码</view>
     </view>
-    <view wx:if="{{pageType == '已有'}}" class="weui-cell__bd">
-      <input class="weui-input" placeholder='游戏的二级密码' bindinput='checkSecPwd' maxlength='16'></input>
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder='游戏的二级密码' value='{{account.secPwd}}' bindinput='checkSecPwd' maxlength='16'></input>
     </view>
-    <view wx:elif="{{pageType == '随机'}}" class="weui-cell__bd">
-      <input class="weui-input" value='{{account.secPwd}}' bindinput='checkSecPwd' maxlength='16'></input>
-    </view>
-    <view wx:if="{{pageType == '随机'}}" class="weui-cell__ft">
+    <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='second' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
     </view>
   </view>

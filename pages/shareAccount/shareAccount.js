@@ -101,6 +101,46 @@ Page({
   },
 
   /**
+   * 回到主页 
+   */
+  goHonePage: function (e) {
+    wx.redirectTo({
+      url: '../index/index',
+    })
+  },
+
+  // 根据showAccount的 type 显示分类图标
+  accTypeToIcon: function (accType) {
+    var returnImg = ""
+    switch (accType) {
+      case "社交":
+        returnImg = "/images/talk_icon.png"
+        break
+      case "游戏":
+        returnImg = "/images/game_icon.png"
+        break
+      case "学习":
+        returnImg = "/images/study_icon.png"
+        break
+      case "金融":
+        returnImg = "/images/money_icon.png"
+        break
+      case "论坛":
+        returnImg = "/images/bbs_icon.png"
+        break
+      case "邮箱":
+        returnImg = "/images/mail_icon.png"
+        break
+      case "其他":
+        returnImg = "/images/others_icon.png"
+        break
+      default:
+        returnImg = "/images/keyManager.png"
+    }
+    return returnImg
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -108,7 +148,16 @@ Page({
     if (accountJSON != "") {
       accountJSON = util.replaceAll(accountJSON, "-", "#")
       console.log(accountJSON)
-      const account = JSON.parse(accountJSON)
+      var account = JSON.parse(accountJSON)
+      // 分享显示帐号时，判断自定义icon是否存在
+      if (account.icon.search("//store") != -1) {
+        wx.getSavedFileInfo({
+          filePath: account.icon,
+          fail: res => {
+            account.icon = this.accTypeToIcon(account.kind)
+          }
+        })        
+      }
       this.setData({
         account: account,
       })
@@ -119,22 +168,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
     const account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')
-    console.log(account)
     return {
       title: this.data.account.name + '（帐号分享）',
       path: '/pages/shareAccount/shareAccount?accountJSON=' + account,
-      imageUrl: "/images/shareImage.png",
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
+      imageUrl: "/images/shareImage.png",      
     }
   }
 })

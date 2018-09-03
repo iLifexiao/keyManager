@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">登录密码</view>
-  <view class="page__desc">用于确认用户的身份，避免陌生人操作你的账户信息</view>
+  <view class="page__desc">用于确认用户的身份，防治陌生人操作你的帐号信息</view>
 </view>
 
 <view class="weui-cells weui-cells_after-title">

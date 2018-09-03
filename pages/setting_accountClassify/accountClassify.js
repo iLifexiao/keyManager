@@ -6,15 +6,18 @@ Page({
    */
   data: {
     urlType: "",
-    accountClassify: [],
-    // 用于判断分类的图片是否已经存在
-    existIconPathList: [],
+    accountClassify: [],    
     existClassify: [],
+    
+    // 用于区分添加icon的状态（已有、新的）
+    iconTypeIndex: 0,
     tempIconPath: "/images/package.png",
     tempName: "",
     tempUrl: "",
+    
     buttonType: "添加", // 按钮的状态：添加新的分类、更新分类    
     currentClassifyIndex: 0, // 表示当前选择（删除、更新）的分类下标
+    
     // 分类对象结构
     classify: {
       "name": "",
@@ -29,7 +32,8 @@ Page({
       success: res => {
         var tempFilePaths = res.tempFilePaths[0]
         this.setData({
-          tempIconPath: tempFilePaths
+          tempIconPath: tempFilePaths,
+          iconTypeIndex: 1
         })
       },
     });
@@ -53,52 +57,42 @@ Page({
       return
     }
     const tempUrl = "../showAccount/showaccount?type=" + this.data.tempName
-    // 判断是否更改了默认图标    
-    if (this.data.tempIconPath == '/images/package.png') {      
-      this.addWithExistIcon(this.data.tempName, tempUrl)
+    // 判断是否更改了默认图标
+    if (this.data.iconTypeIndex == 0) {      
+      this.addWithExistIcon(this.data.tempName, tempUrl, this.data.tempIconPath)
     } else {
       this.addWithDIYIcon(this.data.tempName, tempUrl)
     }
   },
 
-  addWithExistIcon: function (tempName, tempUrl) {
+  addWithExistIcon: function (tempName, tempUrl, tempIconPath) {
     this.setData({
       classify: {
         "name": tempName,
-        "iconPath": "/images/package.png",
+        "iconPath": tempIconPath,
         "url": tempUrl
       }
     })
     this.handleOperation()
   },
 
-  addWithDIYIcon: function (tempName, tempUrl) {
-    // 在保存文件的时候校验文件是否已经保存    
-    if (this.data.existIconPathList.indexOf(this.data.tempIconPath) == -1) {
-      // 新的icon
-      wx.saveFile({
-        tempFilePath: this.data.tempIconPath,
-        success: res => {
-          this.setData({
-            classify: {
-              "name": tempName,
-              "iconPath": res.savedFilePath,
-              "url": tempUrl
-            }
-          })
-          this.handleOperation()
-        }
-      })
-    } else {
-      this.setData({
-        classify: {
-          "name": tempName,
-          "iconPath": this.data.tempIconPath,
-          "url": tempUrl
-        }
-      })
-      this.handleOperation()
-    }  
+  addWithDIYIcon: function (tempName, tempUrl) {    
+    wx.saveFile({
+      tempFilePath: this.data.tempIconPath,
+      success: res => {
+        this.setData({
+          classify: {
+            "name": tempName,
+            "iconPath": res.savedFilePath,
+            "url": tempUrl
+          },
+          // 更新保存的icon 和状态
+          tempIconPath: res.savedFilePath,
+          iconTypeIndex: 0
+        })
+        this.handleOperation()
+      }
+    })
   },
 
   handleOperation: function () {
@@ -117,7 +111,11 @@ Page({
    */
   addNewClassify: function (classify) {
     var accountClassify = this.data.accountClassify
+    // 管理的分类始终在最后一个
+    let lastClass = accountClassify.pop()
     accountClassify.push(classify)
+    accountClassify.push(lastClass)
+
     this.setData({
       accountClassify: accountClassify
     })
@@ -175,13 +173,13 @@ Page({
     const classifyName = e.currentTarget.id
     // 记录当前点击的行
     const currentClassifyIndex = this.data.existClassify.indexOf(classifyName)
-    console.log(currentClassifyIndex)
+    // console.log(currentClassifyIndex)
     this.setData({
       currentClassifyIndex: currentClassifyIndex
     })
 
     // 排除系统定义的分类
-    if (currentClassifyIndex > 8) {
+    if (currentClassifyIndex > 7 && classifyName !== "管理") {
       wx.showActionSheet({
         itemList: ["编辑", "删除"],
         itemColor: '#00ADB7',
@@ -208,7 +206,7 @@ Page({
    */
   editClassify: function (currentClassifyIndex) {
     const currentClassify = this.data.accountClassify[currentClassifyIndex]
-    console.log(currentClassify)
+    // console.log(currentClassify)
     this.setData({
       tempIconPath: currentClassify.iconPath,
       tempName: currentClassify.name,
@@ -222,12 +220,49 @@ Page({
   deleteClassify: function (currentClassifyIndex) {
     // 如果这里引用了 this.data 的数据
     var accountClassify = this.data.accountClassify
+    // 删除图片
+    let accountClass = accountClassify[currentClassifyIndex]
+    if (this.isSaveUniqueIcon(accountClass.iconPath)) {
+      wx.removeSavedFile({
+        filePath: accountClass.iconPath,
+        success: res => {
+          console.log("保存的图片删除成功")
+        },
+        fail: res => {
+          console.log("保存的图片删除失败")
+        }
+      })
+    }
     // 这里对其修改，不仅仅改变视图层的数据，而且前面的引用也会同时修改
     this.setData({
       accountClassify: util.deleteArrayInfo(accountClassify, currentClassifyIndex)
     })
     this.updateAccountClassifyData(accountClassify)
   },
+
+  // 判断是否为保存的图片icon
+  isSaveUniqueIcon: function (iconPath) {
+    // 是否为自定义图片
+    if (iconPath.search("//store") != -1) {
+      // 是否只有一个帐号使用了该图片
+      // 通过所有帐号的图标数量来判断        
+      var sameIconCount = 0
+      app.globalData.accountClassify.forEach(function (accountClass, index) {
+        if (accountClass.iconPath == iconPath) {
+          sameIconCount += 1
+        }
+      })
+      console.log(sameIconCount)
+      if (sameIconCount > 1) {
+        return false
+      }
+      else {
+        return true
+      }
+    }
+    return false
+  },
+
 
   /**
    * 获取所有分类，包括系统的分类
@@ -242,26 +277,11 @@ Page({
     })
   },
 
+
   /**
-   * 异步接口在写成工具类的时候，可能会还没获取到数据就返回了
+   * 异步API，在写成工具类的时候，可能会还没获取到数据就返回了
+   * 需要在succeed时候，返回数据
    */
-  getExistIconPathList: function () {
-    var existFileList = []
-    var existIconPathList = []
-    wx.getSavedFileList({
-      success: res => {
-        existFileList = res.fileList
-        // console.log(existFileList)
-        existFileList.forEach(function (icon, index) {
-          existIconPathList.push(icon.filePath)
-        })
-        console.log('existIconPathList:', existIconPathList)
-        this.setData({
-          existIconPathList: existIconPathList,
-        })
-      }
-    })
-  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -272,7 +292,5 @@ Page({
     })
     // 获取已经存在的分类
     this.getAllClassify(app.globalData.accountClassify)
-    // 获取已经存在的icon文件地址 
-    this.getExistIconPathList()
   },
 })

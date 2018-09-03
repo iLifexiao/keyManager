@@ -21,10 +21,10 @@ Page({
     const accountIndex = util.getIndexInObjectArray(app.globalData.accountList, account)
     const tapIndex = util.getIndexInObjectArray(this.data.accountList, account)
 
-    console.log("account:", account)
+    // console.log("account:", account)
 
     // 传递type & 当前的点击位置信息，用来修改信息
-    const url = '../adding_account/account?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex
+    const url = '../adding_account/account?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex + '&pageType=显示'
     // console.log("url:",url)    
     wx.navigateTo({
       url: url,
@@ -60,6 +60,18 @@ Page({
 
   // Source下方可以使用断点调试
   deleteAccount: function (account) {
+    // 删除保存的图片icon
+    if (this.isSaveUniqueIcon(account.icon)) {
+      wx.removeSavedFile({
+        filePath: account.icon,
+        success: res => {
+          console.log("保存的图片删除成功")
+        },
+        fail: res => {
+          console.log("保存的图片删除失败")
+        }
+      })
+    }
     // 当前信息            
     this.setData({
       accountList: util.deleteArrayInfo(this.data.accountList, this.data.currentAccountIndex)
@@ -75,10 +87,33 @@ Page({
           title: '删除成功',
         })
       }
-    })
+    })        
     // 更新全局变量
     app.globalData.accountList = newAccountList  
     this.updateAccountCount()  
+  },
+
+  // 判断是否为保存的图片icon
+  isSaveUniqueIcon: function (iconPath) {
+    // 是否为自定义图片
+      if (iconPath.search("//store") != -1) {
+        // 是否只有一个帐号使用了该图片
+        // 通过所有帐号的图标数量来判断        
+        var sameIconCount = 0
+        app.globalData.accountList.forEach(function(account, index){
+          if (account.icon == iconPath) {
+            sameIconCount += 1
+          }
+        })
+        // console.log(sameIconCount)
+        if (sameIconCount > 1) {
+          return false
+        }
+        else {
+          return true
+        }        
+      }
+      return false
   },
 
   /**
@@ -104,14 +139,14 @@ Page({
     if (accountList.length == 0) {
       this.setData({
         accType: tempType,
-        emptyInfo: "暂无 " + tempType + " 的帐号"
+        emptyInfo: "暂无 " + tempType + " 的帐号，点击右下角的按钮去添加一个吧^_^"
       })
     } else {
       this.setData({
         accType: tempType,
         accountList: accountList,
         // 避免删除分类下最后一个帐号后，不会显示信息
-        emptyInfo: "暂无 " + tempType + " 的帐号"
+        emptyInfo: "暂无 " + tempType + " 的帐号，点击右下角的按钮去添加一个吧^_^"
       })
     }    
   },
@@ -126,7 +161,7 @@ Page({
   // 右下角的浮动按钮
   jumpToAdd: function() {
     wx.navigateTo({
-      url: '../adding_account/account?accType=' + this.data.accType + '&pageType=随机',
+      url: '../adding_account/account?accType=' + this.data.accType + '&pageType=添加',
     })
   },
 

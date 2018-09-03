@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">提示</view>
-  <view class="page__desc">对有指纹识别的手机提供指纹验证技术，使得使用软件更加地方便和安全</view>
+  <view class="page__desc">对有支持指纹识别的机器提供指纹验证登录，使得使用软件更加地方便和安全</view>
 </view>
 
 <view class="weui-cells weui-cells_after-title">

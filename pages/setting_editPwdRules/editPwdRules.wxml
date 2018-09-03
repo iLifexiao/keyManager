@@ -1,6 +1,6 @@
 <view class="page__hd">
   <view class="page__title">密码规则</view>
-  <view class="page__desc">AES对称加密，需要使用密钥(key)，和密钥偏移量(iv)来完成工作。导入/导出的帐号是通过 key & iv 完成加密/解密。请妥善保存该信息，修改密码后原先备份的数据将不能使用!!!</view>
+  <view class="page__desc">AES对称加密，需要使用密钥，和密钥偏移量来完成工作。导入/导出的帐号是通过加密规则来完成加密/解密的。请妥善保存该信息。修改加密规则后，原来通过旧的加密规则备份的数据将不能使用，请在修改加密规则后务必进行一次备份，避免发生帐号数据丢失</view>
 </view>
 
 <view class="weui-cells weui-cells_after-title">

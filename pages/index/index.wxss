@@ -1,5 +1,7 @@
 .tishiLable {
   text-align: center;
+  font-weight: bold;
+  font-size: 17px;
   /* 上右下左（顺时针）*/
   margin: 10px 0px 20px;
 }
@@ -49,7 +51,9 @@
 .setPwdAgain {
   display: flex;
   flex-direction: row;
-  /* align-items: center; */
-  justify-content: center;
-  margin-top: 10px;
+  align-items: baseline;   
+    /* justify-content: center;    */
+  justify-content:space-between;  
+   margin-top: 10px;  
+  /* background-color: black; */
 }

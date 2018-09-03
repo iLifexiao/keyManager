@@ -1,17 +1,17 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     // 获取用户的primaryKEY
     var key = wx.getStorageSync('primary') || []
     if (key.length != 0) {
-      this.globalData.userKey = key     
+      this.globalData.userKey = key
     }
 
     // 获取加密信息, 虽然是一个字典，但是数据是空的，自然旧获取不到key
     var secret = wx.getStorageSync('secret') || {
       "key": "",
       "iv": ""
-      }
+    }
 
     if (secret.key.length != 16 || secret.iv.length != 16) {
       // console.log("设置默认密钥")
@@ -34,80 +34,83 @@ App({
 
     // 获取用户的帐号分类, 避免发生获取失败的问题
     var accountClassify = wx.getStorageSync('accountClassify') || []
-    if (accountClassify.length == 0) {      
-      accountClassify = [
-        {
-          "name": "全部",
-          "iconPath": "/images/all.png",
-          "url": "../showAccount/showaccount?type=全部"
-        },
-        {
-          "name": "社交",
-          "iconPath": "/images/talk.png",
-          "url": "../showAccount/showaccount?type=社交"
-        },
-        {
-          "name": "游戏",
-          "iconPath": "/images/game.png",
-          "url": "../showAccount/showaccount?type=游戏"
-        },
-        {
-          "name": "学习",
-          "iconPath": "/images/study.png",
-          "url": "../showAccount/showaccount?type=学习"
-        },
-        {
-          "name": "金融",
-          "iconPath": "/images/money.png",
-          "url": "../showAccount/showaccount?type=金融"
-        },
-        {
-          "name": "论坛",
-          "iconPath": "/images/bbs.png",
-          "url": "../showAccount/showaccount?type=论坛"
-        },
-        {
-          "name": "邮箱",
-          "iconPath": "/images/mail.png",
-          "url": "../showAccount/showaccount?type=邮箱"
-        },
-        {
-          "name": "其他",
-          "iconPath": "/images/others.png",
-          "url": "../showAccount/showaccount?type=其他"
-        },
-        {
-          "name": "管理",
-          "iconPath": "/images/addClass.png",
-          "url": "../setting_accountClassify/accountClassify"
-        }
-      ],
-      wx.setStorageSync("accountClassify", accountClassify)
-      this.globalData.accountClassify = accountClassify      
+    if (accountClassify.length == 0) {
+      accountClassify = [{
+            "name": "全部",
+            "iconPath": "/images/all.png",
+            "url": "../showAccount/showaccount?type=全部"
+          },
+          {
+            "name": "社交",
+            "iconPath": "/images/talk.png",
+            "url": "../showAccount/showaccount?type=社交"
+          },
+          {
+            "name": "游戏",
+            "iconPath": "/images/game.png",
+            "url": "../showAccount/showaccount?type=游戏"
+          },
+          {
+            "name": "学习",
+            "iconPath": "/images/study.png",
+            "url": "../showAccount/showaccount?type=学习"
+          },
+          {
+            "name": "金融",
+            "iconPath": "/images/money.png",
+            "url": "../showAccount/showaccount?type=金融"
+          },
+          {
+            "name": "论坛",
+            "iconPath": "/images/bbs.png",
+            "url": "../showAccount/showaccount?type=论坛"
+          },
+          {
+            "name": "邮箱",
+            "iconPath": "/images/mail.png",
+            "url": "../showAccount/showaccount?type=邮箱"
+          },
+          {
+            "name": "其他",
+            "iconPath": "/images/others.png",
+            "url": "../showAccount/showaccount?type=其他"
+          },
+          {
+            "name": "管理",
+            "iconPath": "/images/addClass.png",
+            "url": "../setting_accountClassify/accountClassify"
+          }
+        ],
+        wx.setStorageSync("accountClassify", accountClassify)
+      this.globalData.accountClassify = accountClassify
     } else {
-      this.globalData.accountClassify = accountClassify      
+      this.globalData.accountClassify = accountClassify
     }
 
     // 检测是否支持指纹识别
-    wx.checkIsSupportSoterAuthentication({
+    wx.checkIsSupportSoterAuthentication({      
       success: res => {
+        // that = this
         let supportMode = res.supportMode
         if (supportMode.length != 0) {
-          var isSupport = false
+          var isSupportFinger = false
           // forEach里不能使用 this
           // 同之前的一样
-          supportMode.forEach(function (mode, index) {
+          supportMode.forEach(function(mode, index) {
             if (mode == "fingerPrint") {
-              isSupport = true              
+              isSupportFinger = true              
+            }
+            if (mode == "facial") {
+              // this.globalData.supportFacial = "1"
+              console.log("支持人脸识别")
             }
           })
-          if (isSupport) {
+          if (isSupportFinger) {
             this.globalData.supportFinger = "1"
             console.log("支持指纹识别")
-          }       
-        }
-        else {
-          console.log("不支持指纹识别")
+          }          
+        } else {
+          console.log("不支持生物验证")
         }
       },
     })
@@ -119,8 +122,16 @@ App({
     // 开启随机壁纸
     var isOpenRandomImg = wx.getStorageSync("randomImg") || '0'
     this.globalData.isOpenRandomImg = isOpenRandomImg
-    
-},
+
+    // 获取用户自定义壁纸
+    wx.getStorage({
+      key: 'bgImageUrl',
+      success: res => {
+        this.globalData.bgImageUrl = res.data
+      },
+    })
+
+  },
 
   globalData: {
     userKey: [],
@@ -129,6 +140,9 @@ App({
     accountList: [],
     supportFinger: '0',
     openFingerPrint: '0',
-    isOpenRandomImg: '0'
+    // supportFacial: "0",
+    // openFacial: "0",
+    isOpenRandomImg: '0',
+    bgImageUrl: "/images/defaultBG.jpeg"
   }
 })

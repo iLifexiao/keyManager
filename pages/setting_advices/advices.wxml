@@ -1,9 +1,10 @@
 <!-- 建议框 -->
 <view class="page__hd">
   <view class="page__title">提示</view>
-  <view class="page__desc">碰到了问题，或者有什么建议可以通过下方按钮联系客服</view>
+  <view class="page__desc">碰到了问题，或者有什么建议可以通过意见反馈取得联系。若长时间未回复，可以通过发送邮件来获得反馈（设置->关于软件->联系方式，tips:点击即可复制邮箱)</view>
 </view>
 
-<view class="operationButton">
-  <button class="weui-btn" type="primary" open-type="contact" style='background-color: #00ADB7'>联系客服</button>
+<view class="operationButton">  
+  <button class="weui-btn" type="primary" open-type="feedback" style='background-color: #00ADB7'>意见反馈</button>
+  <!-- <button class="weui-btn" type="default" open-type="contact" >联系客服</button> -->
 </view>

@@ -74,4 +74,5 @@
 <view class="operationButton">
   <button class="weui-btn" type="primary" bindtap='saveAccount' style='background-color: #00ADB7'>保存帐号</button>
   <button class="weui-btn" type="default" bindtap='copyPwd'>复制密码</button>
+  <button class="weui-btn" type="default" bindtap='goHonePage'>回到主页</button>
 </view>

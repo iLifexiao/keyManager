@@ -7,7 +7,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell" bindtap='showVersion'>
     <view class="weui-cell__bd">版本记录</view>
-    <view class="weui-cell__ft">1.5.5</view>
+    <view class="weui-cell__ft">1.6.0</view>
   </view>  
   <view class="weui-cell" bindtap='copyGitHubAddr'>
     <view class="weui-cell__bd">代码开源</view>
@@ -17,11 +17,15 @@
     <view class="weui-cell__bd">联系方式</view>
     <view class="weui-cell__ft">{{mailAddr}}</view>
   </view>
+  <view class="weui-cell" bindtap='clearCache'>
+    <view class="weui-cell__bd">清除缓存</view>
+    <view class="weui-cell__ft">{{cacheSizeInfo}}</view>
+  </view>
 </view>
 
 <view class="page__hd">
   <view class="page__desc">
-    提供保存帐号密码、导出、导入、分享帐号、清空本帐号地密码等功能。一键生成密码、添加已有密码、本地信息加密。第一次使用需要设置登录密码，并且对支持指纹识别的机器提供支持。有任何建议和问题可以通过下方的吐槽链接联系我们！
+    提供保存、导入/出、分享、清空、自定义生成密码、等帐号管理功能。第一次使用时，需要设置登录密码。同时提供指纹识别登录。有任何建议和问题可以通过下方的吐槽链接联系我们！
   </view>
 </view>
 

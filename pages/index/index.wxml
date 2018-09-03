@@ -25,13 +25,13 @@
 <view class='numberKeyBoard'>
   <view class="weui-flex">
     <view class="weui-flex__item">
-      <button class='numButton' bindtap='clearTap'>CLR</button>
+      <button class='numButton' style='border: 1px solid #FF0000; color: #FF0000;' bindtap='clearTap'>C</button>
     </view>
     <view class="weui-flex__item">
       <button class='numButton' bindtap='numTap' data-num="0">0</button>
     </view>
     <view class="weui-flex__item">
-      <button class='numButton' bindtap='deleteTap'>DEL</button>
+      <button class='numButton' style='border: 1px solid #FF0000; color: #FF0000;' bindtap='deleteTap'>←</button>
     </view>
   </view>
 </view>
@@ -39,8 +39,10 @@
 <!-- 忘记上一次的密码 按钮  -->
 <view class='setPwdAgain'>
   <button wx:if="{{tishi == '再输入一次'}}" bindtap='clearStoreKey' class="weui-btn" type="primary" plain="true" size="mini" style='color: #00ADB7;border: 1px solid #00ADB7'>重新设置</button>
-</view>
-
-<view class='setPwdAgain'>
   <button wx:if="{{openFingerPrint == '1'}}" bindtap='checkFingerPrint' class="weui-btn" type="primary" plain="true" size="mini" style='color: #00ADB7;border: 1px solid #00ADB7'>指纹验证</button>
 </view>
+<!--
+<view class='setPwdAgain'>
+  
+</view>
+-->

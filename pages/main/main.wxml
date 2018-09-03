@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <!-- 背景视图 -->
 <view class='bgView'>
-  <input class='searchBar' placeholder='Search' bindconfirm='searchStart' confirm-type='搜索'></input>
+  <input class='searchBar' placeholder='搜索帐号' bindconfirm='searchStart' confirm-type='搜索'></input>
   <image class="dailyimage" src="{{imageURL}}" mode="scaleToFill"></image>
 </view>
 
@@ -9,7 +9,7 @@
 <view class="icon-box">
   <image src="/images/tag.png" style='width: 20px; height: 20px'></image>
   <text style='margin-left: 5px;'>分类</text>
-  <image src="/images/recycle.png" bindtap='randomBGButton' style='margin-left: 74%; width: 23px; height: 23px;'></image>
+  <image src="/images/recycle.png" bindtap='changeBGAction' style='margin-left: 74%; width: 23px; height: 23px;'></image>
 </view>
 <view class="weui-grids">
   <block wx:for="{{accountClassify}}" wx:key="{{item.name}}">

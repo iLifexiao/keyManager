@@ -18,7 +18,8 @@ Page({
           { "name": "Skype", "path": "/images/logo/skype.png" },
           { "name": "Ins", "path": "/images/logo/ins.png" },
           { "name": "MOMO", "path": "/images/logo/momo.png" },
-          { "name": "易信", "path": "/images/logo/yixin.png" }
+          { "name": "易信", "path": "/images/logo/yixin.png" },
+          { "name": "钉钉", "path": "/images/logo/dingding.png" }
         ]
       },
       {
@@ -105,8 +106,7 @@ Page({
           { "name": "网易游戏", "path": "/images/logo/wyg.png" },
           { "name": "Steam", "path": "/images/logo/steam.png" },
           { "name": "我的世界", "path": "/images/logo/minecraft.png" },
-          { "name": "梦幻西游", "path": "/images/logo/mhxy.png" },
-          { "name": "旅行青蛙", "path": "/images/logo/lxqw.png" },
+          { "name": "梦幻西游", "path": "/images/logo/mhxy.png" },          
           { "name": "崩坏3", "path": "/images/logo/mihoyo.png" },
           { "name": "部落冲突", "path": "/images/logo/blct.png" },
           { "name": "虚荣", "path": "/images/logo/vainglory.png" },          
@@ -120,6 +120,7 @@ Page({
           { "name": "必应词典", "path": "/images/logo/bingdic.png" },
           { "name": "沪江网校", "path": "/images/logo/hjclass.png" },
           { "name": "ANKI", "path": "/images/logo/anki.png" },
+          { "name": "小程序", "path": "/images/logo/miniprogram.png" },
           { "name": "掌上阅读", "path": "/images/logo/palmebook.png" },
           { "name": "知乎", "path": "/images/logo/zhihu.png" },
           { "name": "读者", "path": "/images/logo/reader.png" },
@@ -128,14 +129,16 @@ Page({
           { "name": "智联招聘", "path": "/images/logo/zhaopin.png" },
           { "name": "51Job", "path": "/images/logo/51job.png" },
           { "name": "牛客网", "path": "/images/logo/nowcoder.png" },
+          { "name": "掘金", "path": "/images/logo/juejin.png" },
           { "name": "豆瓣", "path": "/images/logo/douban.png" },
           { "name": "百词斩", "path": "/images/logo/card.png" },
           { "name": "粉笔网", "path": "/images/logo/fb.png" },
+          { "name": "考虫", "path": "/images/logo/kaochong.png" },
           { "name": "扇贝单词", "path": "/images/logo/shanbay.png" },
           { "name": "中关村在线", "path": "/images/logo/zol.png" },
           { "name": "CSDN", "path": "/images/logo/csdn.png" },
           { "name": "CET4", "path": "/images/logo/cet4.png" },
-          { "name": "CET6", "path": "/images/logo/cet6.png" },
+          { "name": "CET6", "path": "/images/logo/cet6.png" },          
         ]
       },
       {

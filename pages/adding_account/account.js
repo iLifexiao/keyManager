@@ -5,10 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pageType: "随机", // 用于展示不同的页面，默认随机页面
+    pageType: "添加", // 用于展示不同的页面，默认添加帐号页面
     tapIndex: 0,
     accType: "",
-    existIconPathList: [],// 用于判断分类的图片是否已经存在
+    // existIconPathList: [],// 用于判断分类的图片是否已经存在
     buttonType: "保存帐号",
     accountIndex: 0,
     account: {
@@ -44,22 +44,6 @@ Page({
       '!@#': ['!', '#', '@', '$', '%', '^', '_', '*', ',', '.']
     }
   },
-  /**
-   * 解决方法一
-   * 复制一份当前的对象，如下：
-   * var that=this;//把this对象复制到临时变量that
-   * 
-   * 在wx.request({})，有时候会需要获取页面初始化数据data的情况，
-   * 如果使用，this.data来获取，调试页面会报undefiend。
-   * 原因是，在javascript中，this代表着当前对象，会随着程序的执行过程中的上下文改变
-   * 在wx.request({}); 方法的回调函数中，对象已经发生改变，所以已经不是wx.request({});方法对象了，data属性也不存在了。 
-   *
-   *  解决方法二
-   * 将回调函数换一种声明方式
-   * success: res=> {
-   *   this.
-   * }
-   */
 
   /**
    * 选择帐号图标
@@ -104,7 +88,7 @@ Page({
           tempIcon: tempFilePaths
         })
       },
-    });
+    })
   },
 
   chooseOrdinaryIcon: function (e) {
@@ -184,7 +168,7 @@ Page({
     const rules = this.getPwdRules()
     // 必须有选择密码种类
     if (rules.length > 0) {
-      const randomPwd = this.creatRandomPwdWithRules(rules)
+      const randomPwd = this.makeSureUsedAllPwdRules(rules)
       this.savePwdWithType(randomPwd, e.currentTarget.dataset.pwdType)
     } else {
       wx.showToast({
@@ -213,17 +197,51 @@ Page({
    */
   creatRandomPwdWithRules: function (rules) {
     var randomPwd = ""
+    var usedRules = []
+    var result = {
+      pwd: "",
+      allUsed: false
+    }
     for (var i = 0; i < this.data.account.pwdCount; ++i) {
       // 随机选择一个种类
       const kindIndex = Math.floor(Math.random() * rules.length)
       const kind = rules[kindIndex]
+
+      // 记录使用过的种类，为后面保证使用了选中的所有的密码规则提供依据
+      var isUsed = false
+      usedRules.forEach(function (value, index) {
+        if (kind == value) {
+          isUsed = true
+        }
+      })
+      if (!isUsed) {
+        usedRules.push(kind)
+      }
+
       const compoent = this.data.passwordCompoent[kind]
       // 随机种类中的随机元素
       const compoentIndex = Math.floor(Math.random() * compoent.length)
       var randomValue = compoent[compoentIndex]
       randomPwd += randomValue
     }
-    return randomPwd
+    result.pwd = randomPwd    
+    if (usedRules.length == rules.length) {
+      result.allUsed = true
+    } 
+
+    return result   
+  },
+
+  /**
+   * 确保使用了所有的密码规则
+   */
+  makeSureUsedAllPwdRules: function (rules) {
+    var result = {}
+    do {
+      result = this.creatRandomPwdWithRules(rules)
+    } while(!result.allUsed)
+    
+    return result.pwd
   },
 
   /**
@@ -279,12 +297,18 @@ Page({
       return
     }
 
-    // 判断页面状态
-    if (this.data.buttonType == "更新帐号") {
-      // 更新icon的类型
-      this.isExistIcon()
-    }
-
+    // 判断页面状态    
+    // if (this.data.buttonType == "更新帐号") {
+    //   // 更新icon的类型
+    //   this.isExistIcon()
+    // }
+        
+    // 在选择同一张相册图片时，无法保存帐号，因为tempFile已经被移动到缓存中了，所以无法入法找到路径，导致执行wx.saveFile失败
+    // 所以修改临时路径，为已经保存的图片，并执行第一步[常用图标] == 
+    // 但是如果存在两个帐号同时使用一个文件，删除帐号会导致另一个帐号的图片失效
+    // 所以需要在删除的时候判断是否该帐号是唯一使用该图片的帐号
+    // 或者采用提示用户更新图片，为了更好的用户体验，使用第一种方法
+    console.log(this.data.iconTypeIndex)
     switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
       case '常用图标':
         const account = this.updateAccWithIconPath(this.data.tempIcon)
@@ -294,8 +318,13 @@ Page({
         wx.saveFile({
           tempFilePath: this.data.tempIcon,
           success: res => {
-            const account = this.updateAccWithIconPath(this.data.tempIcon)
+            // BUG -> V.1.5.7:这里还是用的临时文件
+            const account = this.updateAccWithIconPath(res.savedFilePath)
             this.saveNewAccount(account)
+            this.setData({
+              tempIcon: res.savedFilePath,
+              iconTypeIndex: 0
+            })
           }
         })
         break;
@@ -333,7 +362,7 @@ Page({
         this.updataAddPage(account)
       }      
     }
-    console.log(account)
+    // console.log(account)
   },
 
   /**
@@ -358,16 +387,16 @@ Page({
    * 判断图片是否为缓存中 || icon列表中的图片
    * 是, 则设置图标为普通类型
    */
-  isExistIcon: function () {
-    // 是否为自定义图片
-    if (this.data.tempIcon.search("//store") != -1) {
-      if (this.data.existIconPathList.indexOf(tempIcon) != -1) {
-        this.setData({
-          iconTypeIndex: 0
-        })
-      }
-    }
-  },
+  // isExistIcon: function () {
+  //   // 是否为自定义图片
+  //   if (this.data.tempIcon.search("//store") != -1) {
+  //     if (this.data.existIconPathList.indexOf(this.data.tempIcon) != -1) {
+  //       this.setData({
+  //         iconTypeIndex: 0
+  //       })
+  //     }
+  //   }
+  // },
 
   /**
    * 修改帐号信息
@@ -395,6 +424,7 @@ Page({
     var pages = getCurrentPages()
     var that = pages[pages.length - 2]
     var beforeAccountList = that.data.accountList
+    // 这里通过判断是否更改了帐号的类型，来删除上一页面的帐号信息
     if (this.data.accType == account.kind || this.data.accType == "全部") {
       beforeAccountList[this.data.tapIndex] = account
     } else {
@@ -416,7 +446,13 @@ Page({
     const secPwd = this.data.account.secPwd
 
     if (this.data.classifyIndex == 1) {
-      util.handleCopyPwd(pwd + "/" + secPwd, "游戏拷贝成功", "还未填写密码")
+      // 游戏帐号未必有二级密码，拷贝分情况
+      if (secPwd.length == 0) {
+        util.handleCopyPwd(pwd, "游戏拷贝成功", "还未填写密码")  
+      } 
+      else {
+        util.handleCopyPwd(pwd + "/" + secPwd, "游戏拷贝成功", "还未填写密码")
+      }    
     } else {
       util.handleCopyPwd(pwd, "密码拷贝成功", "还未填写密码")
     }
@@ -444,79 +480,54 @@ Page({
   },
 
   /**
-   * 异步接口在写成工具类的时候，可能会还没获取到数据就返回了
-   */
-  getExistIconPathList: function () {
-    var existFileList = []
-    var existIconPathList = []
-    wx.getSavedFileList({
-      success: res => {
-        existFileList = res.fileList
-        // console.log(existFileList)
-        existFileList.forEach(function (icon, index) {
-          existIconPathList.push(icon.filePath)
-        })
-        // console.log('existIconPathList:', existIconPathList)
-        this.setData({
-          existIconPathList: existIconPathList,
-        })
-      }
-    })
-  },
-
-  /**
    * 根据不同的页面状态，显示不同的页面
    */
   handlePageShowType: function (options, existClassify) {
     // 已有帐号点击显示, 获取帐号在数据缓存中的位置
-    const accountJSON = options.accountJSON || ""
-    if (accountJSON != "") {
-      // 获取已经存在的icon文件地址 
-      this.getExistIconPathList()
-      const account = JSON.parse(accountJSON)
-      // 获取帐号的点击位置（上一页）和类型（未修改时）
-      const classifyIndex = existClassify.indexOf(account.kind)
-      this.setData({
-        account: account,
-        accType: options.accType,
-        tapIndex: options.tapIndex,
-        accountIndex: options.accountIndex,
-        tempIcon: account.icon,
-        tempName: account.name,
-        classifyIndex: classifyIndex,
-        buttonType: "更新帐号"
-      })
-      wx.setNavigationBarTitle({
-        title: account.name,
-      })
-      return
-    }
-
-    // url字符串中不需要添加 引号
-    const pageType = options.pageType || ""
-    this.settingPageType(pageType)
+    let pageType = options.pageType
+    switch (pageType) {
+      case "显示":
+        this.showAccountInfo(options, existClassify)
+        break;
+      case "添加":
+        this.settingPageType(pageType)
+        // url字符串中不需要添加 引号
+        this.updateOriginalAccountInfo(options.accType, existClassify)
+        break;
+      default:        
+        break;
+    } 
   },
 
   /**
-   * 设置页面显示状态
+   * 显示帐号
+   */
+  showAccountInfo: function (options, existClassify) {
+    const account = JSON.parse(options.accountJSON)
+    // 获取帐号的点击位置（上一页）和类型（未修改时）
+    const classifyIndex = existClassify.indexOf(account.kind)
+    this.setData({
+      account: account,
+      accType: options.accType,
+      tapIndex: options.tapIndex,
+      accountIndex: options.accountIndex,
+      tempIcon: account.icon,
+      tempName: account.name,
+      classifyIndex: classifyIndex,      
+      buttonType: "更新帐号"
+    })
+    wx.setNavigationBarTitle({
+      title: account.name,
+    })
+  },
+
+  /**
+   * 设置页面显示状态，默认为添加状态
    */
   settingPageType: function(pageType) {
-    if (pageType == "随机") {
-      this.setData({
-        pageType: "随机"
-      }),
+    if (pageType == "添加") {
       wx.setNavigationBarTitle({
-        title: "随机生成密码",
-      })
-      return
-    }
-
-    if (pageType == "已有") {
-      this.setData({
-        pageType: "已有"
-      }),
-      wx.setNavigationBarTitle({
-        title: "添加已有帐号",
+        title: "添加帐号",
       })
       return
     }
@@ -527,14 +538,14 @@ Page({
   },
 
   // 处理从 showAccount 处的跳转
-  jumpFromShowAccount: function (accType, classify) {
+  updateOriginalAccountInfo: function (accType, classify) {
     // 判断跳转过来的分类
-    const classifyIndex = classify.indexOf(accType)
-    // 更改帐号的分类 & 图标
-    var account = this.data.account   
-    account.icon = this.accTypeToIcon(accType)
-    account.kind = accType
+    const classifyIndex = classify.indexOf(accType)    
     if (classifyIndex != -1) {
+      // 更改帐号的分类 & 图标
+      var account = this.data.account   
+      account.icon = this.accTypeToIcon(accType)
+      account.kind = accType
       this.setData({
         classifyIndex: classifyIndex,
         account: account,
@@ -578,10 +589,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const existClassify = util.getExistClassify(app.globalData.accountClassify)    
-    this.jumpFromShowAccount(options.accType, existClassify)
+    const existClassify = util.getExistClassify(app.globalData.accountClassify)
+    // 获取已经存在的icon文件地址
+    // 这个函数的目的在于节省本地文件保存数量，节省空间，但是比较的是临时文件，无法比较保存后的情况
+    // this.getExistIconPathList()
     this.setData({
       classify: existClassify,
+      pageType: options.pageType
     })
     this.handlePageShowType(options, existClassify)
   },
@@ -590,17 +604,11 @@ Page({
    * 用户分享
    */
   onShareAppMessage: function (res) {
-    const account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')  
+    let account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')
     return {
       title: this.data.tempName + '（帐号分享）',
       path: '/pages/shareAccount/shareAccount?accountJSON=' + account,
       imageUrl: "/images/shareImage.png",
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
     }
   }
 })
