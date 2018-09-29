@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/main/main",    
     "pages/adding_account/account",
+    "pages/adding_showAcc/showAcc",
     "pages/adding_chooseLogo/chooseLogo",
     "pages/setting/setting",
     "pages/setting_exportPwd/exportPwd",

@@ -23,7 +23,9 @@ Page({
     },
     tempIcon: "/images/keyManager.png",
     tempName: "",
-    iconTypeList: ['常用图标', '从相册中选择'],
+    iconTypeList: ['常用图标', '输入图片链接', '从相册中选择'],
+    islinkInputHiden: true,
+    linkinputValue: "",
     iconTypeIndex: 0,
     classify: [],
     classifyIndex: 0,
@@ -72,6 +74,9 @@ Page({
         this.chooseOrdinaryIcon();
         break;
       case 1:
+        this.chooseIconWithLink();
+        break;
+      case 2:
         this.chooseIconWithAlbum();
         break;
       default:
@@ -95,6 +100,36 @@ Page({
     wx.navigateTo({
       url: '../adding_chooseLogo/chooseLogo',
     })
+  },
+
+  // 输入图片链接
+  chooseIconWithLink: function (e) {
+    this.setData({
+      islinkInputHiden: false
+    })
+  },
+
+  confirmLink: function (e) {
+    // 用于输入特殊检查
+    if (util.checkSpecialMark(this.data.linkinputValue)) {
+      return
+    }
+    this.setData({
+      islinkInputHiden: true,
+      tempIcon: this.data.linkinputValue
+    })
+  },
+
+  cancelLink: function (e) {
+    this.setData({
+      islinkInputHiden: true
+    })
+  },
+
+  linkInput: function (e) {
+    this.setData({
+      linkinputValue: e.detail.value
+    })        
   },
 
   /**
@@ -311,7 +346,11 @@ Page({
     console.log(this.data.iconTypeIndex)
     switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
       case '常用图标':
-        const account = this.updateAccWithIconPath(this.data.tempIcon)
+        var account = this.updateAccWithIconPath(this.data.tempIcon)
+        this.saveNewAccount(account)
+        break;
+      case '输入图片链接':
+        account = this.updateAccWithIconPath(this.data.tempIcon)
         this.saveNewAccount(account)
         break;
       case '从相册中选择':
@@ -422,7 +461,7 @@ Page({
    */
   updateBeforePageData: function (account) {
     var pages = getCurrentPages()
-    var that = pages[pages.length - 2]
+    var that = pages[pages.length - 3]
     var beforeAccountList = that.data.accountList
     // 这里通过判断是否更改了帐号的类型，来删除上一页面的帐号信息
     if (this.data.accType == account.kind || this.data.accType == "全部") {
@@ -436,6 +475,22 @@ Page({
         emptyInfo: "暂无 " + this.data.accType + " 的帐号"
       })
     }
+    
+    // 更新新的显示帐号的信息
+    that = pages[pages.length - 2]
+    // 处理备注过长的问题
+    var tempRemarks = account.remarks
+    if (tempRemarks.length > 15) {
+      tempRemarks = tempRemarks.substring(0, 15) + '...'
+    }
+    if (tempRemarks.length == 0) {
+      tempRemarks = '...'
+    }
+
+    that.setData({
+      account: account,
+      tempRemarks: tempRemarks
+    })
   },
 
   /**

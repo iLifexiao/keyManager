@@ -24,10 +24,12 @@ Page({
     // console.log("account:", account)
 
     // 传递type & 当前的点击位置信息，用来修改信息
-    const url = '../adding_account/account?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex + '&pageType=显示'
-    // console.log("url:",url)    
+    // const url = '../adding_account/account?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex + '&pageType=显示'
+    // console.log("url:",url)   
+
+    const url2 = '../adding_showAcc/showAcc?accountJSON=' + JSON.stringify(account) + '&accountIndex=' + accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + tapIndex + '&pageType=显示'
     wx.navigateTo({
-      url: url,
+      url: url2,
     })
   },
 

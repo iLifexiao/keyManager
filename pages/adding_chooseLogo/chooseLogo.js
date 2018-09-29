@@ -86,6 +86,8 @@ Page({
           { "name": "淘宝", "path": "/images/logo/taobao.png" },
           { "name": "天猫", "path": "/images/logo/tmall.png" },
           { "name": "大众点评", "path": "/images/logo/dianping.png" },
+          { "name": "掌上电力", "path": "https://s1.ax1x.com/2018/09/28/iQW4dP.png" },
+          { "name": "水电煤气", "path": "https://s1.ax1x.com/2018/09/28/iQ5wlD.png" },          
         ]
       },
       {

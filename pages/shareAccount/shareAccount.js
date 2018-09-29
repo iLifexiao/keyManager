@@ -100,6 +100,11 @@ Page({
     }
   },
 
+  copyAcc: function (e) {
+    const acc = this.data.account.acc
+    util.handleCopyPwd(acc, "帐号拷贝成功", "还未填写帐号")
+  },
+
   /**
    * 回到主页 
    */

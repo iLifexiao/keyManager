@@ -125,3 +125,6 @@
     </button>
   </block>
 </view>
+
+<!-- 弹窗 -->
+<modal hidden="{{islinkInputHiden}}" title="图片地址" confirm-text="确认" cancel-text="取消" bindcancel="cancelLink" bindconfirm="confirmLink">    <input type='text' bindinput='linkInput' placeholder="请输入图片链接" /></modal>
