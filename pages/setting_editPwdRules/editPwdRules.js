@@ -15,7 +15,7 @@ Page({
       checkKey: e.detail.value
     })
     //收起键盘
-    util.hideKeyboard(e.detail.value, 6)    
+    util.hideKeyboard(e.detail.value, 6)
   },
   checkKey: function(e) {
     this.setData({
@@ -34,7 +34,7 @@ Page({
 
   changeRules: function(e) {
     const checkKey = this.data.checkKey
-    if(util.isEmptyInput(checkKey, "请验证身份")) {
+    if (util.isEmptyInput(checkKey, "请验证身份")) {
       return
     }
     const userKey = this.data.userKey
@@ -58,24 +58,23 @@ Page({
       }
       // 修改全局变量，提高速度访问
       app.globalData.secret = changedRule
-      
+
       wx.setStorage({
         key: 'secret',
         data: changedRule,
-        success: res=> {
+        success: res => {
           wx.showToast({
             title: '规则修改成功',
           })
         },
-        fail: res=> {
+        fail: res => {
           wx.showToast({
             title: '修改失败',
             image: "/images/error.png"
           })
-        }              
+        }
       })
-    }
-    else {
+    } else {
       wx.showToast({
         title: '密码错误',
         image: "/images/error.png"
@@ -85,7 +84,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     const userKeyArray = app.globalData.userKey
     const userKey = userKeyArray.join("")
     this.setData({

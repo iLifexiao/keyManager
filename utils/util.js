@@ -1,3 +1,7 @@
+import { 
+  match
+} from './pinyinMatch.js'
+
 function formatTime(date) {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -28,12 +32,12 @@ function hideKeyboard(value, len) {
  */
 function deleteArrayInfo(array, index) {
   const popCount = array.length - index
-  var popArray = []
-  for (var i = 0; i < popCount; ++i) {
+  let popArray = []
+  for (let i = 0; i < popCount; ++i) {
     popArray.push(array.pop())
   }
   popArray = popArray.reverse()
-  for (var i = 1; i < popCount; ++i) {
+  for (let i = 1; i < popCount; ++i) {
     array.push(popArray[i])
   }
   return array
@@ -44,7 +48,7 @@ function deleteArrayInfo(array, index) {
  * 根据内容来查找 
  */
 function getIndexInObjectArray(theArray, theObject) {
-  var theIndex = 0
+  let theIndex = 0
   theArray.forEach(function (item, index) {
     if (JSON.stringify(theObject) == JSON.stringify(item)) {
       theIndex = index
@@ -57,7 +61,7 @@ function getIndexInObjectArray(theArray, theObject) {
  * 获得已经拥有的分类，当分类的状态发生改变，也需要变更
  */
 function getExistClassify(accountClassify) {
-  var existClassify = []
+  let existClassify = []
   accountClassify.forEach(function (classify, index) {
     if (classify.name != "全部" && classify.name != "管理") {
       existClassify.push(classify.name)
@@ -74,7 +78,7 @@ function getExistClassify(accountClassify) {
  * 即使两个对象的内容完全相同
  */
 function addAccount(account, allAccountList) {
-  var existflag = false
+  let existflag = false
   allAccountList.forEach(function (item, index) {
     if (JSON.stringify(account) == JSON.stringify(item)) {
       wx.showToast({
@@ -106,7 +110,7 @@ function addAccount(account, allAccountList) {
  * 根据分类获取帐号信息
  */
 function getAccountWith(accType, allAccountList) {
-  var accountList = []
+  let accountList = []
   // 显示全部或其他分类
   if (accType == "全部") {
     return allAccountList
@@ -124,11 +128,15 @@ function getAccountWith(accType, allAccountList) {
  * 根据（名称、帐号、备注）获取帐号信息
  */
 function getSearchAccountWith(key, allAccountList) {
-  var accountList = []  
+  let accountList = []  
+  let lowCaseKey = key.toLowerCase()
   // 获取帐号
   allAccountList.forEach(function (account, index) {
-    if (account.name.search(key) != -1 || account.acc.search(key) != -1 || account.remarks.search(key) != -1) {
-      accountList.push(account)
+    if (account.name.toLowerCase().search(lowCaseKey) !== -1 ||       
+      account.acc.toLowerCase().search(lowCaseKey) !== -1 || 
+      account.remarks.toLowerCase().search(lowCaseKey) !== -1 ||
+      match(account.name, lowCaseKey)) {
+        accountList.push(account)
     }
   })
 
@@ -153,7 +161,7 @@ function isEmptyInput(data, info) {
  * 处理拷贝密码
  */
 function handleCopyPwd(data, info, errInfo) {
-  var dataLen = data.length
+  let dataLen = data.length
   if (info == "游戏拷贝成功") {
     dataLen -= 1
   }
@@ -182,7 +190,7 @@ function handleCopyPwd(data, info, errInfo) {
  * 保存帐号的限制特殊符号：-、&、？
  */
 function checkSpecialMark(info) {
-  var re = new RegExp("[-&?]");
+  let re = new RegExp("[-&?]");
   const index = info.search(re)
   // console.log("index:", index)
   if (index != -1) {
@@ -198,9 +206,34 @@ function checkSpecialMark(info) {
 
 // 替换 # --> \ 因为微信的转发信息用 # 来分割，导致字典被破坏
 function replaceAll(data, source, target) {
-  var re = new RegExp(source, 'gm');
-  var str = data.replace(re, target)
+  let re = new RegExp(source, 'gm');
+  let str = data.replace(re, target)
   return str
+}
+
+/**
+ * 处理账号显示长度问题
+ */
+function handleAccountLength(account) {
+  // 处理账号名称
+  var tempName = account.name
+  if (tempName.length > 6) {
+    tempName = tempName.substring(0, 6) + '...'
+  }
+
+  // 处理备注过长的问题
+  var tempRemarks = account.remarks
+  if (tempRemarks.length > 15) {
+    tempRemarks = tempRemarks.substring(0, 15) + '...'
+  }
+  if (tempRemarks.length == 0) {
+    tempRemarks = '...'
+  }
+
+  return {    
+    name: tempName,
+    remarks: tempRemarks
+  }
 }
 
 module.exports = {
@@ -216,6 +249,7 @@ module.exports = {
   addAccount: addAccount,
   getAccountWith: getAccountWith,
   getSearchAccountWith: getSearchAccountWith,
+  handleAccountLength: handleAccountLength,
 
   hideKeyboard: hideKeyboard,
 

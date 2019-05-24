@@ -18,7 +18,7 @@ Page({
       acc: "",
       pwd: "",
       secPwd: "",
-      pwdCount: 8,
+      pwdCount: 16,
       remarks: "",
     },
     tempIcon: "/images/keyManager.png",
@@ -30,11 +30,26 @@ Page({
     classify: [],
     classifyIndex: 0,
 
-    pwdRules: [
-      { name: '0-9', value: '0', checked: true },
-      { name: 'a-z', value: '1', checked: true },
-      { name: 'A-Z', value: '2', checked: true },
-      { name: '!@#', value: '3', checked: true }
+    pwdRules: [{
+        name: '0-9',
+        value: '0',
+        checked: true
+      },
+      {
+        name: 'a-z',
+        value: '1',
+        checked: true
+      },
+      {
+        name: 'A-Z',
+        value: '2',
+        checked: true
+      },
+      {
+        name: '!@#',
+        value: '3',
+        checked: true
+      }
     ],
 
     // 10*26*26*10 = 66760??
@@ -50,7 +65,7 @@ Page({
   /**
    * 选择帐号图标
    */
-  selectIcon: function (e) {
+  selectIcon: function(e) {
     wx.showActionSheet({
       itemList: this.data.iconTypeList,
       itemColor: '#00ADB7',
@@ -65,7 +80,7 @@ Page({
   /**
    * 处理图片的选择 & 记录图片来源
    */
-  handleSelectIcon: function (tapIndex) {
+  handleSelectIcon: function(tapIndex) {
     this.setData({
       iconTypeIndex: tapIndex
     })
@@ -84,11 +99,11 @@ Page({
     }
   },
 
-  chooseIconWithAlbum: function (e) {
+  chooseIconWithAlbum: function(e) {
     wx.chooseImage({
       count: 1,
       success: res => {
-        var tempFilePaths = res.tempFilePaths[0]
+        let tempFilePaths = res.tempFilePaths[0]
         this.setData({
           tempIcon: tempFilePaths
         })
@@ -96,20 +111,20 @@ Page({
     })
   },
 
-  chooseOrdinaryIcon: function (e) {
+  chooseOrdinaryIcon: function(e) {
     wx.navigateTo({
       url: '../adding_chooseLogo/chooseLogo',
     })
   },
 
   // 输入图片链接
-  chooseIconWithLink: function (e) {
+  chooseIconWithLink: function(e) {
     this.setData({
       islinkInputHiden: false
     })
   },
 
-  confirmLink: function (e) {
+  confirmLink: function(e) {
     // 用于输入特殊检查
     if (util.checkSpecialMark(this.data.linkinputValue)) {
       return
@@ -120,23 +135,23 @@ Page({
     })
   },
 
-  cancelLink: function (e) {
+  cancelLink: function(e) {
     this.setData({
       islinkInputHiden: true
     })
   },
 
-  linkInput: function (e) {
+  linkInput: function(e) {
     this.setData({
       linkinputValue: e.detail.value
-    })        
+    })
   },
 
   /**
    * 选择帐号分类
    */
-  selectClassify: function (e) {
-    var account = this.data.account
+  selectClassify: function(e) {
+    let account = this.data.account
     const classifyIndex = e.detail.value
     account.kind = this.data.classify[classifyIndex]
     this.setData({
@@ -147,8 +162,8 @@ Page({
   /**
    * 选择密码位数
    */
-  accountCountChange: function (e) {
-    var account = this.data.account
+  accountCountChange: function(e) {
+    let account = this.data.account
     account.pwdCount = e.detail.value
     this.setData({
       account: account
@@ -157,13 +172,13 @@ Page({
   /**
    * 修改成成的密码规则
    */
-  pwdRuleChange: function (e) {
-    var pwdRules = this.data.pwdRules
-    var values = e.detail.value
-    for (var i = 0, lenI = pwdRules.length; i < lenI; ++i) {
+  pwdRuleChange: function(e) {
+    let pwdRules = this.data.pwdRules
+    let values = e.detail.value
+    for (let i = 0, lenI = pwdRules.length; i < lenI; ++i) {
       pwdRules[i].checked = false;
 
-      for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
+      for (let j = 0, lenJ = values.length; j < lenJ; ++j) {
         if (pwdRules[i].value == values[j]) {
           pwdRules[i].checked = true;
           break;
@@ -178,8 +193,8 @@ Page({
    * 随机生成的密码用户可以修改
    * 如果用户修改了密码的状态，同时也要修改密码长度
    */
-  checkPwd: function (e) {
-    var account = this.data.account
+  checkPwd: function(e) {
+    let account = this.data.account
     const pwd = e.detail.value
     account.pwdCount = pwd.length
     account.pwd = pwd
@@ -187,8 +202,8 @@ Page({
       account: account
     })
   },
-  checkSecPwd: function (e) {
-    var account = this.data.account
+  checkSecPwd: function(e) {
+    let account = this.data.account
     const secPwd = e.detail.value
     account.secPwd = secPwd
     this.setData({
@@ -199,12 +214,26 @@ Page({
   /**
    * 随机生成密码
    */
-  creatPassword: function (e) {
+  creatPassword: function(e) {
     const rules = this.getPwdRules()
     // 必须有选择密码种类
     if (rules.length > 0) {
       const randomPwd = this.makeSureUsedAllPwdRules(rules)
-      this.savePwdWithType(randomPwd, e.currentTarget.dataset.pwdType)
+
+      if (randomPwd.length === 0) {
+        wx.showToast({
+          title: '至少有一位密码',
+          image: '/images/exclamatory-mark.png'
+        })
+        return
+      }
+
+      // 用户主动点击 or 自动生成
+      if (e) {
+        this.savePwdWithType(randomPwd, e.currentTarget.dataset.pwdType)
+      } else {
+        this.savePwdWithType(randomPwd, 'first')
+      }
     } else {
       wx.showToast({
         title: '至少有一个规则',
@@ -216,10 +245,10 @@ Page({
   /**
    * 获得当前选择的规则种类
    */
-  getPwdRules: function () {
-    var rules = []
-    var pwdRules = this.data.pwdRules
-    for (var i = 0, lenI = pwdRules.length; i < lenI; ++i) {
+  getPwdRules: function() {
+    let rules = []
+    let pwdRules = this.data.pwdRules
+    for (let i = 0, lenI = pwdRules.length; i < lenI; ++i) {
       if (pwdRules[i].checked) {
         rules.push(pwdRules[i].name)
       }
@@ -230,21 +259,22 @@ Page({
   /**
    * 根据密码规则，生成随机密码
    */
-  creatRandomPwdWithRules: function (rules) {
-    var randomPwd = ""
-    var usedRules = []
-    var result = {
+  creatRandomPwdWithRules: function(rules) {
+    let randomPwd = ""
+    let usedRules = []
+    let result = {
       pwd: "",
       allUsed: false
     }
-    for (var i = 0; i < this.data.account.pwdCount; ++i) {
+
+    for (let i = 0; i < this.data.account.pwdCount; ++i) {
       // 随机选择一个种类
       const kindIndex = Math.floor(Math.random() * rules.length)
       const kind = rules[kindIndex]
 
       // 记录使用过的种类，为后面保证使用了选中的所有的密码规则提供依据
-      var isUsed = false
-      usedRules.forEach(function (value, index) {
+      let isUsed = false
+      usedRules.forEach(function(value, index) {
         if (kind == value) {
           isUsed = true
         }
@@ -256,34 +286,36 @@ Page({
       const compoent = this.data.passwordCompoent[kind]
       // 随机种类中的随机元素
       const compoentIndex = Math.floor(Math.random() * compoent.length)
-      var randomValue = compoent[compoentIndex]
+      let randomValue = compoent[compoentIndex]
       randomPwd += randomValue
     }
-    result.pwd = randomPwd    
-    if (usedRules.length == rules.length) {
+    result.pwd = randomPwd
+    // 避免密码长度为0 或者 少于规则数量时，导致死循环
+    if (usedRules.length == rules.length ||
+      this.data.account.pwdCount <= rules.length) {
       result.allUsed = true
-    } 
+    }
 
-    return result   
+    return result
   },
 
   /**
    * 确保使用了所有的密码规则
    */
-  makeSureUsedAllPwdRules: function (rules) {
-    var result = {}
+  makeSureUsedAllPwdRules: function(rules) {
+    let result = {}
     do {
       result = this.creatRandomPwdWithRules(rules)
-    } while(!result.allUsed)
-    
+    } while (!result.allUsed)
+
     return result.pwd
   },
 
   /**
    * 根据密码种类保存密码
    */
-  savePwdWithType: function (pwd, pwdType) {
-    var account = this.data.account
+  savePwdWithType: function(pwd, pwdType) {
+    let account = this.data.account
     switch (pwdType) {
       case "first":
         account.pwd = pwd
@@ -303,7 +335,7 @@ Page({
   /**
    * 保存帐号
    */
-  saveAccount: function (e) {
+  saveAccount: function(e) {
     // 输入信息判断
     if (util.isEmptyInput(this.data.tempName, "名称不能为空")) {
       return
@@ -337,7 +369,7 @@ Page({
     //   // 更新icon的类型
     //   this.isExistIcon()
     // }
-        
+
     // 在选择同一张相册图片时，无法保存帐号，因为tempFile已经被移动到缓存中了，所以无法入法找到路径，导致执行wx.saveFile失败
     // 所以修改临时路径，为已经保存的图片，并执行第一步[常用图标] == 
     // 但是如果存在两个帐号同时使用一个文件，删除帐号会导致另一个帐号的图片失效
@@ -346,7 +378,7 @@ Page({
     console.log(this.data.iconTypeIndex)
     switch (this.data.iconTypeList[this.data.iconTypeIndex]) {
       case '常用图标':
-        var account = this.updateAccWithIconPath(this.data.tempIcon)
+        let account = this.updateAccWithIconPath(this.data.tempIcon)
         this.saveNewAccount(account)
         break;
       case '输入图片链接':
@@ -376,8 +408,8 @@ Page({
   /**
    * 根据图片的不同信息，来更新帐号的图片路径
    */
-  updateAccWithIconPath: function (path) {
-    var account = this.data.account
+  updateAccWithIconPath: function(path) {
+    let account = this.data.account
     account.icon = path
     account.name = this.data.tempName
     this.setData({
@@ -389,7 +421,7 @@ Page({
   /**
    * 更新完成后，保存更新
    */
-  saveNewAccount: function (account) {
+  saveNewAccount: function(account) {
     if (this.data.buttonType == "更新帐号") {
       this.modifyAccount(account, this.data.accountIndex)
     } else {
@@ -399,7 +431,7 @@ Page({
         app.globalData.accountList = newAccountList
         // 处理跳转来自帐号显示
         this.updataAddPage(account)
-      }      
+      }
     }
     // console.log(account)
   },
@@ -408,12 +440,12 @@ Page({
    * 处理上一页面为帐号显示的添加帐号
    * 此时更新原来的帐号列表
    */
-  updataAddPage: function (account) {
-    var pages = getCurrentPages()
-    var that = pages[pages.length - 2]
+  updataAddPage: function(account) {
+    let pages = getCurrentPages()
+    let that = pages[pages.length - 2]
     if (that.__route__ == "pages/showAccount/showaccount") {
       if (that.data.accType == account.kind || that.data.accType == "全部") {
-        var beforeAccountList = that.data.accountList
+        let beforeAccountList = that.data.accountList
         beforeAccountList.push(account)
         that.setData({
           accountList: beforeAccountList,
@@ -440,7 +472,7 @@ Page({
   /**
    * 修改帐号信息
    */
-  modifyAccount: function (account, index) {
+  modifyAccount: function(account, index) {
     // 全局信息    
     app.globalData.accountList[index] = account
     this.updateBeforePageData(account)
@@ -459,12 +491,14 @@ Page({
   /**
    * 更新上一页面的信息
    */
-  updateBeforePageData: function (account) {
-    var pages = getCurrentPages()
-    var that = pages[pages.length - 3]
-    var beforeAccountList = that.data.accountList
+  updateBeforePageData: function(account) {
+    let pages = getCurrentPages()
+    let that = pages[pages.length - 3]
+    let beforeAccountList = that.data.accountList
     // 这里通过判断是否更改了帐号的类型，来删除上一页面的帐号信息
-    if (this.data.accType == account.kind || this.data.accType == "全部") {
+    if (this.data.accType == account.kind ||
+      this.data.accType == "全部" ||
+      that.data.pageType === '搜索') {
       beforeAccountList[this.data.tapIndex] = account
     } else {
       beforeAccountList = util.deleteArrayInfo(beforeAccountList, this.data.tapIndex)
@@ -475,59 +509,52 @@ Page({
         emptyInfo: "暂无 " + this.data.accType + " 的帐号"
       })
     }
-    
+
     // 更新新的显示帐号的信息
     that = pages[pages.length - 2]
     // 处理备注过长的问题
-    var tempRemarks = account.remarks
-    if (tempRemarks.length > 15) {
-      tempRemarks = tempRemarks.substring(0, 15) + '...'
-    }
-    if (tempRemarks.length == 0) {
-      tempRemarks = '...'
-    }
+    const tempAccount = util.handleAccountLength(account)
 
     that.setData({
       account: account,
-      tempRemarks: tempRemarks
+      tempAccount: tempAccount
     })
   },
 
   /**
    * 拷贝密码 
    */
-  copyPwd: function (e) {
+  copyPwd: function(e) {
     const pwd = this.data.account.pwd
     const secPwd = this.data.account.secPwd
 
     if (this.data.classifyIndex == 1) {
       // 游戏帐号未必有二级密码，拷贝分情况
       if (secPwd.length == 0) {
-        util.handleCopyPwd(pwd, "游戏拷贝成功", "还未填写密码")  
-      } 
-      else {
+        util.handleCopyPwd(pwd, "游戏拷贝成功", "还未填写密码")
+      } else {
         util.handleCopyPwd(pwd + "/" + secPwd, "游戏拷贝成功", "还未填写密码")
-      }    
+      }
     } else {
       util.handleCopyPwd(pwd, "密码拷贝成功", "还未填写密码")
     }
   },
 
   // 输入框失去焦点的响应事件
-  checkAccountName: function (e) {
+  checkAccountName: function(e) {
     this.setData({
       tempName: e.detail.value
     })
   },
-  checkAccount: function (e) {
-    var account = this.data.account
+  checkAccount: function(e) {
+    let account = this.data.account
     account.acc = e.detail.value
     this.setData({
       account: account
     })
   },
-  checkRemarks: function (e) {
-    var account = this.data.account
+  checkRemarks: function(e) {
+    let account = this.data.account
     account.remarks = e.detail.value
     this.setData({
       account: account
@@ -537,7 +564,7 @@ Page({
   /**
    * 根据不同的页面状态，显示不同的页面
    */
-  handlePageShowType: function (options, existClassify) {
+  handlePageShowType: function(options, existClassify) {
     // 已有帐号点击显示, 获取帐号在数据缓存中的位置
     let pageType = options.pageType
     switch (pageType) {
@@ -548,16 +575,18 @@ Page({
         this.settingPageType(pageType)
         // url字符串中不需要添加 引号
         this.updateOriginalAccountInfo(options.accType, existClassify)
+        // 自动生成密码
+        this.creatPassword()
         break;
-      default:        
+      default:
         break;
-    } 
+    }
   },
 
   /**
    * 显示帐号
    */
-  showAccountInfo: function (options, existClassify) {
+  showAccountInfo: function(options, existClassify) {
     const account = JSON.parse(options.accountJSON)
     // 获取帐号的点击位置（上一页）和类型（未修改时）
     const classifyIndex = existClassify.indexOf(account.kind)
@@ -568,7 +597,7 @@ Page({
       accountIndex: options.accountIndex,
       tempIcon: account.icon,
       tempName: account.name,
-      classifyIndex: classifyIndex,      
+      classifyIndex: classifyIndex,
       buttonType: "更新帐号"
     })
     wx.setNavigationBarTitle({
@@ -593,25 +622,25 @@ Page({
   },
 
   // 处理从 showAccount 处的跳转
-  updateOriginalAccountInfo: function (accType, classify) {
+  updateOriginalAccountInfo: function(accType, classify) {
     // 判断跳转过来的分类
-    const classifyIndex = classify.indexOf(accType)    
+    const classifyIndex = classify.indexOf(accType)
     if (classifyIndex != -1) {
       // 更改帐号的分类 & 图标
-      var account = this.data.account   
+      let account = this.data.account
       account.icon = this.accTypeToIcon(accType)
       account.kind = accType
       this.setData({
         classifyIndex: classifyIndex,
         account: account,
-        tempIcon: this.accTypeToIcon(accType) 
+        tempIcon: this.accTypeToIcon(accType)
       })
     }
   },
 
   // 根据showAccount的 type 显示分类图标
-  accTypeToIcon: function (accType) {
-    var returnImg = ""
+  accTypeToIcon: function(accType) {
+    let returnImg = ""
     switch (accType) {
       case "社交":
         returnImg = "/images/talk_icon.png"
@@ -636,14 +665,14 @@ Page({
         break
       default:
         returnImg = "/images/keyManager.png"
-    }    
+    }
     return returnImg
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     const existClassify = util.getExistClassify(app.globalData.accountClassify)
     // 获取已经存在的icon文件地址
     // 这个函数的目的在于节省本地文件保存数量，节省空间，但是比较的是临时文件，无法比较保存后的情况
@@ -658,7 +687,7 @@ Page({
   /**
    * 用户分享
    */
-  onShareAppMessage: function (res) {
+  onShareAppMessage: function(res) {
     let account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')
     return {
       title: this.data.tempName + '（帐号分享）',

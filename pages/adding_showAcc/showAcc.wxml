@@ -3,10 +3,10 @@
   <image class='icon' src='{{account.icon}}'></image>
   <view class='account'>{{account.acc}}</view>  
   <button class='share' style='border: none; padding: 0' open-type='share' plain='true'><image class='share' src='/images/shareAcc.png' mode='widthFix'></image></button>  
-  <view class='name'>{{account.name}} | {{account.kind}}</view>  
+  <view class='name'>{{tempAccount.name}} | {{account.kind}}</view>  
   <image class='edit' src='/images/editAcc.png' mode='widthFix' bindtap='editacc'></image>
-  <view class='pwd'>密码：{{account.pwd}} | {{account.pwdCount}}</view>
-  <view class='remark'>备注：{{tempRemarks}}</view>
+  <view class='pwd'>密码：xxxxxxxxxxxxxxxx</view>
+  <view class='remark'>备注：{{tempAccount.remarks}}</view>
   </view>
 </view>
 
@@ -14,8 +14,7 @@
 <view class="operationButton">
     <button class="weui-btn" type="primary" bindtap='copyPwd' style='background-color: #00ADB7'>复制密码
     </button>
-    <button class="weui-btn" type="default" bindtap='copyAcc'>复制帐号
-    </button>
-    <button class="weui-btn" type="default" bindtap='copyRemarks'>复制备注
-    </button>
+    <button class="weui-btn" type="default" bindtap='copyAcc'>复制帐号</button>
+    <button class="weui-btn" type="default" bindtap='copyRemarks'>复制备注</button>
+    <button class="weui-btn" type="default" bindtap='copyIcon'>复制图标</button>
 </view>

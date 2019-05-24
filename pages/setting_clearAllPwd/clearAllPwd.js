@@ -10,15 +10,15 @@ Page({
     accountList: []
   },
 
-  checkUserKey: function (e) {
+  checkUserKey: function(e) {
     this.setData({
       checkKey: e.detail.value
     })
     //收起键盘
-    util.hideKeyboard(e.detail.value, 6)    
+    util.hideKeyboard(e.detail.value, 6)
   },
 
-  clearAllAccount: function () {
+  clearAllAccount: function() {
     if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {
       return
     }
@@ -46,8 +46,7 @@ Page({
           })
         }
       })
-    }
-    else {
+    } else {
       wx.showToast({
         title: '密码错误',
         image: "/images/error.png"
@@ -57,7 +56,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     const userKeyArray = app.globalData.userKey
     var userKey = userKeyArray.join("")
 

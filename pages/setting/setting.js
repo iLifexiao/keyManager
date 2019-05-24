@@ -3,8 +3,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pwdManagerList: [
-      {
+    pwdManagerList: [{
         "iconPath": "/images/export.png",
         "title": "导出帐号",
         "detail": "",
@@ -29,8 +28,7 @@ Page({
         "url": "/pages/setting_resetSoft/resetSoft"
       }
     ],
-    encodeSettingList: [
-      {
+    encodeSettingList: [{
         "iconPath": "/images/edit.png",
         "title": "修改密码规则",
         "detail": "",
@@ -49,8 +47,7 @@ Page({
         "url": "/pages/setting_fingerPrint/fingerPrint"
       }
     ],
-    softSettingList: [
-      {
+    softSettingList: [{
         "iconPath": "/images/help.png",
         "title": "使用帮助",
         "detail": "",
@@ -74,7 +71,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
 
   },
 })

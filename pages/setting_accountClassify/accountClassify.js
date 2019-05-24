@@ -6,18 +6,19 @@ Page({
    */
   data: {
     urlType: "",
-    accountClassify: [],    
-    existClassify: [],
-    
+    accountClassify: [],
+
     // 用于区分添加icon的状态（已有、新的）
     iconTypeIndex: 0,
     tempIconPath: "/images/package.png",
+    iconTypeList: ['输入图片链接', '从相册中选择'],
+    islinkInputHiden: true,
+    linkinputValue: "",
     tempName: "",
     tempUrl: "",
-    
+
     buttonType: "添加", // 按钮的状态：添加新的分类、更新分类    
-    currentClassifyIndex: 0, // 表示当前选择（删除、更新）的分类下标
-    
+
     // 分类对象结构
     classify: {
       "name": "",
@@ -26,7 +27,42 @@ Page({
     },
   },
 
-  selectIcon: function (e) {
+  _existClassify: [],
+  _currentClassifyIndex: 0, // 表示当前选择（删除、更新）的分类下标
+
+  selectIcon: function(e) {
+    wx.showActionSheet({
+      itemList: this.data.iconTypeList,
+      itemColor: '#00ADB7',
+      success: res => {
+        if (!res.cancel) {
+          this.handleSelectIcon(res.tapIndex)
+        }
+      }
+    })
+  },
+
+  handleSelectIcon: function(tapIndex) {
+    switch (tapIndex) {
+      case 0:
+        this.chooseIconWithLink();
+        break;
+      case 1:
+        this.chooseIconWithAlbum();
+        break;
+      default:
+        break;
+    }
+  },
+
+  // 输入图片链接
+  chooseIconWithLink: function(e) {
+    this.setData({
+      islinkInputHiden: false
+    })
+  },
+
+  chooseIconWithAlbum: function(e) {
     wx.chooseImage({
       count: 1,
       success: res => {
@@ -39,17 +75,43 @@ Page({
     });
   },
 
-  checkAccountClassifyName: function (e) {
+  // 输入图片链接
+  chooseIconWithLink: function(e) {
+    this.setData({
+      islinkInputHiden: false
+    })
+  },
+
+  confirmLink: function(e) {
+    this.setData({
+      islinkInputHiden: true,
+      tempIconPath: this.data.linkinputValue
+    })
+  },
+
+  cancelLink: function(e) {
+    this.setData({
+      islinkInputHiden: true
+    })
+  },
+
+  linkInput: function(e) {
+    this.setData({
+      linkinputValue: e.detail.value
+    })
+  },
+
+  checkAccountClassifyName: function(e) {
     this.setData({
       tempName: e.detail.value
     })
   },
 
-  addAccountClassify: function (e) {
+  addAccountClassify: function(e) {
     if (util.isEmptyInput(this.data.tempName, "名称不能为空")) {
       return
-    }  
-    if (this.data.existClassify.indexOf(this.data.tempName) != -1) {
+    }
+    if (this._existClassify.indexOf(this.data.tempName) != -1) {
       wx.showToast({
         title: '该分类已经存在',
         image: '/images/exclamatory-mark.png'
@@ -58,14 +120,14 @@ Page({
     }
     const tempUrl = "../showAccount/showaccount?type=" + this.data.tempName
     // 判断是否更改了默认图标
-    if (this.data.iconTypeIndex == 0) {      
+    if (this.data.iconTypeIndex == 0) {
       this.addWithExistIcon(this.data.tempName, tempUrl, this.data.tempIconPath)
     } else {
       this.addWithDIYIcon(this.data.tempName, tempUrl)
     }
   },
 
-  addWithExistIcon: function (tempName, tempUrl, tempIconPath) {
+  addWithExistIcon: function(tempName, tempUrl, tempIconPath) {
     this.setData({
       classify: {
         "name": tempName,
@@ -76,7 +138,7 @@ Page({
     this.handleOperation()
   },
 
-  addWithDIYIcon: function (tempName, tempUrl) {    
+  addWithDIYIcon: function(tempName, tempUrl) {
     wx.saveFile({
       tempFilePath: this.data.tempIconPath,
       success: res => {
@@ -95,13 +157,13 @@ Page({
     })
   },
 
-  handleOperation: function () {
+  handleOperation: function() {
     console.log(this.data.classify)
     // 根据不同的按钮类型，进行不同的操作    
     if (this.data.buttonType == "添加") {
       this.addNewClassify(this.data.classify)
     } else if (this.data.buttonType == "更新") {
-      this.modifyClassify(this.data.currentClassifyIndex)
+      this.modifyClassify(this._currentClassifyIndex)
     }
     this.updateAccountClassifyData(this.data.accountClassify)
   },
@@ -109,7 +171,7 @@ Page({
   /**
    * 添加功能分离
    */
-  addNewClassify: function (classify) {
+  addNewClassify: function(classify) {
     var accountClassify = this.data.accountClassify
     // 管理的分类始终在最后一个
     let lastClass = accountClassify.pop()
@@ -124,7 +186,7 @@ Page({
   /**
    * 更新
    */
-  modifyClassify: function (currentClassifyIndex) {
+  modifyClassify: function(currentClassifyIndex) {
     var accountClassify = this.data.accountClassify
     accountClassify[currentClassifyIndex] = this.data.classify
     this.setData({
@@ -138,7 +200,7 @@ Page({
   /**
    * 更新当前的信息 & 上一页面的分类信息 & 缓存数据 & 全局变量
    */
-  updateAccountClassifyData: function (accountClassify) {
+  updateAccountClassifyData: function(accountClassify) {
     // 当前的信息
     this.getAllClassify(accountClassify)
 
@@ -169,14 +231,11 @@ Page({
   /**
    * 改变分类的状态
    */
-  changeClassify: function (e) {
+  changeClassify: function(e) {
     const classifyName = e.currentTarget.id
     // 记录当前点击的行
-    const currentClassifyIndex = this.data.existClassify.indexOf(classifyName)
-    // console.log(currentClassifyIndex)
-    this.setData({
-      currentClassifyIndex: currentClassifyIndex
-    })
+    const currentClassifyIndex = this._existClassify.indexOf(classifyName)
+    this._currentClassifyIndex = currentClassifyIndex
 
     // 排除系统定义的分类
     if (currentClassifyIndex > 7 && classifyName !== "管理") {
@@ -190,7 +249,7 @@ Page({
                 this.editClassify(currentClassifyIndex);
                 break;
               case 1:
-                this.deleteClassify(currentClassifyIndex);
+                this.showHandelTips(currentClassifyIndex);
                 break;
               default:
                 break;
@@ -198,13 +257,19 @@ Page({
           }
         }
       })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: "暂时不支持修改系统提供的分类哦^_^",
+        showCancel: false
+      })
     }
   },
 
   /**
    * 点击分类编辑
    */
-  editClassify: function (currentClassifyIndex) {
+  editClassify: function(currentClassifyIndex) {
     const currentClassify = this.data.accountClassify[currentClassifyIndex]
     // console.log(currentClassify)
     this.setData({
@@ -214,10 +279,24 @@ Page({
     })
   },
 
+  showHandelTips: function(currentClassifyIndex) {
+    wx.showModal({
+      title: '温馨提示',
+      content: '确定删除吗?',
+      cancelColor: '#00ADB7',
+      confirmColor: '#000000',
+      success: res => {
+        if (res.confirm) {
+          this.deleteClassify(currentClassifyIndex);
+        }
+      }
+    })
+  },
+
   /**
    * 点击删除
    */
-  deleteClassify: function (currentClassifyIndex) {
+  deleteClassify: function(currentClassifyIndex) {
     // 如果这里引用了 this.data 的数据
     var accountClassify = this.data.accountClassify
     // 删除图片
@@ -241,13 +320,13 @@ Page({
   },
 
   // 判断是否为保存的图片icon
-  isSaveUniqueIcon: function (iconPath) {
+  isSaveUniqueIcon: function(iconPath) {
     // 是否为自定义图片
     if (iconPath.search("//store") != -1) {
       // 是否只有一个帐号使用了该图片
       // 通过所有帐号的图标数量来判断        
       var sameIconCount = 0
-      app.globalData.accountClassify.forEach(function (accountClass, index) {
+      app.globalData.accountClassify.forEach(function(accountClass, index) {
         if (accountClass.iconPath == iconPath) {
           sameIconCount += 1
         }
@@ -255,8 +334,7 @@ Page({
       console.log(sameIconCount)
       if (sameIconCount > 1) {
         return false
-      }
-      else {
+      } else {
         return true
       }
     }
@@ -267,14 +345,12 @@ Page({
   /**
    * 获取所有分类，包括系统的分类
    */
-  getAllClassify: function (accountClassify) {
+  getAllClassify: function(accountClassify) {
     var existClassify = []
-    accountClassify.forEach(function (classify, index) {
+    accountClassify.forEach(function(classify, index) {
       existClassify.push(classify.name)
     })
-    this.setData({
-      existClassify: existClassify
-    })
+    this._existClassify = existClassify
   },
 
 
@@ -286,7 +362,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       accountClassify: app.globalData.accountClassify
     })

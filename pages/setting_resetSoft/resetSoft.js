@@ -9,7 +9,7 @@ Page({
     checkKey: ""
   },
 
-  checkUserKey: function (e) {
+  checkUserKey: function(e) {
     this.setData({
       checkKey: e.detail.value
     })
@@ -17,7 +17,7 @@ Page({
     util.hideKeyboard(e.detail.value, 6)
   },
 
-  resetSoft: function () {
+  resetSoft: function() {
     if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {
       return
     }
@@ -26,8 +26,7 @@ Page({
     // 确认密码
     if (checkKey == this.data.userKey) {
       this.clearAllData()
-    }
-    else {
+    } else {
       wx.showToast({
         title: '密码错误',
         image: "/images/error.png"
@@ -35,7 +34,7 @@ Page({
     }
   },
 
-  clearAllData: function () {
+  clearAllData: function() {
     // 全局信息
     app.globalData = {
       userKey: [],
@@ -49,10 +48,10 @@ Page({
     // 保存的文件
     wx.getSavedFileList({
       success: res => {
-        res.fileList.forEach(function (icon, index) {
+        res.fileList.forEach(function(icon, index) {
           wx.removeSavedFile({
             filePath: icon.filePath,
-            complete: function (res) {
+            complete: function(res) {
               console.log(res)
             }
           })
@@ -82,7 +81,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     const userKeyArray = app.globalData.userKey
     var userKey = userKeyArray.join("")
     this.setData({

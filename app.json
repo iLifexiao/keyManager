@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/main/main",    
+    "pages/main/main",
     "pages/adding_account/account",
     "pages/adding_showAcc/showAcc",
     "pages/adding_chooseLogo/chooseLogo",
@@ -45,5 +45,6 @@
     ],
     "color": "#D3D3D3",
     "selectedColor": "#00ADB7"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

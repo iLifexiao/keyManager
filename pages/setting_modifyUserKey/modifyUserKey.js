@@ -12,15 +12,15 @@ Page({
     checkPwd: ""
   },
 
-  checkOldPassword: function (e) {
+  checkOldPassword: function(e) {
     this.setData({
       oldPwd: e.detail.value
     })
     //收起键盘
-    util.hideKeyboard(e.detail.value, 6)    
+    util.hideKeyboard(e.detail.value, 6)
   },
 
-  checkNewPassword: function (e) {
+  checkNewPassword: function(e) {
     this.setData({
       newPwd: e.detail.value
     })
@@ -28,7 +28,7 @@ Page({
     util.hideKeyboard(e.detail.value, 6)
   },
 
-  checkSamePassword: function (e) {
+  checkSamePassword: function(e) {
     this.setData({
       checkPwd: e.detail.value
     })
@@ -36,9 +36,9 @@ Page({
     util.hideKeyboard(e.detail.value, 6)
   },
 
-  changePassword: function (e) {
-    const oldPwd = this.data.oldPwd    
-    if (util.isEmptyInput(oldPwd, '请验证身份')) {      
+  changePassword: function(e) {
+    const oldPwd = this.data.oldPwd
+    if (util.isEmptyInput(oldPwd, '请验证身份')) {
       return
     }
 
@@ -95,8 +95,7 @@ Page({
           image: '/images/exclamatory-mark.png'
         })
       }
-    }
-    else {
+    } else {
       wx.showToast({
         title: '原密码错误',
         image: "/images/error.png"
@@ -106,7 +105,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     const userKeyArray = app.globalData.userKey
     const userKey = userKeyArray.join("")
     this.setData({

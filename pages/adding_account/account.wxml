@@ -27,20 +27,26 @@
   <!-- 帐号名称 -->
   <view class="weui-cell weui-cell_input">
     <view class="weui-cell__hd">
-      <view class="weui-label">名称</view>
+      <view class="weui-label">
+      名称
+      <text class='required'>*</text>
+      </view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" value="{{tempName}}" placeholder='帐号所对应的名称' bindinput='checkAccountName' />
+      <input class="weui-input" value="{{tempName}}" placeholder='请输入账号名称' bindinput='checkAccountName' />
     </view>
   </view>
 
   <!-- 帐号 -->
   <view class="weui-cell weui-cell_input">
     <view class="weui-cell__hd">
-      <view class="weui-label">帐号</view>
+      <view class="weui-label">
+      帐号
+      <text class='required'>*</text>
+      </view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" value="{{account.acc}}" placeholder="名称所对应的帐号" bindinput='checkAccount' />
+      <input class="weui-input" value="{{account.acc}}" placeholder="请输入账号" bindinput='checkAccount' />
     </view>
   </view>
 
@@ -50,7 +56,7 @@
       <view class="weui-label">密码位数</view>
     </view>
     <view class="weui-cell__bd">
-      <slider bindchange="accountCountChange" min="0" max="16" value='{{account.pwdCount}}' activeColor='#00ADB7' show-value/>
+      <slider bindchange="accountCountChange" min="0" max="128" value='{{account.pwdCount}}' activeColor='#00ADB7' show-value/>
     </view>
   </view>
 
@@ -77,10 +83,13 @@
   <!-- 生成的密码 -->
   <view class="weui-cell weui-cell_input weui-cell_vcode">
     <view class="weui-cell__hd">
-      <view class="weui-label">密码</view>
+      <view class="weui-label">
+      密码
+      <text class='required'>*</text>
+      </view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder='帐号所对应的密码' value='{{account.pwd}}' bindinput='checkPwd' maxlength='16'></input>
+      <input class="weui-input" placeholder='请输入密码' value='{{account.pwd}}' bindinput='checkPwd' maxlength='128'></input>
     </view>    
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='first' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>
@@ -93,7 +102,7 @@
       <view class="weui-label">二级密码</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder='游戏的二级密码' value='{{account.secPwd}}' bindinput='checkSecPwd' maxlength='16'></input>
+      <input class="weui-input" placeholder='游戏的二级密码' value='{{account.secPwd}}' bindinput='checkSecPwd' maxlength='128'></input>
     </view>
     <view class="weui-cell__ft">
       <view class="weui-vcode-btn" data-pwd-type='second' bindtap='creatPassword' style='color: #00ADB7'>生成密码</view>

@@ -1,1 +1,23 @@
 /* pages/adding_chooseLogo/chooseLogo.wxss */
+.searchBackground {
+  background-color: #00ADB7;
+  border: none;
+}
+
+.searchCancelText {
+  color: white;
+}
+
+.emptyIconView {      
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  margin-top: 400rpx;
+}
+
+.emptyText {
+  color: #888;
+  margin-top: 20rpx;
+  word-break: break-word;
+  text-align: center;
+}

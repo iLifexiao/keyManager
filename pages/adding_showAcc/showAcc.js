@@ -16,7 +16,10 @@ Page({
       pwdCount: 8,
       remarks: "",
     },
-    tempRemarks: "发生错误了...",
+    tempAccount: {
+      remarks: "发生错误了...",
+      name: ""
+    },
 
     accountIndex: 0,
     accType: "社交",
@@ -24,7 +27,7 @@ Page({
     pageType: "显示"
   },
 
-  editacc: function (e) {
+  editacc: function(e) {
     const url = '../adding_account/account?accountJSON=' + JSON.stringify(this.data.account) + '&accountIndex=' + this.data.accountIndex + '&accType=' + this.data.accType + '&tapIndex=' + this.data.tapIndex + '&pageType=' + this.data.pageType
     // console.log("url:",url)
     wx.navigateTo({
@@ -32,26 +35,30 @@ Page({
     })
   },
 
-  copyRemarks: function (e) {
+  copyIcon: function(e) {
+    const icon = this.data.account.icon
+    util.handleCopyPwd(icon, "图标复制成功", "暂无图标...")
+  },
+
+  copyRemarks: function(e) {
     const remarks = this.data.account.remarks
     util.handleCopyPwd(remarks, "备注拷贝成功", "暂无备注...")
   },
 
-  copyAcc: function (e) {
+  copyAcc: function(e) {
     const acc = this.data.account.acc
     util.handleCopyPwd(acc, "帐号拷贝成功", "还未填写帐号")
   },
 
-  copyPwd: function (e) {
+  copyPwd: function(e) {
     const pwd = this.data.account.pwd
     const secPwd = this.data.account.secPwd
 
-    if (this.data.classifyIndex == 1) {
+    if (this.data.accType === '游戏') {
       // 游戏帐号未必有二级密码，拷贝分情况
       if (secPwd.length == 0) {
         util.handleCopyPwd(pwd, "游戏拷贝成功", "还未填写密码")
-      }
-      else {
+      } else {
         util.handleCopyPwd(pwd + "/" + secPwd, "游戏拷贝成功", "还未填写密码")
       }
     } else {
@@ -61,44 +68,39 @@ Page({
 
   // 因为在两个页面之间添加了新的页面，需要将以下数据做一个中转
   // accountJSON、accountIndex、accType、tapIndex、pageType
-  showAccountInfo: function (options) {
+  showAccountInfo: function(options) {
 
     const account = JSON.parse(options.accountJSON)
+    const tempAccount = util.handleAccountLength(account)
 
-    // 处理备注过长的问题
-    var tempRemarks = account.remarks
-    if (tempRemarks.length > 15) {
-      tempRemarks = tempRemarks.substring(0, 15) + '...'
-    }
-    if (tempRemarks.length == 0) {
-      tempRemarks = '...'
-    }
-
-    this.setData({      
+    this.setData({
       accountIndex: options.accountIndex,
       accType: options.accType,
       tapIndex: options.tapIndex,
-      pageType: options.pageType,   
-         
+      pageType: options.pageType,
+
       account: account,
-      tempRemarks: tempRemarks,            
-    })
-    wx.setNavigationBarTitle({
-      title: account.name,
+      tempAccount: tempAccount
     })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.showAccountInfo(options)    
+  onLoad: function(options) {
+    this.showAccountInfo(options)
+  },
+
+  onShow: function(options) {
+    wx.setNavigationBarTitle({
+      title: this.data.account.name,
+    })
   },
 
   /**
    * 用户分享
    */
-  onShareAppMessage: function (res) {
+  onShareAppMessage: function(res) {
     let account = util.replaceAll(JSON.stringify(this.data.account), '#', '-')
     return {
       title: this.data.account.name + '（帐号分享）',

@@ -143,6 +143,6 @@ App({
     // supportFacial: "0",
     // openFacial: "0",
     isOpenRandomImg: '0',
-    bgImageUrl: "/images/defaultBG.jpeg"
+    bgImageUrl: "/images/defaultBG.jpg"
   }
 })

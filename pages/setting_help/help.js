@@ -3,8 +3,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    helpList: [
-      {
+    helpList: [{
         "question": "1. 怎么使用AES加密？",
         "qIndex": 0,
         "qAnswer": "输入16位密钥和16位密钥偏移即可"
@@ -77,7 +76,7 @@ Page({
       {
         "question": "15. 可以分享帐号吗？",
         "qIndex": 14,
-        "qAnswer": "到你要分享的帐号的里，点击页面的右上角的三个点，在弹出来的选项中选中转发即可，或者点击飞机图标"
+        "qAnswer": "到你要分享的帐号的里，点击页面的右上角的三个点，在弹出来的选项中选中转发即可。或者点击帐号卡片右上角的飞机图标"
       },
       {
         "question": "16. 保存帐号、分享的帐号异常?",
@@ -93,7 +92,7 @@ Page({
         "question": "18. 如何复制游戏密码的？",
         "qIndex": 17,
         "qAnswer": "因为游戏可能包含二级密码，所以复制的格式为[密码1/密码2](比如: 123456/abcdef)，即两个密码使用/分割开"
-      }      
+      }
     ]
   },
 
@@ -103,7 +102,7 @@ Page({
      * 不能有大写(大写会自动转成小写)如data-element-type，
      * 最终在 event.currentTarget.dataset 中会将连字符转成驼峰elementType
      */
-    const qIndex = e.currentTarget.dataset.qIndex    
+    const qIndex = e.currentTarget.dataset.qIndex
     const qAnswer = this.data.helpList[qIndex].qAnswer
     wx.showModal({
       title: '回答',

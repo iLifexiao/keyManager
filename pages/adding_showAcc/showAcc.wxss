@@ -19,9 +19,9 @@
 
 .edit {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  top: 65px;
+  width: 25px;
+  height: 25px;
+  top: 70px;
   right: 20px;    
 }
 
@@ -35,8 +35,10 @@
 
 .account {  
   position: absolute;
-  width: 50%;
-  height: 25px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  width: 60%;
+  height: 30px;
   top: 20px;
   left: 90px;
   text-align: left;

@@ -8,10 +8,12 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.93",
+	"libVersion": "2.7.0",
 	"appid": "wx76e8a8d9a6050aff",
 	"projectname": "%E5%B8%90%E5%8F%B7%E7%AE%A1%E7%90%86",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -39,9 +41,11 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "单页验证",
-					"pathName": "pages/adding_showAcc/showAcc"
+					"pathName": "pages/adding_chooseLogo/chooseLogo",
+					"query": "pageType=\"添加\"",
+					"scene": null
 				}
 			]
 		}

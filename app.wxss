@@ -57,3 +57,7 @@ page {
   justify-content: center;
   align-items: center;
 }
+
+.required {
+  color: red;
+}

@@ -14,6 +14,10 @@ Page({
       secPwd: "",
       pwdCount: 8,
       remarks: "",
+    },
+    tempAccount: {
+      remarks: "发生错误了...",
+      name: ""      
     }
   },
 
@@ -154,6 +158,7 @@ Page({
       accountJSON = util.replaceAll(accountJSON, "-", "#")
       console.log(accountJSON)
       var account = JSON.parse(accountJSON)
+      const tempAccount = util.handleAccountLength(account)
       // 分享显示帐号时，判断自定义icon是否存在
       if (account.icon.search("//store") != -1) {
         wx.getSavedFileInfo({
@@ -165,6 +170,7 @@ Page({
       }
       this.setData({
         account: account,
+        tempAccount: tempAccount
       })
     }
   },

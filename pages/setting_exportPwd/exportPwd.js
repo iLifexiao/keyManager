@@ -12,17 +12,17 @@ Page({
     key: null,
     iv: null
   },
-  
-  checkUserKey: function (e) {
+
+  checkUserKey: function(e) {
     this.setData({
       checkKey: e.detail.value
     })
     //收起键盘
-    util.hideKeyboard(e.detail.value, 6)    
+    util.hideKeyboard(e.detail.value, 6)
   },
 
-  exportAllAccount: function (e) {
-    if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {      
+  exportAllAccount: function(e) {
+    if (util.isEmptyInput(this.data.checkKey, '请验证身份')) {
       return
     }
     const userKey = this.data.userKey
@@ -30,15 +30,17 @@ Page({
 
     // 确认密码
     if (checkKey == userKey) {
-      const accountList = this.data.accountList      
-      const remarks = this.Encrypt(JSON.stringify({"accountList": accountList}), this.data.key, this.data.iv)
+      const accountList = this.data.accountList
+      const remarks = this.Encrypt(JSON.stringify({
+        "accountList": accountList
+      }), this.data.key, this.data.iv)
       // console.log("remarks:", remarks)
       // 同时拷贝到剪切板
       wx.setClipboardData({
         data: remarks,
-        success: function (res) {
+        success: function(res) {
           wx.getClipboardData({
-            success: function (res) {
+            success: function(res) {
               wx.showToast({
                 title: '复制成功:' + accountList.length,
               })
@@ -50,8 +52,7 @@ Page({
         firstName: '帐号管理(备份信息)',
         remark: remarks
       })
-    }
-    else {
+    } else {
       wx.showToast({
         title: '密码错误',
         image: "/images/error.png"
@@ -64,14 +65,18 @@ Page({
    */
   Encrypt: function(word, key, iv) {
     var srcs = fun_aes.CryptoJS.enc.Utf8.parse(word);
-    var encrypted = fun_aes.CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: fun_aes.CryptoJS.mode.CBC, padding: fun_aes.CryptoJS.pad.Pkcs7 });
+    var encrypted = fun_aes.CryptoJS.AES.encrypt(srcs, key, {
+      iv: iv,
+      mode: fun_aes.CryptoJS.mode.CBC,
+      padding: fun_aes.CryptoJS.pad.Pkcs7
+    });
     return encrypted.ciphertext.toString().toUpperCase();
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     const userKeyArray = app.globalData.userKey
     const userKey = userKeyArray.join("")
 
