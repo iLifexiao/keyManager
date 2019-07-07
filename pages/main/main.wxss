@@ -27,3 +27,15 @@
   background-color: #fff;
   text-align: center;
 }
+
+.tool-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: cneter;
+}
+
+.tag-view {
+  display: flex;
+  justify-content: cneter;
+  align-items: cneter;
+}

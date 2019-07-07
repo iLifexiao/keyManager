@@ -6,10 +6,12 @@
 </view>
 
 <!-- 帐号分类 begin -->
-<view class="icon-box">
-  <image src="/images/tag.png" style='width: 20px; height: 20px'></image>
-  <text style='margin-left: 5px;'>分类</text>
-  <image src="/images/recycle.png" bindtap='changeBGAction' style='margin-left: 74%; width: 23px; height: 23px;'></image>
+<view class="tool-bar">
+  <view class="tag-view">
+    <image src="/images/tag.png" style='width: 23px; height: 23px;'></image>
+    <text style='margin-left: 10rpx;'>分类</text>
+  </view>
+  <image src="/images/recycle.png" bindtap='changeBGAction' style='margin-right: 20rpx; width: 23px; height: 23px;'></image>
 </view>
 <view class="weui-grids">
   <block wx:for="{{accountClassify}}" wx:key="{{item.name}}">
